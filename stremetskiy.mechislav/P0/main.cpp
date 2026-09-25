@@ -1,4 +1,5 @@
 #include <iostream>
 
-int main()
-{}
+int main(){
+    std::cout << "stremetskiy.mechislav\n";
+}
