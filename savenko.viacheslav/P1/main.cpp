@@ -4,7 +4,7 @@ int process_a_sequence();
 
 int main()
 {
-    int answer = 0;
+    int answer=0;
 
     try
     {
