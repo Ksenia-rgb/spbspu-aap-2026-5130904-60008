@@ -14,13 +14,11 @@ int main()
 
         return 0;
     }
-    
+
     catch (int error_code)
     {
         return error_code;
     }
-
-    
 }
 
 int process_a_sequence()
@@ -35,7 +33,7 @@ int process_a_sequence()
         std::cerr << "The input data cannot be identified as a sequence." << "\n";
         throw 1;
     }
-    
+
     if (previous_number==0)
     {
         std::cerr << "The sequence is too short." << "\n";
