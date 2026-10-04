@@ -2,7 +2,8 @@
 
 int processASequence();
 
-int main() {
+int main()
+{
   int answer = 0;
 
   try {
@@ -18,7 +19,8 @@ int main() {
   }
 }
 
-int processASequence() {
+int processASequence()
+{
   int previous_number = 0;
   int current_number = 0;
   int next_number = 0;
