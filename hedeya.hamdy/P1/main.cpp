@@ -9,7 +9,7 @@ Test Cases:
 */
 
 int main()
-{   
+{
     std::string string = "";
     std::cout << "Enter a string of characters: \n";
     std::cin >> string;
@@ -28,7 +28,7 @@ int main()
 
         longest = std::max(length, longest);
     }
-    
+
     std::cout << "Length of longest substring of repeating characters: " << longest;
     return EXIT_SUCCESS;
 }
