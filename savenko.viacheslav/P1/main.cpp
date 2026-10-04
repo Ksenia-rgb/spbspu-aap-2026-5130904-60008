@@ -1,6 +1,6 @@
 #include <iostream>
 
-int process_a_sequence();
+int processASequence();
 
 int main()
 {
@@ -8,7 +8,7 @@ int main()
 
     try
     {
-        answer=process_a_sequence();
+        answer=processASequence();
 
         std::cout << "Number of local minima in the sequence: " << answer << "\n";
 
@@ -21,7 +21,7 @@ int main()
     }
 }
 
-int process_a_sequence()
+int processASequence()
 {
     int previous_number=0;
     int current_number=0;
