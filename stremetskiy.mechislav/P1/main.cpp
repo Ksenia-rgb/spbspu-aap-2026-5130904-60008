@@ -1,6 +1,6 @@
 #include <iostream>
-#include <climits> // Библиотека для получения макс. значения int
-#include <stdexcept> // Библиотека для получении сообщения ошибки
+#include <climits> 
+#include <stdexcept> 
 
 int main()
 {
