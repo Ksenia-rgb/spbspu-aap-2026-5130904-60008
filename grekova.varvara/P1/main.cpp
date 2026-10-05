@@ -67,7 +67,7 @@ int readInt()
   int value = 0;
   if (!(std::cin >> value))
   {
-    std::cerr << "Ivalid Input\n";
+    std::cerr << "Invalid Input\n";
     throw invalid_input;
   }
   return value;
