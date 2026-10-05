@@ -50,23 +50,25 @@ int main()
     }
 
     std::cout << max_len << "\n";
+
+    return 0;
   }
 
-  catch (int thr)
+  catch (int error_code)
   {
-    std::cerr << "Ivalid Input\n";
-    return 1;
+    return error_code;
   }
-
-  return 0;
 }
 
 int readInt()
 {
+  const int invalid_input = 1;
+
   int value = 0;
   if (!(std::cin >> value))
   {
-    throw 999;
+    std::cerr << "Ivalid Input\n";
+    throw invalid_input;
   }
   return value;
 }
