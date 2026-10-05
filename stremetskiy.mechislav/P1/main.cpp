@@ -1,6 +1,6 @@
 #include <iostream>
-#include <climits> 
-#include <stdexcept> 
+#include <climits>
+#include <stdexcept>
 
 int main()
 {
