@@ -1,20 +1,21 @@
 #include <iostream>
-#include <climits> // Библиотека для получения макс. значения переменной типа int
+#include <climits> // Библиотека для получения макс. значения int
 #include <stdexcept> // Библиотека для получении сообщения ошибки
 
 int main()
 {
   setlocale(LC_ALL, "rus");
-  
+
   int num = -1;
   int count_max = 0;
   int max = INT_MIN;
   int size = 0;
 
-  std::cout 
-  << "\nВведите последовательность чисел через пробел, последнее число должно являться 0: \n";
+  std::cout
+  << "\nВведите последовательность чисел через пробел,"
+  << "последнее число должно являться 0: \n";
 
-  try 
+  try
   {
     while (num != 0)
     {
@@ -47,27 +48,33 @@ int main()
       ++size;
     }
   }
+
   catch (const std::invalid_argument & ex)
   {
     std::cerr << "Invalid input: " << ex.what() << "\n";
     return 1;
   }
+
   catch (const std::logic_error & ex)
   {
    std::cerr << "Invalid input: " << ex.what() << "\n";
     return 2;
   }
+
   catch (const std::range_error & ex)
   {
     std::cerr << "Value out of range: " << ex.what() << "\n";
     return 2;
   }
+
   catch (...)
   {
     std::cerr << "Не тут что другое \n";
     return 2;
   }
 
-  std::cout << "Количество максимальных чисел последовательности: " << count_max << "\n";
+  std::cout
+  << "Количество максимальных чисел последовательности: "
+  << count_max << "\n";
   return 0;
 }
