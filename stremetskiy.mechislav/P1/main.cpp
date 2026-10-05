@@ -4,16 +4,12 @@
 
 int main()
 {
-  setlocale(LC_ALL, "rus");
-
   int num = -1;
   int count_max = 0;
   int max = INT_MIN;
   int size = 0;
 
-  std::cout
-  << "\nВведите последовательность чисел через пробел,"
-  << "последнее число должно являться 0: \n";
+  std::cout << "\nEnter a sequence of numbers separated by spaces: \n";
 
   try
   {
@@ -21,12 +17,12 @@ int main()
     {
       if (!(std::cin >> num))
       {
-        throw std::invalid_argument("Неверный ввод");
+        throw std::invalid_argument("expected int");
       }
 
       if (num == 0 && size == 0)
       {
-        throw std::logic_error("Слишком маленькая последовательность");
+        throw std::logic_error("Sequence is too short");
       }
 
       if (num > max)
@@ -42,7 +38,7 @@ int main()
         }
         else
         {
-          throw std::range_error("Слишком большая последовательность");
+          throw std::range_error("Sequence is too big");
         }
       }
       ++size;
@@ -69,12 +65,10 @@ int main()
 
   catch (...)
   {
-    std::cerr << "Не тут что другое \n";
+    std::cerr << "Another error\n";
     return 2;
   }
 
-  std::cout
-  << "Количество максимальных чисел последовательности: "
-  << count_max << "\n";
+  std::cout << "Number of max values in the sequence: " << count_max << "\n";
   return 0;
 }
