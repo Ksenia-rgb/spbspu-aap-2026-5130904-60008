@@ -2,8 +2,8 @@
 
 int readInt();
 
-int main(){
-  try{
+int main() {
+  try {
     int curr_len = 1;
     int max_len = 1;
     int prev = 0;
@@ -11,27 +11,27 @@ int main(){
 
     prev = readInt();
 
-    if (prev == 0){
+    if (prev == 0) {
       std::cout << "0\n";
       return 0;
     }
 
-    while (true){
+    while (true) {
       now = readInt();
 
-      if (now == 0){
-          if (curr_len > max_len){
-            max_len = curr_len;
-          }
-          break;
+      if (now == 0) {
+        if (curr_len > max_len) {
+          max_len = curr_len;
         }
+        break;
+      }
 
-      if (now >= prev){
+      if (now >= prev) {
         ++curr_len;
       }
 
-      else{
-        if (curr_len > max_len){
+      else {
+        if (curr_len > max_len) {
           max_len = curr_len;
         }
         curr_len = 1;
@@ -44,16 +44,16 @@ int main(){
     return 0;
   }
 
-  catch (int error_code){
+  catch (int error_code) {
     return error_code;
   }
 }
 
-int readInt(){
+int readInt() {
   const int invalid_input = 1;
 
   int value = 0;
-  if (!(std::cin >> value)){
+  if (!(std::cin >> value)) {
     std::cerr << "Invalid Input\n";
     throw invalid_input;
   }
