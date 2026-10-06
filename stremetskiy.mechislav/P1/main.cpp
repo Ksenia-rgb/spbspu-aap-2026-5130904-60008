@@ -3,8 +3,8 @@
 #include <stdexcept>
 #include <cstdlib>
 
-constexpr int RANGE_ERROR = 2;
-constexpr int INVALID_ERROR = 1;
+constexpr int invalid_input_error = 1;
+constexpr int range_error = 2;
 
 int main()
 {
@@ -52,12 +52,12 @@ int main()
   catch (const std::invalid_argument &ex)
   {
     std::cerr << "Invalid input: " << ex.what() << "\n";
-    std::exit(INVALID_ERROR);
+    std::exit(invalid_input_error);
   }
   catch (const std::range_error &ex)
   {
     std::cerr << "Value out of range: " << ex.what() << "\n";
-    std::exit(RANGE_ERROR);
+    std::exit(range_error);
   }
 
   std::cout << "Number of max values in the sequence: " << count_max << "\n";
