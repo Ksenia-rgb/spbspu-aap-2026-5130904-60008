@@ -3,6 +3,9 @@
 #include <stdexcept>
 #include <cstdlib>
 
+constexpr int RANGE_ERROR = 2;
+constexpr int INVALID_ERROR = 1;
+
 int main()
 {
   int num = -1;
@@ -23,7 +26,7 @@ int main()
 
       if (num == 0 && size == 0)
       {
-        throw std::logic_error("Sequence is too short");
+        throw std::range_error("Sequence is too short");
       }
 
       if (num > max)
@@ -49,22 +52,12 @@ int main()
   catch (const std::invalid_argument &ex)
   {
     std::cerr << "Invalid input: " << ex.what() << "\n";
-    std::exit(1);
-  }
-  catch (const std::logic_error &ex)
-  {
-    std::cerr << "Invalid input: " << ex.what() << "\n";
-    std::exit(2);
+    std::exit(INVALID_ERROR);
   }
   catch (const std::range_error &ex)
   {
     std::cerr << "Value out of range: " << ex.what() << "\n";
-    std::exit(2);
-  }
-  catch (...)
-  {
-    std::cerr << "Another error\n";
-    std::exit(2);
+    std::exit(RANGE_ERROR);
   }
 
   std::cout << "Number of max values in the sequence: " << count_max << "\n";
