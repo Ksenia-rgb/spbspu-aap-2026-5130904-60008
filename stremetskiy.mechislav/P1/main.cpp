@@ -4,7 +4,7 @@
 
 int main()
 {
-  int num = -3;
+  int num = -1;
   int count_max = 0;
   int max = INT_MIN;
   int size = 0;
