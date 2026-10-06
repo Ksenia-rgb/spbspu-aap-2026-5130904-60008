@@ -2,7 +2,8 @@
 
 int readInt();
 
-int main() {
+int main()
+{
   try {
     int curr_len = 1;
     int max_len = 1;
@@ -49,7 +50,8 @@ int main() {
   }
 }
 
-int readInt() {
+int readInt()
+{
   const int invalid_input = 1;
 
   int value = 0;
