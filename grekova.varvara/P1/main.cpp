@@ -50,7 +50,6 @@ int main()
     }
 
     std::cout << max_len << "\n";
-
     return 0;
   }
 
@@ -70,5 +69,6 @@ int readInt()
     std::cerr << "Invalid Input\n";
     throw invalid_input;
   }
+
   return value;
 }
