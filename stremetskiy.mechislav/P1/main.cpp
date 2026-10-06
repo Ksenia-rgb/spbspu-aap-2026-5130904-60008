@@ -8,7 +8,7 @@ constexpr int range_error = 2;
 
 int main()
 {
-  int num = -1;
+  int num = -2;
   int count_max = 0;
   int max = INT_MIN;
   int size = 0;
