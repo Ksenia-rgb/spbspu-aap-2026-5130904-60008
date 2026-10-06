@@ -1,6 +1,7 @@
 #include <iostream>
 #include <climits>
 #include <stdexcept>
+#include <cstdlib>
 
 int main()
 {
@@ -48,22 +49,22 @@ int main()
   catch (const std::invalid_argument &ex)
   {
     std::cerr << "Invalid input: " << ex.what() << "\n";
-    return 1;
+    std::exit(1);
   }
   catch (const std::logic_error &ex)
   {
     std::cerr << "Invalid input: " << ex.what() << "\n";
-    return 2;
+    std::exit(2);
   }
   catch (const std::range_error &ex)
   {
     std::cerr << "Value out of range: " << ex.what() << "\n";
-    return 2;
+    std::exit(2);
   }
   catch (...)
   {
     std::cerr << "Another error\n";
-    return 2;
+    std::exit(2);
   }
 
   std::cout << "Number of max values in the sequence: " << count_max << "\n";
