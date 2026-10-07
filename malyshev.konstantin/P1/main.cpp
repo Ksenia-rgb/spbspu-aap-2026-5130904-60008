@@ -1,11 +1,13 @@
 #include <iostream>
 
-int main() {
+int main()
+{
   int a = 1;
   int b = 0;
   int c = 0;
   int count = 0;
   const int min = 2;
+  const int err_code = 2;
   while (a != 0) {
     try {
       if (!(std::cin >> a)) {
@@ -13,7 +15,7 @@ int main() {
       }
       if (a == 0) {
         if (count < min) {
-          throw 2;
+          throw err_code;
         }
         break;
       }
@@ -29,9 +31,9 @@ int main() {
         std::cerr << "Error: Input is not a number";
         return 1;
       }
-      if (thr == 2) {
+      if (thr == err_code) {
         std::cerr << "Error: Sequence must contain at least 2 elements";
-        return 2;
+        return err_code;
       }
     }
   }
