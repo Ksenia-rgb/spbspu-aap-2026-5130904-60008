@@ -36,7 +36,7 @@ int main()
 			count += 1;
 			b = a;
 		}
-		
+
 		catch (int thr)
 		{
 			if (thr == 1)
@@ -51,6 +51,6 @@ int main()
 			}
 		}
 	}
-	std::cout << c <<"\n";
+	std::cout << c << "\n";
 	return 0;
 }
