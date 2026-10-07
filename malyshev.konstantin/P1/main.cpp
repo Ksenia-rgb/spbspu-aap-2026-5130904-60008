@@ -1,7 +1,5 @@
 #include <iostream>
 
-
-
 int main()
 
 {
@@ -14,7 +12,7 @@ int main()
 
     int count = 0;
 
-
+    int min = 2;
 
     while (a != 0)
 
@@ -32,13 +30,11 @@ int main()
 
             }
 
-
-
             if (a == 0)
 
             {
 
-                if (count < 2)
+                if (count < min)
 
                 {
 
@@ -49,8 +45,6 @@ int main()
                 break;
 
             }
-
-
 
             if (count >= 1)
 
@@ -66,15 +60,11 @@ int main()
 
             }
 
-
-
             count += 1;
 
             b = a;
 
         }
-
-
 
         catch (int thr)
 
