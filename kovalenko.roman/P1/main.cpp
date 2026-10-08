@@ -2,7 +2,7 @@
 
 int main()
 {
-  int x;
+  int x = 0;
   if (!(std::cin >> x)) {
     std::cerr << "input is not a sequence of integers\n";
     return 1;
@@ -12,8 +12,8 @@ int main()
     std::cerr << "sequence is empty\n";
     return 2;
   }
-  int maxVal = x;
-  int countAfter = 0;
+  int max_val = x;
+  int count_after = 0;
 
   if (!(std::cin >> x)) {
     std::cerr << "sequence is empty\n";
@@ -21,11 +21,11 @@ int main()
   }
 
   while (x != 0) {
-    if (x > maxVal) {
-      maxVal = x;
-      countAfter = 0;
+    if (x > max_val) {
+      max_val = x;
+      count_after = 0;
     } else {
-      countAfter++;
+      count_after++;
     }
 
     if (!(std::cin >> x)) {
@@ -33,6 +33,6 @@ int main()
       return 1;
     }
   }
-  std::cout << countAfter << "\n";
+  std::cout << count_after << "\n";
   return 0;
 }
