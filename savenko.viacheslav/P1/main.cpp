@@ -54,8 +54,7 @@ int processASequence()
   else {
     while (true) {
       if (!(std::cin >> next_number)) {
-        std::cerr << error_not_sequence
-                  << "\n";
+        std::cerr << error_not_sequence << "\n";
         throw error_code_1;
       }
 
