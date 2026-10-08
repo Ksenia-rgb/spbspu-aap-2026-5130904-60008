@@ -1,39 +1,20 @@
 #include <iostream>
 
-namespace kilyan
-{
-	bool isValidInput()
-	{
-		if (std::cin.fail())
-		{
-			return false;
-		}
-		char nextChar = std::cin.peek();
-		if (nextChar != ' ' && nextChar != '\n' && nextChar != '\t')
-		{
-			return false;
-		}
-		return true;
-	}
-}
 int main()
 {
 	int currentNumber = 0;
 	int previsionNumber = 0;
 	int cnt = 0;
 	bool isFirst = true;
-	while (true)
+
+	if (!(std::cin >> currentNumber))
 	{
-		std::cin >> currentNumber;
-		if (!kilyan::isValidInput())
-		{
-			std::cerr << "Invalid input.";
-			return 1;
-		}
-		if (currentNumber == 0)
-		{
-			break;
-		}
+		std::cerr << "Invalid input.\n";
+		return 1;
+	}
+
+	while (currentNumber != 0)
+	{
 		if (!isFirst)
 		{
 			if (currentNumber > previsionNumber)
@@ -46,7 +27,12 @@ int main()
 			isFirst = false;
 		}
 		previsionNumber = currentNumber;
+		if (!(std::cin >> currentNumber))
+		{
+			std::cerr << "Invalid input.\n";
+			return 1;
+		}
 	}
-	std::cout << cnt << std::endl;
+	std::cout << cnt << "\n";
 	return 0;
 }
