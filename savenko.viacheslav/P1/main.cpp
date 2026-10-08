@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 int processASequence();
 
@@ -26,22 +27,24 @@ int processASequence()
   int next_number = 0;
   int count = 0;
 
-  const int error_not_sequence = 1;
-  const int error_too_short = 2;
+  const int ERROR_CODE_1 = 1;
+  const int ERROR_CODE_2 = 2;
+  const std::string ERROR_NOT_SEQUENCE = "The input data cannot be identified as a sequence.";
+  const std::string ERROR_TOO_SHORT = "The sequence is too short.";
 
   if (!(std::cin >> previous_number)) {
-    std::cerr << "The input data cannot be identified as a sequence." << "\n";
-    throw error_not_sequence;
+    std::cerr << ERROR_NOT_SEQUENCE << "\n";
+    throw ERROR_CODE_1;
   }
 
   if (previous_number == 0) {
-    std::cerr << "The sequence is too short." << "\n";
-    throw error_too_short;
+    std::cerr << ERROR_TOO_SHORT << "\n";
+    throw ERROR_CODE_2;
   }
 
   if (!(std::cin >> current_number)) {
-    std::cerr << "The input data cannot be identified as a sequence." << "\n";
-    throw error_not_sequence;
+    std::cerr << ERROR_NOT_SEQUENCE << "\n";
+    throw ERROR_CODE_1;
   }
 
   if (current_number == 0) {
@@ -51,9 +54,9 @@ int processASequence()
   else {
     while (true) {
       if (!(std::cin >> next_number)) {
-        std::cerr << "The input data cannot be identified as a sequence."
+        std::cerr << ERROR_NOT_SEQUENCE
                   << "\n";
-        throw error_not_sequence;
+        throw ERROR_CODE_1;
       }
 
       if (next_number == 0) {
