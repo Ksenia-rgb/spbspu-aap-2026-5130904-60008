@@ -2,6 +2,6 @@
 
 int main()
 {
-  std::cout << "hedeya.hamdy";
+  std::cout << "hedeya.hamdy\n";
   return EXIT_SUCCESS;
 }
