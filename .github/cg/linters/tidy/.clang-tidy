@@ -73,7 +73,7 @@ CheckOptions:
     value: true
 
   - key:  readability-magic-numbers.IgnoredIntegerValues
-    value:  '0;1;2;3;4'
+    value:  '0;1;2;3;4;10'
 
   - key: cppcoreguidelines-avoid-non-const-global-variables.AllowInternalLinkage
     value: true
