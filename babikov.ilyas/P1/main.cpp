@@ -2,14 +2,14 @@
 #include <iostream>
 #include <stdexcept>
 
-int main() {
+int main()
+{
   int current = 0;
   int previous = 0;
   int ans = 0;
   int count = 0;
 
-  std::cout << "Введите последовательность целых чисел"
-            << "(0 для завершения):\n";
+  std::cout << "Введите числа (0 - конец):\n";
 
   try {
     while (true) {
@@ -34,17 +34,13 @@ int main() {
       previous = current;
       ++count;
     }
-  }
-
-  catch (const std::exception &) {
-    std::cerr << "Ошибка: входные данные не являются"
-              << "последовательностью целых чисел\n";
+  } catch (const std::exception &) {
+    std::cerr << "Ошибка: неверные входные данные\n";
     return 1;
   }
 
   if (count < 2) {
-    std::cerr << "Ошибка: недостаточно элементов"
-              << "для подсчёта смен знака\n";
+    std::cerr << "Ошибка: мало элементов\n";
     return 2;
   }
 
