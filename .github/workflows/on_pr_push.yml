@@ -26,6 +26,8 @@ container:
 image: caseyrgb/rgb-tested:clang20
 steps:
 - uses: actions/checkout@v5
+  with:
+    fetch-depth: 0
 with:
 fetch-depth: 0
 - name: Branch
@@ -38,6 +40,8 @@ container:
 image: caseyrgb/rgb-tested:clang20
 steps:
 - uses: actions/checkout@v5
+    with:
+      fetch-depth: 0
 - name: Content
 working-directory: ${{ github.workspace }}
 run: $TEST_DIR/validate-files.sh
@@ -48,6 +52,8 @@ container:
 image: caseyrgb/rgb-tested:clang20
 steps:
 - uses: actions/checkout@v5
+    with:
+      fetch-depth: 0
 - name: Author
 working-directory: ${{ github.workspace }}
 run: $TEST_DIR/validate-student.sh
@@ -59,6 +65,8 @@ container:
 image: caseyrgb/rgb-tested:clang20
 steps:
 - uses: actions/checkout@v5
+    with:
+      fetch-depth: 0
 - name: Build
 working-directory: ${{ github.workspace }}
 run: $TEST_DIR/build.sh
@@ -76,6 +84,8 @@ container:
 image: caseyrgb/rgb-tested:clang20
 steps:
 - uses: actions/checkout@v5
+    with:
+      fetch-depth: 0
 - name: Acceptance
 working-directory: ${{ github.workspace }}
 run: |
@@ -97,6 +107,8 @@ image: caseyrgb/rgb-tested:clang20
 if: ${{ inputs.run-optional-cg != 'skip' }}
 steps:
 - uses: actions/checkout@v5
+    with:
+      fetch-depth: 0
 with:
 fetch-depth: 0
 - name: Set up git remote head
