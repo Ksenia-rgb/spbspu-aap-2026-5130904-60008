@@ -10,7 +10,7 @@ int main() {
   int result = 0;
 
   try {
-    result = CountIncreasingElement();
+    result = countIncreasingElement();
     std::cout << "количество элементво больших предыдущего " << result << "\n";
     return 0;
   } catch (int error_code) {
@@ -18,7 +18,7 @@ int main() {
   }
 }
 
-int CountIncreasingElement() {
+int countIncreasingElement() {
   int prev_num = 0;
   int curr_num = 0;
   int count = 0;
