@@ -13,7 +13,7 @@ int main()
 		return 1;
 	}
 
-	while (currentNumber != 0)
+	while(currentNumber != 0)
 	{
 		if (!isFirst)
 		{
