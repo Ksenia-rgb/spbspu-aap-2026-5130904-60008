@@ -4,7 +4,6 @@
 
 int main()
 {
-
   int num = 0;
   int count = 0;
   int prev = 0;
