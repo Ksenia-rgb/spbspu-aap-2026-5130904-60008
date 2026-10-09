@@ -4,7 +4,8 @@
 
 int countIncreasingElement();
 
-int main() {
+int main()
+{
   setlocale(LC_ALL, "ru_RU.UTF-8");
 
   int result = 0;
@@ -18,7 +19,8 @@ int main() {
   }
 }
 
-int countIncreasingElement() {
+int countIncreasingElement()
+{
   int prev_num = 0;
   int curr_num = 0;
   int count = 0;
