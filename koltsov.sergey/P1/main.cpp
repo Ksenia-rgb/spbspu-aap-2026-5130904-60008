@@ -22,7 +22,7 @@ int main()
     }
 }
 
-int countIncreasingElements()
+int CountIncreasingElement()
 {
   int prev_num = 0;
   int curr_num = 0;
