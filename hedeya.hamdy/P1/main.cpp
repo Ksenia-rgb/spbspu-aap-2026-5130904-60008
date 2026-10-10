@@ -13,7 +13,7 @@ int main()
   std::string string;
 
   std::cout << "Enter a string of characters: \n";
-  std::cin >> string;
+  std::getline(std::cin, string);
 
   const int length = getLengthOfLongestRepeatingSubstring(string);
   std::cout << "Length of longest repeating substring: " << length;
