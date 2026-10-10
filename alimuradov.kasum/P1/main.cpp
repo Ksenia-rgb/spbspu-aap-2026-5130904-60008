@@ -2,27 +2,33 @@
 #include <cstdlib>
 
 int main() {
-    int prev = 0;
-    int cur = 0;
-    int curLen = 0;
-    int maxLen = 0;
+  int prev = 0;
+  int cur = 0;
+  int curlen = 1;
+  int maxlen = 1;
 
     if (!(std::cin >> prev)) {
-        std::cout << "Not a sequence\n";
-        return EXIT_FAILURE;
+        std::cout << 0 << "\n";
+        return EXIT_SUCCESS;
     }
 
-    while (std::cin >> cur) {
-        curLen = (cur < prev) ? (curLen ? curLen + 1 : 2) : 0;
-        if (curLen > maxLen) maxLen = curLen;
+    while (std::cin >> cur && cur != 0) {
+        if (cur <= prev) {
+            curlen++;
+        } else {
+            if (curlen > maxlen) maxlen = curlen;
+            curlen = 1;
+        }
         prev = cur;
     }
 
-    if (!std::cin.eof()) {
+    if (std::cin.fail() && !std::cin.eof()) {
         std::cout << "Not a number\n";
         return EXIT_FAILURE;
     }
 
-    std::cout << maxLen << "\n";
+    if (curlen > maxlen) maxlen = curlen;
+
+    std::cout << maxlen << "\n";
     return EXIT_SUCCESS;
 }
