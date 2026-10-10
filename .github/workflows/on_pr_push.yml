@@ -97,9 +97,7 @@ jobs:
     if: ${{ inputs.run-optional-cg != 'skip' }}
     steps:
       - uses: actions/checkout@v5
-        with: 
-          fetch-depth: 0  
-      - name: Set up git remote head
+      - name: CG
         working-directory: ${{ github.workspace }}
-        run: git remote set-head origin --auto
+        run: $TEST_DIR/validate-cg.sh
         shell: bash
