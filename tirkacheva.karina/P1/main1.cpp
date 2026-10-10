@@ -17,8 +17,8 @@ int main()
 }
 int countDivisible()
 {
-  int previous;
-  int current;
+  int previous = 0;
+  int current = 0;
   int count = 0;
   int elements = 0;
 
