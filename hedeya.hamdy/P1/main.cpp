@@ -10,7 +10,8 @@ int getLengthOfLongestRepeatingSubstring(std::string string);
 
 int main()
 {
-  std::string string = "";
+  std::string string;
+
   std::cout << "Enter a string of characters: \n";
   std::cin >> string;
 
