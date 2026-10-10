@@ -30,10 +30,12 @@ int main() {
 
     std::cout << max2 << "\n";
 
-  } catch (const std::invalid_argument &ex) {
+  }
+    catch (const std::invalid_argument &ex) {
     std::cerr << ex.what() << "\n";
     return 1;
-  } catch (const std::runtime_error &ex) {
+  }
+    catch (const std::runtime_error &ex) {
     std::cerr << ex.what() << "\n";
     return 2;
   }
