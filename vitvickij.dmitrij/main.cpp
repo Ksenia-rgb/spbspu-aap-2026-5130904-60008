@@ -29,7 +29,7 @@ int main()
         }
 
         std::cout << max2 << "\n";
-        
+
     } catch (const std::invalid_argument &ex) {
         std::cerr << ex.what() << "\n";
         return 1;
