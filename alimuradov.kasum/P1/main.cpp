@@ -16,11 +16,11 @@ int main()
   while (std::cin >> cur && cur != 0) {
     if (cur <= prev) {
       curlen++;
-      } else {
-        if (curlen > maxlen) maxlen = curlen;
-        curlen = 1;
-      }
-      prev = cur;
+    } else {
+      if (curlen > maxlen) maxlen = curlen;
+      curlen = 1;
+    }
+    prev = cur;
   }
 
   if (std::cin.fail() && !std::cin.eof()) {
