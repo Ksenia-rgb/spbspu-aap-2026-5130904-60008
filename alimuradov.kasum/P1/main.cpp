@@ -13,6 +13,11 @@ int main()
     return EXIT_SUCCESS;
   }
 
+  if (prev == 0) {
+    std::cout << 0 << "\n";
+    return EXIT_SUCCESS;
+  }
+
   while (std::cin >> cur && cur != 0) {
     if (cur <= prev) {
       curlen++;
@@ -24,12 +29,12 @@ int main()
   }
 
   if (std::cin.fail() && !std::cin.eof()) {
-    std::cout << "Not a number\n"
+    std::cout << "Not a number\n";
     return EXIT_FAILURE;
   }
 
   if (curlen > maxlen) maxlen = curlen;
 
-  std::cout << maxlen << "\n"
+  std::cout << maxlen << "\n";
   return EXIT_SUCCESS;
 }
