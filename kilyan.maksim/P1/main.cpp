@@ -1,35 +1,40 @@
 #include <iostream>
+
 int main()
 {
-    int currentNumber = 0;
-    int previsionNumber = 0;
+    int current_number = 0;
+    int prevision_number = 0;
     int cnt = 0;
-    bool isFirst = true;
-    if (!(std::cin >> currentNumber))
+    bool is_first = true;
+    
+    if (!(std::cin >> current_number))
     {
         std::cerr << "Invalid input.\n";
         return 1;
     }
-    while (currentNumber != 0)
+    
+    while (current_number != 0)
     {
-        if (!isFirst)
+        if (!is_first)
         {
-            if (currentNumber > previsionNumber)
+            if (current_number > prevision_number)
             {
                 cnt++;
             }
         }
         else
         {
-            isFirst = false;
+            is_first = false;
         }
-        previsionNumber = currentNumber;
-        if (!(std::cin >> currentNumber))
+        prevision_number = current_number;
+        if (!(std::cin >> current_number))
         {
             std::cerr << "Invalid input.\n";
             return 1;
         }
     }
+    
     std::cout << cnt << "\n";
+    
     return 0;
 }
