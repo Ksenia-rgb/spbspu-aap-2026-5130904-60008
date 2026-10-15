@@ -15,4 +15,3 @@ out
 update-student-stats.sh
 generate-stats
 .github/cg/linters/format/.useless-old
-/.vs
