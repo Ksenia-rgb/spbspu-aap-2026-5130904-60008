@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <new>
 
 namespace koshutin
 {
@@ -11,8 +12,8 @@ namespace koshutin
   const std::string INV_DATA = "Invalid array";
   const int MAX_LENGTH = 10000;
 
-  int ReadElements(std::ifstream &input, int *massive, int rows, int cols);
-  long CountRowsWithoutEqualNumbers(const int *massive, int rows, int cols);
+  int readElements(std::ifstream &input, int *massive, int rows, int cols);
+  long countRowsWithoutEqualNumbers(const int *massive, int rows, int cols);
 }
 
 int main(int argc, char *argv[])
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
     return 2;
   }
 
-  long n = static_cast<long>(rows) * cols;
+  const long n = static_cast<long>(rows) * cols;
   long answer = 0;
 
   if (num == "1")
@@ -70,14 +71,15 @@ int main(int argc, char *argv[])
       return 2;
     }
     int massive[koshutin::MAX_LENGTH];
-    if (koshutin::ReadElements(input, massive, rows, cols) != 0)
+    if (koshutin::readElements(input, massive, rows, cols) != 0)
     {
       return 2;
     }
-    answer = koshutin::CountRowsWithoutEqualNumbers(massive, rows, cols);
+    answer = koshutin::countRowsWithoutEqualNumbers(massive, rows, cols);
   }
 
-  if (num == "2") {
+  if (num == "2")
+  {
     int *massive = nullptr;
     try
     {
@@ -87,12 +89,12 @@ int main(int argc, char *argv[])
     {
       std::cerr << koshutin::INV_DATA << "\n";
     }
-    if (koshutin::ReadElements(input, massive, rows, cols) != 0)
+    if (koshutin::readElements(input, massive, rows, cols) != 0)
     {
       delete[] massive;
       return 2;
     }
-    answer = koshutin::CountRowsWithoutEqualNumbers(massive, rows, cols);
+    answer = koshutin::countRowsWithoutEqualNumbers(massive, rows, cols);
     delete[] massive;
   }
 
@@ -108,23 +110,28 @@ int main(int argc, char *argv[])
 
 namespace koshutin
 {
-  int ReadElements(std::ifstream &input, int *massive, int rows, int cols) {
-    long n = static_cast<long>(rows) * cols;
+  int readElements(std::ifstream &input, int *massive, int rows, int cols)
+  {
+    const long n = static_cast<long>(rows) * cols;
     for (long i = 0; i < n; ++i)
     {
-      if (!(input >> massive[i])) {
-      std::cerr << koshutin::INV_DATA << "\n";
-      return 2;
+      if (!(input >> massive[i]))
+      {
+        std::cerr << koshutin::INV_DATA << "\n";
+        return 2;
       }
     }
     return 0;
   }
 
-  long CountRowsWithoutEqualNumbers(const int *massive, int rows, int cols) {
+  long countRowsWithoutEqualNumbers(const int *massive, int rows, int cols)
+  {
     long count = 0;
-    for (int i = 0; i < rows; ++i) {
+    for (int i = 0; i < rows; ++i)
+    {
       bool norm = true;
-      for (int j = 0; j + 1 < cols; ++j) {
+      for (int j = 0; j + 1 < cols; ++j)
+      {
         if (massive[i * cols + j] == massive[i * cols + j + 1])
         {
           norm = false;
