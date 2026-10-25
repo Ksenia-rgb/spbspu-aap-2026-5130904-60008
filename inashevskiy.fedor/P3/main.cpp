@@ -21,7 +21,7 @@ namespace inashevskiy
 bool isInteger(const char* s)
 {
     int i = 0;
-    if (s[0] == '+'  s[0] == '-') i++;
+    if (s[0] == '+' ||  s[0] == '-') i++;
     if (s[i] == '\0') return false;
     for (; s[i] != '\0'; i++)
     {
@@ -33,7 +33,7 @@ bool isInteger(const char* s)
 bool readHeader(std::ifstream& in, int& rows, int& cols)
 {
     if (!(in >> rows >> cols)) return false;
-    if (rows < 0  cols < 0) return false;
+    if (rows < 0 ||  cols < 0) return false;
     return true;
 }
 
