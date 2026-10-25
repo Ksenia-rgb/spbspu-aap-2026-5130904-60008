@@ -1,13 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <stdexcept>
 #include <string>
 
 namespace bulgakov
 {
-  std::string ERROR = "Error!\n";
-
   const std::string ERR_ARGS = "Invalid number of arguments!\n";
   const std::string ERR_PARAM = "First parameter must be 1 or 2!\n";
   const std::string ERR_OPEN_IN = "Cannot open input file!\n";
@@ -16,8 +13,10 @@ namespace bulgakov
   const std::string ERR_CORRUPT_DATA = "Invalid matrix elements or unexpected end of file!\n";
   const std::string ERR_OPEN_OUT = "Cannot open output file!\n";
 
-  void process_matrix(int* a, int rows, int cols);
-  void process_matrix(int** a, int rows, int cols);
+  constexpr int MAX_STACK_SIZE = 10000;
+
+  void processMatrix(int* a, int rows, int cols);
+  void processMatrix(int** a, int rows, int cols);
 }
 
 int main(int argc, char* argv[])
@@ -28,16 +27,16 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  std::string num_str = argv[1];
+  const std::string num_str = argv[1];
   if (num_str != "1" && num_str != "2")
   {
     std::cerr << bulgakov::ERR_PARAM;
     return 1;
   }
-  int num = std::stoi(num_str);
+  const int num = std::stoi(num_str);
 
-  std::string input_filename = argv[2];
-  std::string output_filename = argv[3];
+  const std::string input_filename = argv[2];
+  const std::string output_filename = argv[3];
 
   std::ifstream fin(input_filename);
   if (!fin.is_open())
@@ -46,19 +45,33 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  int rows = 0, cols = 0;
-  if (!(fin >> rows >> cols) || rows <= 0 || cols <= 0)
+  int rows = 0;
+  int cols = 0;
+  if (!(fin >> rows >> cols) || rows < 0 || cols < 0)
   {
     std::cerr << bulgakov::ERR_DIMENSIONS;
     return 2;
   }
 
+  std::ofstream fout(output_filename);
+  if (!fout.is_open())
+  {
+    std::cerr << bulgakov::ERR_OPEN_OUT;
+    return 2;
+  }
+
+  if (rows == 0 || cols == 0)
+  {
+    fout << 0 << " " << 0 << "\n";
+    return 0;
+  }
+
   int* matrix = nullptr;
-  static int stack_matrix[10000];
+  static int stack_matrix[bulgakov::MAX_STACK_SIZE];
 
   if (num == 1)
   {
-    if (rows * cols > 10000)
+    if (rows * cols > bulgakov::MAX_STACK_SIZE)
     {
       std::cerr << bulgakov::ERR_STACK_LIMIT;
       return 2;
@@ -75,21 +88,16 @@ int main(int argc, char* argv[])
     if (!(fin >> matrix[i]))
     {
       std::cerr << bulgakov::ERR_CORRUPT_DATA;
-      if (num == 2) delete[] matrix;
+      if (num == 2)
+      {
+        delete[] matrix;
+      }
       return 2;
     }
   }
   fin.close();
 
-  bulgakov::process_matrix(matrix, rows, cols);
-
-  std::ofstream fout(output_filename);
-  if (!fout.is_open())
-  {
-    std::cerr << bulgakov::ERR_OPEN_OUT;
-    if (num == 2) delete[] matrix;
-    return 2;
-  }
+  bulgakov::processMatrix(matrix, rows, cols);
 
   fout << rows << " " << cols << "\n";
   for (int i = 0; i < rows; ++i)
@@ -110,11 +118,14 @@ int main(int argc, char* argv[])
   return 0;
 }
 
-void bulgakov::process_matrix(int* a, int rows, int cols)
+void bulgakov::processMatrix(int* a, int rows, int cols)
 {
-  if (rows <= 0 || cols <= 0 || a == nullptr) return;
+  if (rows <= 0 || cols <= 0 || a == nullptr)
+  {
+    return;
+  }
 
-  int total_elements = rows * cols;
+  const int total_elements = rows * cols;
   int increment = 1;
 
   int top = 0;
@@ -122,32 +133,30 @@ void bulgakov::process_matrix(int* a, int rows, int cols)
   int left = 0;
   int right = cols - 1;
 
-  int r = 0, c = 0;
-
   while (increment <= total_elements)
   {
-    for (r = top; r <= bottom && increment <= total_elements; ++r)
+    for (int r = top; r <= bottom && increment <= total_elements; ++r)
     {
       a[r * cols + left] += increment;
       increment++;
     }
     left++;
 
-    for (c = left; c <= right && increment <= total_elements; ++c)
+    for (int c = left; c <= right && increment <= total_elements; ++c)
     {
       a[bottom * cols + c] += increment;
       increment++;
     }
     bottom--;
 
-    for (r = bottom; r >= top && increment <= total_elements; --r)
+    for (int r = bottom; r >= top && increment <= total_elements; --r)
     {
       a[r * cols + right] += increment;
       increment++;
     }
     right--;
 
-    for (c = right; c >= left && increment <= total_elements; --c)
+    for (int c = right; c >= left && increment <= total_elements; --c)
     {
       a[top * cols + c] += increment;
       increment++;
@@ -156,9 +165,12 @@ void bulgakov::process_matrix(int* a, int rows, int cols)
   }
 }
 
-void bulgakov::process_matrix(int** a, int rows, int cols)
+void bulgakov::processMatrix(int** a, int rows, int cols)
 {
-  if (rows <= 0 || cols <= 0 || a == nullptr) return;
+  if (rows <= 0 || cols <= 0 || a == nullptr)
+  {
+    return;
+  }
 
   int* flat = new int[rows * cols];
 
@@ -170,7 +182,7 @@ void bulgakov::process_matrix(int** a, int rows, int cols)
     }
   }
 
-  process_matrix(flat, rows, cols);
+  processMatrix(flat, rows, cols);
 
   for (int i = 0; i < rows; ++i)
   {
