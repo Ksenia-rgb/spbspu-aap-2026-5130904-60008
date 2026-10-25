@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     std::cerr << bulgakov::ERR_ARGS;
     return 1;
   }
-  
+
   std::string num_str = argv[1];
   if (num_str != "1" && num_str != "2")
   {
@@ -124,9 +124,7 @@ void bulgakov::process_matrix(int* a, int rows, int cols)
 
   int r = 0, c = 0;
 
-  
-
-while (increment <= total_elements)
+  while (increment <= total_elements)
   {
     for (r = top; r <= bottom && increment <= total_elements; ++r)
     {
@@ -160,27 +158,4 @@ while (increment <= total_elements)
 
 void bulgakov::process_matrix(int** a, int rows, int cols)
 {
-  if (rows <= 0 || cols <= 0 || a == nullptr) return;
-
-  int* flat = new int[rows * cols];
-
-  for (int i = 0; i < rows; ++i)
-  {
-    for (int j = 0; j < cols; ++j)
-    {
-      flat[i * cols + j] = a[i][j];
-    }
-  }
-
-  process_matrix(flat, rows, cols);
-
-  for (int i = 0; i < rows; ++i)
-  {
-    for (int j = 0; j < cols; ++j)
-    {
-      a[i][j] = flat[i * cols + j];
-    }
-  }
-
-  delete[] flat;
-}
+  if 
