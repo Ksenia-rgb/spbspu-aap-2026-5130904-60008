@@ -24,18 +24,18 @@ namespace babikov
   {
     int rows;
     int cols;
-    const int * data;
+    const int* data;
   };
 
-  int getMode(const std::string & param);
-  int readSize(std::ifstream & infile, int & rows, int & cols);
-  bool readData(std::ifstream & infile, int * data, int count);
-  int countColumns(const Matrix & mat);
-  void runStatic(std::ifstream & infile, std::ofstream & outfile);
-  void runDynamic(std::ifstream & infile, std::ofstream & outfile);
+  int getMode(const std::string& param);
+  int readSize(std::ifstream& infile, int& rows, int& cols);
+  bool readData(std::ifstream& infile, int* data, int count);
+  int countColumns(const Matrix& mat);
+  void runStatic(std::ifstream& infile, std::ofstream& outfile);
+  void runDynamic(std::ifstream& infile, std::ofstream& outfile);
 }
 
-int main(int argc, char * argv[])
+int main(int argc, char* argv[])
 {
   if (argc < 4)
   {
@@ -55,7 +55,7 @@ int main(int argc, char * argv[])
   {
     mode = babikov::getMode(argv[1]);
   }
-  catch (const std::invalid_argument & ex)
+  catch (const std::invalid_argument& ex)
   {
     std::cerr << ex.what() << "\n";
     return babikov::ARG_CODE;
@@ -81,12 +81,12 @@ int main(int argc, char * argv[])
       babikov::runDynamic(infile, outfile);
     }
   }
-  catch (const std::invalid_argument & ex)
+  catch (const std::invalid_argument& ex)
   {
     std::cerr << ex.what() << "\n";
     return babikov::MATRIX_CODE;
   }
-  catch (const std::bad_alloc &)
+  catch (const std::bad_alloc&)
   {
     std::cerr << babikov::NOT_MEMORY << "\n";
     return babikov::MATRIX_CODE;
@@ -95,7 +95,7 @@ int main(int argc, char * argv[])
   return 0;
 }
 
-int babikov::getMode(const std::string & param)
+int babikov::getMode(const std::string& param)
 {
   bool is_number = !param.empty();
 
@@ -125,7 +125,7 @@ int babikov::getMode(const std::string & param)
   throw std::invalid_argument(babikov::OUT_RANGE);
 }
 
-int babikov::readSize(std::ifstream & infile, int & rows, int & cols)
+int babikov::readSize(std::ifstream& infile, int& rows, int& cols)
 {
   if (!(infile >> rows >> cols))
   {
@@ -145,7 +145,7 @@ int babikov::readSize(std::ifstream & infile, int & rows, int & cols)
   return rows * cols;
 }
 
-bool babikov::readData(std::ifstream & infile, int * data, int count)
+bool babikov::readData(std::ifstream& infile, int* data, int count)
 {
   for (int i = 0; i < count; ++i)
   {
@@ -158,7 +158,7 @@ bool babikov::readData(std::ifstream & infile, int * data, int count)
   return true;
 }
 
-int babikov::countColumns(const babikov::Matrix & mat)
+int babikov::countColumns(const babikov::Matrix& mat)
 {
   if (mat.rows == 0 || mat.cols == 0)
   {
@@ -188,7 +188,7 @@ int babikov::countColumns(const babikov::Matrix & mat)
   return result;
 }
 
-void babikov::runStatic(std::ifstream & infile, std::ofstream & outfile)
+void babikov::runStatic(std::ifstream& infile, std::ofstream& outfile)
 {
   int rows = 0;
   int cols = 0;
@@ -210,13 +210,13 @@ void babikov::runStatic(std::ifstream & infile, std::ofstream & outfile)
   outfile << babikov::countColumns(mat) << "\n";
 }
 
-void babikov::runDynamic(std::ifstream & infile, std::ofstream & outfile)
+void babikov::runDynamic(std::ifstream& infile, std::ofstream& outfile)
 {
   int rows = 0;
   int cols = 0;
   const int count = babikov::readSize(infile, rows, cols);
 
-  int * const data = new int[count];
+  int* const data = new int[count];
   const bool is_read = babikov::readData(infile, data, count);
 
   if (is_read)
