@@ -47,7 +47,7 @@ int findBestColumn(const int matrix[], int rows, int columns) {
     return 0;
   }
 
-  int maxLength = 1;
+  int max_length = 1;
   int bestColumn = 1;
 
   for (int j = 0; j < columns; j++) {
@@ -60,8 +60,8 @@ int findBestColumn(const int matrix[], int rows, int columns) {
         currentLength = 1;
       }
 
-      if (currentLength > maxLength) {
-        maxLength = currentLength;
+      if (currentLength > max_length) {
+        max_length = currentLength;
         bestColumn = j + 1;
       }
     }
