@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     return 2;
   }
 
-  const long n = static_cast<long>(rows) * cols;
+  const long n = static_cast< long >(rows) * cols;
   long answer = 0;
 
   if (num == "1")
@@ -111,7 +111,7 @@ namespace koshutin
 {
   int readElements(std::ifstream &input, int *massive, int rows, int cols)
   {
-    const long n = static_cast<long>(rows) * cols;
+    const long n = static_cast< long >(rows) * cols;
     for (long i = 0; i < n; ++i)
     {
       if (!(input >> massive[i]))
