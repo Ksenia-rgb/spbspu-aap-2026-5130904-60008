@@ -172,7 +172,7 @@ void bulgakov::processMatrix(int** a, int rows, int cols)
     return;
   }
 
-  int* flat = new int[rows * cols];
+  const int* flat = new int[rows * cols];
 
   for (int i = 0; i < rows; ++i)
   {
