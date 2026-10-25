@@ -177,7 +177,7 @@ int runDynamic(std::ifstream &input, std::ofstream &output) {
   return SUCCESS;
 }
 
-} // namespace tirkacheva
+}
 
 int main(int argc, char *argv[]) {
   using namespace tirkacheva;
