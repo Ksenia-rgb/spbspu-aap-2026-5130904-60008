@@ -158,4 +158,27 @@ void bulgakov::process_matrix(int* a, int rows, int cols)
 
 void bulgakov::process_matrix(int** a, int rows, int cols)
 {
-  if 
+  if (rows <= 0 || cols <= 0 || a == nullptr) return;
+
+  int* flat = new int[rows * cols];
+
+  for (int i = 0; i < rows; ++i)
+  {
+    for (int j = 0; j < cols; ++j)
+    {
+      flat[i * cols + j] = a[i][j];
+    }
+  }
+
+  process_matrix(flat, rows, cols);
+
+  for (int i = 0; i < rows; ++i)
+  {
+    for (int j = 0; j < cols; ++j)
+    {
+      a[i][j] = flat[i * cols + j];
+    }
+  }
+
+  delete[] flat;
+}
