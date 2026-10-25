@@ -29,7 +29,7 @@ namespace babikov
 
   int getMode(const std::string & param);
   int readSize(std::ifstream & infile, int & rows, int & cols);
-  bool readData(std::ifstream & infile, int* data, int count);
+  bool readData(std::ifstream & infile, int * data, int count);
   int countColumns(const Matrix & mat);
   void runStatic(std::ifstream & infile, std::ofstream & outfile);
   void runDynamic(std::ifstream & infile, std::ofstream & outfile);
@@ -216,7 +216,7 @@ void babikov::runDynamic(std::ifstream & infile, std::ofstream & outfile)
   int cols = 0;
   const int count = babikov::readSize(infile, rows, cols);
 
-  int * data = new int[count];
+  int * const data = new int[count];
   const bool is_read = babikov::readData(infile, data, count);
 
   if (is_read)
