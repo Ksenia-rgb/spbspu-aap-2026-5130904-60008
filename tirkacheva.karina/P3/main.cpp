@@ -31,7 +31,7 @@ int readDimensions(std::ifstream &input, int &rows, int &columns) {
 }
 
 int readElements(std::ifstream &input, int matrix[], int rows, int columns) {
-  int total = rows * columns;
+  const int total = rows * columns;
 
   for (int i = 0; i < total; i++) {
     if (!(input >> matrix[i])) {
@@ -70,7 +70,7 @@ int findBestColumn(const int matrix[], int rows, int columns) {
   return bestColumn;
 }
 
-int writeResult(std::ofstream &output, int result) {
+int writeResult(std::ofstream &output, const int result) {
   output << result << '\n';
 
   if (!output) {
@@ -105,7 +105,7 @@ int runFixed(std::ifstream &input, std::ofstream &output) {
       return status;
     }
 
-    int result = findBestColumn(matrix, rows, columns);
+    const int result = findBestColumn(matrix, rows, columns);
 
     status = writeResult(output, result);
 
@@ -142,7 +142,7 @@ int runDynamic(std::ifstream &input, std::ofstream &output) {
       return status;
     }
 
-    int total = rows * columns;
+    const int total = rows * columns;
     int *matrix = nullptr;
 
     try {
@@ -157,7 +157,7 @@ int runDynamic(std::ifstream &input, std::ofstream &output) {
     status = readElements(input, matrix, rows, columns);
 
     if (status == SUCCESS) {
-      int result = findBestColumn(matrix, rows, columns);
+      const int result = findBestColumn(matrix, rows, columns);
       status = writeResult(output, result);
     }
 
@@ -187,7 +187,7 @@ int main(int argc, char *argv[]) {
     return ARGUMENT_ERROR;
   }
 
-  std::string variant = argv[1];
+  const std::string variant = argv[1];
 
   if (variant != "1" && variant != "2") {
     std::cerr << "Invalid variant\n";
