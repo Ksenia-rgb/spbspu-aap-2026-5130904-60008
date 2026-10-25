@@ -21,19 +21,34 @@ namespace inashevskiy
 bool isInteger(const char* s)
 {
     int i = 0;
-    if (s[0] == '+' ||  s[0] == '-') i++;
-    if (s[i] == '\0') return false;
+    if (s[0] == '+' || s[0] == '-')
+    {
+        i++;
+    }
+    if (s[i] == '\0')
+    {
+        return false;
+    }
     for (; s[i] != '\0'; i++)
     {
-        if (!std::isdigit(static_cast<unsigned char>(s[i]))) return false;
+        if (!std::isdigit(static_cast<unsigned char>(s[i])))
+        {
+            return false;
+        }
     }
     return true;
 }
 
 bool readHeader(std::ifstream& in, int& rows, int& cols)
 {
-    if (!(in >> rows >> cols)) return false;
-    if (rows < 0 ||  cols < 0) return false;
+    if (!(in >> rows >> cols))
+    {
+        return false;
+    }
+    if (rows < 0 || cols < 0)
+    {
+        return false;
+    }
     return true;
 }
 
@@ -41,13 +56,22 @@ bool readElements(std::ifstream& in, int* a, long long count)
 {
     for (long long i = 0; i < count; i++)
     {
-        if (!(in >> a[i])) return false;
+        if (!(in >> a[i]))
+        {
+            return false;
+        }
     }
     int extra;
-    if (in >> extra) return false;
+    if (in >> extra)
+    {
+        return false;
+    }
     in.clear();
     in >> std::ws;
-    if (!in.eof()) return false;
+    if (!in.eof())
+    {
+        return false;
+    }
     return true;
 }
 
@@ -55,20 +79,42 @@ void process(int* a, int r, int c)
 {
     int top = 0, bottom = r - 1, left = 0, right = c - 1;
     int k = 1;
-    while (top <= bottom && left <= right) {
-        for (int i = bottom; i >= top; i--) a[i * c + left] -= k++;
+    while (top <= bottom && left <= right)
+    {
+        for (int i = bottom; i >= top; i--)
+        {
+            a[i * c + left] -= k++;
+        }
         left++;
-        if (left > right) break;
+        if (left > right)
+        {
+            break;
+        }
 
-        for (int j = left; j <= right; j++) a[top * c + j] -= k++;
+        for (int j = left; j <= right; j++)
+        {
+            a[top * c + j] -= k++;
+        }
         top++;
-        if (top > bottom) break;
+        if (top > bottom)
+        {
+            break;
+        }
 
-        for (int i = top; i <= bottom; i++) a[i * c + right] -= k++;
+        for (int i = top; i <= bottom; i++)
+        {
+            a[i * c + right] -= k++;
+        }
         right--;
-        if (left > right) break;
+        if (left > right)
+        {
+            break;
+        }
 
-        for (int j = right; j >= left; j--) a[bottom * c + j] -= k++;
+        for (int j = right; j >= left; j--)
+        {
+            a[bottom * c + j] -= k++;
+        }
         bottom--;
     }
 }
@@ -76,9 +122,15 @@ void process(int* a, int r, int c)
 bool writeResult(const char* name, const int* a, int r, int c)
 {
     std::ofstream out(name);
-    if (!out) return false;
+    if (!out)
+    {
+        return false;
+    }
     out << r << ' ' << c;
-    for (long long i = 0; i < static_cast<long long>(r) * c; i++) out << ' ' << a[i];
+    for (long long i = 0; i < static_cast<long long>(r) * c; i++)
+    {
+        out << ' ' << a[i];
+    }
     out << '\n';
     return static_cast<bool>(out);
 }
@@ -102,7 +154,8 @@ int main(int argc, char* argv[])
         return inashevskiy::ARG_EXIT_CODE;
     }
     int num;
-    if (std::strcmp(argv[1], "1") == 0) {
+    if (std::strcmp(argv[1], "1") == 0)
+    {
         num = 1;
     }
     else if (std::strcmp(argv[1], "2") == 0)
@@ -172,3 +225,4 @@ int main(int argc, char* argv[])
     }
     return 0;
 }
+
