@@ -20,7 +20,7 @@ namespace inashevskiy
 bool isInteger(const char* s)
 {
   int i = 0;
-  if (s[0] == '+' ||  s[0] == '-')
+  if (s[0] == '+' || s[0] == '-')
   {
     i++;
   }
@@ -44,7 +44,7 @@ bool readHeader(std::ifstream& in, int& rows, int& cols)
   {
     return false;
   }
-  if (rows < 0 ||  cols < 0)
+  if (rows < 0 || cols < 0)
   {
     return false;
   }
