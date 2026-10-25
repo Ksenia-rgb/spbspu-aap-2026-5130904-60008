@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-namespace koshutin 
+namespace koshutin
 {
   const std::string LESS_ARG = "Not enough arguments";
   const std::string MUCH_ARG = "Too many arguments";
@@ -15,16 +15,16 @@ namespace koshutin
   long CountRowsWithoutEqualNumbers(const int *massive, int rows, int cols);
 }
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
 
-  if (argc < 4) 
+  if (argc < 4)
   {
     std::cerr << koshutin::LESS_ARG << "\n";
     return 1;
   }
 
-  else if (argc > 4) 
+  else if (argc > 4)
   {
     std::cerr << koshutin::MUCH_ARG << "\n";
     return 1;
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
   const std::string num = argv[1];
 
-  if (num != "2" && num != "1") 
+  if (num != "2" && num != "1")
   {
     std::cerr << koshutin::NOT_A_NUMBER << "\n";
     return 1;
@@ -41,19 +41,19 @@ int main(int argc, char *argv[])
   std::ifstream input(argv[2]);
   int rows = 0, cols = 0;
 
-  if (!input) 
+  if (!input)
   {
     std::cerr << "Invalid file" << "\n";
     return 2;
   }
 
-  if (!(input >> rows >> cols)) 
+  if (!(input >> rows >> cols))
   {
     std::cerr << koshutin::INV_DATA << "\n";
     return 2;
   }
 
-  if (rows < 0 || cols < 0) 
+  if (rows < 0 || cols < 0)
   {
     std::cerr << koshutin::INV_DATA << "\n";
     return 2;
@@ -62,15 +62,15 @@ int main(int argc, char *argv[])
   long n = static_cast<long>(rows) * cols;
   long answer = 0;
 
-  if (num == "1") 
+  if (num == "1")
   {
-    if (n > koshutin::MAX_LENGTH) 
+    if (n > koshutin::MAX_LENGTH)
     {
       std::cerr << koshutin::INV_DATA << "\n";
       return 2;
     }
     int massive[koshutin::MAX_LENGTH];
-    if (koshutin::ReadElements(input, massive, rows, cols) != 0) 
+    if (koshutin::ReadElements(input, massive, rows, cols) != 0)
     {
       return 2;
     }
@@ -79,15 +79,15 @@ int main(int argc, char *argv[])
 
   if (num == "2") {
     int *massive = nullptr;
-    try 
+    try
     {
       massive = new int[n];
-    } 
-    catch (const std::bad_alloc &) 
+    }
+    catch (const std::bad_alloc &)
     {
       std::cerr << koshutin::INV_DATA << "\n";
     }
-    if (koshutin::ReadElements(input, massive, rows, cols) != 0) 
+    if (koshutin::ReadElements(input, massive, rows, cols) != 0)
     {
       delete[] massive;
       return 2;
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
   }
 
   std::ofstream output(argv[3]);
-  if (!output) 
+  if (!output)
   {
     std::cerr << "Invalid file" << "\n";
     return 2;
@@ -106,11 +106,11 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-namespace koshutin 
+namespace koshutin
 {
   int ReadElements(std::ifstream &input, int *massive, int rows, int cols) {
     long n = static_cast<long>(rows) * cols;
-    for (long i = 0; i < n; ++i) 
+    for (long i = 0; i < n; ++i)
     {
       if (!(input >> massive[i])) {
       std::cerr << koshutin::INV_DATA << "\n";
@@ -125,13 +125,13 @@ namespace koshutin
     for (int i = 0; i < rows; ++i) {
       bool norm = true;
       for (int j = 0; j + 1 < cols; ++j) {
-        if (massive[i * cols + j] == massive[i * cols + j + 1]) 
+        if (massive[i * cols + j] == massive[i * cols + j + 1])
         {
           norm = false;
           break;
         }
       }
-      if (norm) 
+      if (norm)
       {
         ++count;
       }
