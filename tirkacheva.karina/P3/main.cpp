@@ -42,32 +42,32 @@ int readElements(std::ifstream &input, int matrix[], int rows, int columns) {
   return SUCCESS;
 }
 
-int findBestColumn(const int matrix[], int rows, int columns) {
+int findbest_column(const int matrix[], int rows, int columns) {
   if (rows == 0 || columns == 0) {
     return 0;
   }
 
   int max_length = 1;
-  int bestColumn = 1;
+  int best_column = 1;
 
   for (int j = 0; j < columns; j++) {
-    int currentLength = 1;
+    int current_length = 1;
 
     for (int i = 1; i < rows; i++) {
       if (matrix[i * columns + j] == matrix[(i - 1) * columns + j]) {
-        currentLength++;
+        current_length++;
       } else {
-        currentLength = 1;
+        current_length = 1;
       }
 
-      if (currentLength > max_length) {
-        max_length = currentLength;
-        bestColumn = j + 1;
+      if (current_length > max_length) {
+        max_length = current_length;
+        best_column = j + 1;
       }
     }
   }
 
-  return bestColumn;
+  return best_column;
 }
 
 int writeResult(std::ofstream &output, const int result) {
@@ -105,7 +105,7 @@ int runFixed(std::ifstream &input, std::ofstream &output) {
       return status;
     }
 
-    const int result = findBestColumn(matrix, rows, columns);
+    const int result = findbest_column(matrix, rows, columns);
 
     status = writeResult(output, result);
 
@@ -157,7 +157,7 @@ int runDynamic(std::ifstream &input, std::ofstream &output) {
     status = readElements(input, matrix, rows, columns);
 
     if (status == SUCCESS) {
-      const int result = findBestColumn(matrix, rows, columns);
+      const int result = findbest_column(matrix, rows, columns);
       status = writeResult(output, result);
     }
 
