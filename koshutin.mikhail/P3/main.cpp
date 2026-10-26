@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
     catch (const std::bad_alloc &)
     {
       std::cerr << koshutin::INV_DATA << "\n";
+      return 2;
     }
     if (koshutin::readElements(input, massive, rows, cols) != 0)
     {
@@ -119,6 +120,12 @@ namespace koshutin
         std::cerr << koshutin::INV_DATA << "\n";
         return 2;
       }
+    }
+    input >> std::ws;
+    if (!input.eof())
+    {
+      std::cerr << koshutin::INV_DATA << "\n";
+      return 2;
     }
     return 0;
   }
