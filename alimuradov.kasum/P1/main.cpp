@@ -1,10 +1,8 @@
 #include <iostream>
 
-namespace alimuradov
-{
+namespace alimuradov {
 
-int maxRun(std::istream& in)
-{
+int maxRun(std::istream& in) {
   int prev = 0;
   int cur = 0;
   int curlen = 1;
@@ -21,12 +19,12 @@ int maxRun(std::istream& in)
     return 0;
   }
 
-  bool terminatedByZero = false;
+  bool terminated_by_zero = false;
   while (in >> cur)
   {
     if (cur == 0)
     {
-      terminatedByZero = true;
+      terminated_by_zero = true;
       break;
     }
     if (cur <= prev)
@@ -43,7 +41,7 @@ int maxRun(std::istream& in)
     prev = cur;
   }
 
-  if (!terminatedByZero)
+  if (!terminated_by_zero)
   {
     std::cerr << "cannot read sequence\n";
     return -1;
@@ -61,7 +59,7 @@ int maxRun(std::istream& in)
 
 int main()
 {
-  int result = alimuradov::maxRun(std::cin);
+  const int result = alimuradov::maxRun(std::cin);
   if (result < 0)
   {
     return 1;
