@@ -155,7 +155,9 @@ bool babikov::readData(std::ifstream& infile, int* data, int count)
     }
   }
 
-  return true;
+  infile >> std::ws;
+
+  return infile.eof();
 }
 
 int babikov::countColumns(const babikov::Matrix& mat)
