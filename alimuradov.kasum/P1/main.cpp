@@ -1,22 +1,28 @@
 #include <iostream>
 
-int main()
-{
+namespace alimuradov {
+
+int maxRun(std::istream& in) {
   int prev = 0;
   int cur = 0;
   int curlen = 1;
   int maxlen = 1;
-  if (!(std::cin >> prev)) {
-    std::cout << 0 << "\n";
-    return 0;
+
+  if (!(in >> prev)) {
+    std::cerr << "cannot read sequence\n";
+    return -1;
   }
 
   if (prev == 0) {
-    std::cout << 0 << "\n";
     return 0;
   }
 
-  while (std::cin >> cur && cur != 0) {
+  bool terminatedByZero = false;
+  while (in >> cur) {
+    if (cur == 0) {
+      terminatedByZero = true;
+      break;
+    }
     if (cur <= prev) {
       curlen++;
     } else {
@@ -28,10 +34,25 @@ int main()
     prev = cur;
   }
 
+  if (!terminatedByZero) {
+    std::cerr << "cannot read sequence\n";
+    return -1;
+  }
+
   if (curlen > maxlen) {
     maxlen = curlen;
   }
 
-  std::cout << maxlen << "\n";
+  return maxlen;
+}
+
+}
+
+int main() {
+  int result = alimuradov::maxRun(std::cin);
+  if (result < 0) {
+    return 1;
+  }
+  std::cout << result << "\n";
   return 0;
 }
