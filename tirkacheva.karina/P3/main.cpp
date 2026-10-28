@@ -2,6 +2,7 @@
 #include <iostream>
 #include <new>
 #include <string>
+#include <limits>
 
 namespace tirkacheva {
 
@@ -24,7 +25,7 @@ namespace tirkacheva {
       return INPUT_ERROR;
     }
 
-    if (columns != 0 && rows > MAX_ELEMENTS / columns) {
+    if (columns != 0 && rows > std::numeric_limits< int >::max() / columns) {
       return INPUT_ERROR;
     }
 
@@ -89,100 +90,84 @@ namespace tirkacheva {
     int matrix[MAX_ELEMENTS];
     int rows = 0;
     int columns = 0;
-    bool processed = false;
 
-    while (true) {
-      input >> std::ws;
-
-      if (input.eof()) {
-        break;
-      }
-
-      int status = readDimensions(input, rows, columns);
-
-      if (status != SUCCESS) {
-        return status;
-      }
-
-      status = readElements(input, matrix, rows, columns);
-
-      if (status != SUCCESS) {
-        return status;
-      }
-
-      const int result = findBestColumn(matrix, rows, columns);
-
-      status = writeResult(output, result);
-
-      if (status != SUCCESS) {
-        return status;
-      }
-
-      processed = true;
-    }
-
-    if (!processed) {
+    input >> std::ws;
+    if (input.peek() == std::char_traits< char >::eof()) {
       return INPUT_ERROR;
     }
 
-    return SUCCESS;
+    int status = readDimensions(input, rows, columns);
+
+    if (status != SUCCESS) {
+      return status;
+    }
+
+    if (rows * columns > MAX_ELEMENTS) {
+      return INPUT_ERROR;
+    }
+
+    status = readElements(input, matrix, rows, columns);
+
+    if (status != SUCCESS) {
+      return status;
+    }
+
+    input >> std::ws;
+    if (input.peek() != std::char_traits< char >::eof()) {
+      return INPUT_ERROR;
+    }
+
+    const int result = findBestColumn(matrix, rows, columns);
+
+    return writeResult(output, result);
   }
 
   int runDynamic(std::ifstream &input, std::ofstream &output)
   {
-    bool processed = false;
-
-    while (true) {
-      input >> std::ws;
-
-      if (input.eof()) {
-        break;
-      }
-
-      int rows = 0;
-      int columns = 0;
-
-      int status = readDimensions(input, rows, columns);
-
-      if (status != SUCCESS) {
-        return status;
-      }
-
-      const int total = rows * columns;
-      int *matrix = nullptr;
-
-      try {
-        if (total > 0) {
-          matrix = new int[total];
-        }
-      } catch (const std::bad_alloc &) {
-        std::cerr << "Memory allocation error\n";
-        return INPUT_ERROR;
-      }
-
-      status = readElements(input, matrix, rows, columns);
-
-      if (status == SUCCESS) {
-        const int result = findBestColumn(matrix, rows, columns);
-        status = writeResult(output, result);
-      }
-
-      delete[] matrix;
-
-      if (status != SUCCESS) {
-        return status;
-      }
-
-      processed = true;
-    }
-
-    if (!processed) {
+    input >> std::ws;
+    if (input.peek() == std::char_traits< char >::eof()) {
       return INPUT_ERROR;
     }
 
-    return SUCCESS;
-  }
+    int rows = 0;
+    int columns = 0;
 
+    int status = readDimensions(input, rows, columns);
+
+    if (status != SUCCESS) {
+      return status;
+    }
+
+    const int total = rows * columns;
+    int *matrix = nullptr;
+
+    try {
+      if (total > 0) {
+        matrix = new int[total];
+      }
+    } catch (const std::bad_alloc &) {
+      std::cerr << "Memory allocation error\n";
+      return INPUT_ERROR;
+    }
+
+    status = readElements(input, matrix, rows, columns);
+
+    if (status != SUCCESS) {
+      delete[] matrix;
+      return status;
+    }
+
+    input >> std::ws;
+    if (input.peek() != std::char_traits< char >::eof()) {
+      delete[] matrix;
+      return INPUT_ERROR;
+    }
+
+    const int result = findBestColumn(matrix, rows, columns);
+    delete[] matrix;
+
+    return writeResult(output, result);
+  }
 }
 
 int main(int argc, char *argv[])
