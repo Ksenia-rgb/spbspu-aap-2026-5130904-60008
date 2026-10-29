@@ -82,7 +82,6 @@ int main(int argc, char* argv[])
     return 2;
   }
   
-
   if (num == 1)
   {
     if (rows * cols > bulgakov::MAX_STACK_SIZE)
