@@ -70,11 +70,18 @@ int main(int argc, char* argv[])
   int* matrix = nullptr;
   int stack_matrix[bulgakov::MAX_STACK_SIZE];
 
-  if (rows <= 0 || cols <= 0 || rows > std::numeric_limits<int>::max() / cols)
+  if (rows <= 0 || cols <= 0)
   {
     std::cerr << bulgakov::ERR_CORRUPT_DATA;
     return 2;
   }
+
+  if (rows > std::numeric_limits<int>::max() / cols)
+  {
+    std::cerr << bulgakov::ERR_CORRUPT_DATA;
+    return 2;
+  }
+  
 
   if (num == 1)
   {
@@ -111,11 +118,11 @@ int main(int argc, char* argv[])
     }
   }
 
-  char trailing_char;
-  if(fin >> trailing_char)
+  char trailing_char = '0';
+  if (fin >> trailing_char)
   {
     std::cerr << bulgakov::ERR_CORRUPT_DATA;
-    if(num == 2)
+    if (num == 2)
     {
       delete[] matrix;
     }
