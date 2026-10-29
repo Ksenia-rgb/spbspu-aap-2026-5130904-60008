@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
+#include <limits>
 
 namespace bulgakov
 {
@@ -67,7 +68,13 @@ int main(int argc, char* argv[])
   }
 
   int* matrix = nullptr;
-  static int stack_matrix[bulgakov::MAX_STACK_SIZE];
+  int stack_matrix[bulgakov::MAX_STACK_SIZE];
+
+  if (rows <= 0 || cols <= 0 || rows > std::numeric_limits<int>::max() / cols)
+  {
+    std::cerr << bulgakov::ERR_CORRUPT_DATA;
+    return 2;
+  }
 
   if (num == 1)
   {
@@ -80,7 +87,15 @@ int main(int argc, char* argv[])
   }
   else
   {
-    matrix = new int[rows * cols];
+    try
+    {
+      matrix = new int[rows * cols];
+    }
+    catch (const std::bad_alloc&)
+    {
+      std::cerr << bulgakov::ERR_CORRUPT_DATA;
+      return 2;
+    }
   }
 
   for (int i = 0; i < rows * cols; ++i)
@@ -94,6 +109,17 @@ int main(int argc, char* argv[])
       }
       return 2;
     }
+  }
+
+  char trailing_char;
+  if(fin >> trailing_char)
+  {
+    std::cerr << bulgakov::ERR_CORRUPT_DATA;
+    if(num == 2)
+    {
+      delete[] matrix;
+    }
+    return 2;
   }
   fin.close();
 
