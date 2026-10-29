@@ -1,8 +1,10 @@
 #include <iostream>
 
-namespace alimuradov {
+namespace alimuradov
+{
 
-int maxRun(std::istream& in) {
+int maxRun(std::istream& in)
+{
   int prev = 0;
   int cur = 0;
   int curlen = 1;
