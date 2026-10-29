@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
     std::cerr << bulgakov::ERR_CORRUPT_DATA;
     return 2;
   }
-  
+
   if (num == 1)
   {
     if (rows * cols > bulgakov::MAX_STACK_SIZE)
