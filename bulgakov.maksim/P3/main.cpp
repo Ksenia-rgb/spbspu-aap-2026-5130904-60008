@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  if (rows > std::numeric_limits<int>::max() / cols)
+  if (rows > std::numeric_limits< int >::max() / cols)
   {
     std::cerr << bulgakov::ERR_CORRUPT_DATA;
     return 2;
