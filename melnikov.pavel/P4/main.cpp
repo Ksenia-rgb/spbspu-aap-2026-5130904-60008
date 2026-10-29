@@ -21,38 +21,24 @@ int main()
 {
   std::size_t size = 0, capacity = melnikov::INITIAL_CAPACITY;
   char *fst_str = static_cast< char * >(std::malloc(capacity));
-  char *sec_str = static_cast< char * >(std::malloc(capacity));
 
-  try
+  if (fst_str == nullptr)
   {
-    if (fst_str == nullptr || sec_str == nullptr)
-    {
-      throw std::bad_alloc();
-    }
-    if (melnikov::readLine(fst_str, size, capacity) != 0)
-    {
-      throw std::bad_alloc();
-    }
-    size = 0;
-    capacity = melnikov::INITIAL_CAPACITY;
-    if (melnikov::readLine(sec_str, size, capacity) != 0)
-    {
-      throw std::bad_alloc();
-    }
+    std::cerr << "Memory allocation error\n";
+    return melnikov::EXIT_FAIL_CODE;
   }
-  catch (const std::bad_alloc &)
+
+  if (melnikov::readLine(fst_str, size, capacity) != melnikov::EXIT_SUCCESS_CODE)
   {
     std::free(fst_str);
-    std::free(sec_str);
-    std::cerr << "Memory allocation error\n";
-    std::exit(melnikov::EXIT_FAIL_CODE);
+    std::cerr << "Input or memory allocation error\n";
+    return melnikov::EXIT_FAIL_CODE;
   }
 
-  const int result = melnikov::findDuplicate(fst_str, sec_str);
+  const int result = melnikov::findDuplicate(fst_str, "abs");
   std::cout << result << '\n';
 
   std::free(fst_str);
-  std::free(sec_str);
 
   return melnikov::EXIT_SUCCESS_CODE;
 }
