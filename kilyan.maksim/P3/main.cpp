@@ -137,13 +137,8 @@ int main(int argc, char* argv[])
   }
   else
   {
-    char* mode_arg = argv[1];
+    const char* mode_arg = argv[1];
     if (mode_arg[0] == '\0' || mode_arg[1] != '\0')
-    {
-      std::cerr << "Error: Invalid command line arguments\n";
-      return kilyan::ARGUMENT_ERROR;
-    }
-    if (mode_arg[0] != '1' && mode_arg[0] != '2')
     {
       std::cerr << "Error: Invalid command line arguments\n";
       return kilyan::ARGUMENT_ERROR;
