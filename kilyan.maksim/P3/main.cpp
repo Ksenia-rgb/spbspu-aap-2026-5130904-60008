@@ -135,6 +135,11 @@ int main(int argc, char* argv[])
     std::cerr << "Error: Invalid command line arguments\n";
     return kilyan::ARGUMENT_ERROR;
   }
+  if (argv[1] == nullptr)
+  {
+    std::cerr << "Error: Invalid command line arguments\n";
+    return kilyan::ARGUMENT_ERROR;
+  }
   const std::string mode_str = argv[1];
   if (mode_str != "1" && mode_str != "2")
   {
