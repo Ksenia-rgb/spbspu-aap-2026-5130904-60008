@@ -80,11 +80,6 @@ namespace kilyan
   }
   int runFixed(std::ifstream& infile, std::ofstream& outfile)
   {
-    infile >> std::ws;
-    if (infile.peek() == EOF)
-    {
-      return INPUT_ERROR;
-    }
     int rows = 0, cols = 0;
     int status = readDimensions(infile, rows, cols);
     if (status != 0)
@@ -112,11 +107,6 @@ namespace kilyan
   }
   int runDynamic(std::ifstream& infile, std::ofstream& outfile)
   {
-    infile >> std::ws;
-    if (infile.peek() == EOF)
-    {
-      return INPUT_ERROR;
-    }
     int rows = 0, cols = 0;
     int status = readDimensions(infile, rows, cols);
     if (status != 0)
