@@ -124,20 +124,20 @@ int main(int argc, char* argv[])
   if (argc != 4 || *argv[1] == '\0' || *(argv[1] + 1) != '\0')
   {
     std::cerr << "Error: Invalid command line arguments\n";
-    return ARGUMENT_ERROR;
+    return kilyan::ARGUMENT_ERROR;
   }
   char mode = *argv[1];
   std::ifstream input(argv[2]);
   if (!input)
   {
     std::cerr << "Error: Failed to open input file\n";
-    return INPUT_ERROR;
+    return kilyan::INPUT_ERROR;
   }
   std::ofstream output(argv[3]);
   if (!output)
   {
     std::cerr << "Error: Failed to open output file\n";
-    return ARGUMENT_ERROR;
+    return kilyan::ARGUMENT_ERROR;
   }
   int status = 0;
   switch(mode)
@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
       break;
   default:
       std::cerr << "Error: Invalid mode\n";
-      return INPUT_ERROR;
+      return kilyan::INPUT_ERROR;
   }
   return status;
 }
