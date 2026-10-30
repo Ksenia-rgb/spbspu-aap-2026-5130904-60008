@@ -82,7 +82,10 @@ namespace kilyan
   {
     int rows = 0, cols = 0;
     int status = read_dimensions(infile, rows, cols);
-    if (status != 0) return status;
+    if (status != 0)
+    {
+      return status;
+    }
     int static_matrix[MAX_STATIC_ELEMENTS];
     if (rows * cols > MAX_STATIC_ELEMENTS)
     {
@@ -90,7 +93,10 @@ namespace kilyan
       return INPUT_ERROR;
     }
     status = read_elements(infile, static_matrix, rows, cols);
-    if (status != 0) return status;
+    if (status != 0)
+    {
+      return status;
+    }
     const int result = count_saddle_points(static_matrix, rows, cols);
     return write_result(outfile, result);
   }
@@ -98,7 +104,10 @@ namespace kilyan
   {
     int rows = 0, cols = 0;
     int status = read_dimensions(infile, rows, cols);
-    if (status != 0) return status;
+    if (status != 0)
+    {
+      return status;
+    }
     int* const dynamic_matrix = new int[rows * cols];
     status = read_elements(infile, dynamic_matrix, rows, cols);
     if (status != 0)
@@ -142,13 +151,13 @@ int main(int argc, char* argv[])
   int status = 0;
   switch (mode)
   {
-  case '1':
+    case '1':
       status = kilyan::run_fixed(input, output);
       break;
-  case '2':
+    case '2':
       status = kilyan::run_dynamic(input, output);
       break;
-  default:
+    default:
       std::cerr << "Error: Invalid mode\n";
       return kilyan::INPUT_ERROR;
   }
