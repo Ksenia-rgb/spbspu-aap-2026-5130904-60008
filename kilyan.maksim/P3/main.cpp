@@ -80,6 +80,11 @@ namespace kilyan
   }
   int runFixed(std::ifstream& infile, std::ofstream& outfile)
   {
+    infile >> std::ws;
+    if (infile.peek() == std::char_traits<char>::eof())
+    {
+      return INPUT_ERROR;
+    }
     int rows = 0, cols = 0;
     int status = readDimensions(infile, rows, cols);
     if (status != 0)
@@ -97,11 +102,21 @@ namespace kilyan
     {
       return status;
     }
+    infile >> std::ws;
+    if (infile.peek() != std::char_traits<char>::eof())
+    {
+      return INPUT_ERROR;
+    }
     const int result = countSaddlePoints(static_matrix, rows, cols);
     return writeResult(outfile, result);
   }
   int runDynamic(std::ifstream& infile, std::ofstream& outfile)
   {
+    infile >> std::ws;
+    if (infile.peek() == std::char_traits<char>::eof())
+    {
+      return INPUT_ERROR;
+    }
     int rows = 0, cols = 0;
     int status = readDimensions(infile, rows, cols);
     if (status != 0)
@@ -115,10 +130,9 @@ namespace kilyan
       delete[] dynamic_matrix;
       return status;
     }
-    int extra_element = 0;
-    if (infile >> extra_element)
+    infile >> std::ws;
+    if (infile.peek() != std::char_traits<char>::eof())
     {
-      std::cerr << "Error: Redundant elements found at the end of the file\n";
       delete[] dynamic_matrix;
       return INPUT_ERROR;
     }
@@ -137,7 +151,7 @@ int main(int argc, char* argv[])
   }
   else
   {
-    const char* mode_arg = argv[1];
+    char* const mode_arg = argv[1];
     if (mode_arg[0] == '\0' || mode_arg[1] != '\0')
     {
       std::cerr << "Error: Invalid command line arguments\n";
