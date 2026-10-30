@@ -9,10 +9,25 @@ namespace kilyan
   const int INPUT_ERROR = 2;
   int readDimensions(std::ifstream& infile, int& rows, int& cols)
   {
-    if (!(infile >> rows >> cols) || rows <= 0 || cols <= 0)
+    if (!(infile >> rows >> cols))
     {
-      std::cerr << "Error: Invalid matrix dimensions or failed to read rows/cols\n";
       return INPUT_ERROR;
+    }
+    if (rows < 0 || cols < 0)
+    {
+      return INPUT_ERROR;
+    }
+    if ((rows == 0 && cols != 0) || (cols == 0 && rows != 0))
+    {
+      return INPUT_ERROR;
+    }
+    if (cols > 0)
+    {
+      const int max_int = 2147483647;
+      if (rows > max_int / cols)
+      {
+        return INPUT_ERROR;
+      }
     }
     return SUCCESS;
   }
@@ -24,7 +39,6 @@ namespace kilyan
       {
         if (!(infile >> matrix_ptr[i * cols + j]))
         {
-          std::cerr << "Error: Failed to read matrix element\n";
           return INPUT_ERROR;
         }
       }
@@ -33,6 +47,10 @@ namespace kilyan
   }
   int countSaddlePoints(const int* matrix_ptr, int rows, int cols)
   {
+    if (rows == 0 || cols == 0)
+    {
+      return 0;
+    }
     int saddle_count = 0;
     for (int i = 0; i < rows; ++i)
     {
@@ -80,20 +98,24 @@ namespace kilyan
   }
   int runFixed(std::ifstream& infile, std::ofstream& outfile)
   {
+    infile >> std::ws;
+    if (infile.peek() == EOF)
+    {
+      return INPUT_ERROR;
+    }
     int rows = 0, cols = 0;
     int status = readDimensions(infile, rows, cols);
-    if (status != 0)
+    if (status != SUCCESS)
     {
       return status;
     }
-    int static_matrix[MAX_STATIC_ELEMENTS];
     if (rows * cols > MAX_STATIC_ELEMENTS)
     {
-      std::cerr << "Error: Matrix size exceeds static limit of " << MAX_STATIC_ELEMENTS << "\n";
       return INPUT_ERROR;
     }
+    int static_matrix[MAX_STATIC_ELEMENTS];
     status = readElements(infile, static_matrix, rows, cols);
-    if (status != 0)
+    if (status != SUCCESS)
     {
       return status;
     }
@@ -107,15 +129,30 @@ namespace kilyan
   }
   int runDynamic(std::ifstream& infile, std::ofstream& outfile)
   {
+    infile >> std::ws;
+    if (infile.peek() == EOF)
+    {
+      return INPUT_ERROR;
+    }
     int rows = 0, cols = 0;
     int status = readDimensions(infile, rows, cols);
-    if (status != 0)
+    if (status != SUCCESS)
     {
       return status;
     }
-    int* const dynamic_matrix = new int[rows * cols];
+    const int total = rows * cols;
+    if (total == 0)
+    {
+      infile >> std::ws;
+      if (infile.peek() != EOF)
+      {
+        return INPUT_ERROR;
+      }
+      return writeResult(outfile, 0);
+    }
+    int* const dynamic_matrix = new int[total];
     status = readElements(infile, dynamic_matrix, rows, cols);
-    if (status != 0)
+    if (status != SUCCESS)
     {
       delete[] dynamic_matrix;
       return status;
@@ -141,13 +178,13 @@ int main(int argc, char* argv[])
   }
   else
   {
-    char* const mode_arg = argv[1];
-    if (mode_arg[0] == '\0' || mode_arg[1] != '\0')
+    const char* const mode_str = argv[1];
+    if (mode_str[0] == '\0' || mode_str[1] != '\0' || (mode_str[0] != '1' && mode_str[0] != '2'))
     {
-      std::cerr << "Error: Invalid command line arguments\n";
+      std::cerr << "Error: Invalid mode\n";
       return kilyan::ARGUMENT_ERROR;
     }
-    const char mode = mode_arg[0];
+    const char mode = mode_str[0];
     std::ifstream input(argv[2]);
     if (!input)
     {
@@ -160,19 +197,18 @@ int main(int argc, char* argv[])
       std::cerr << "Error: Failed to open output file\n";
       return kilyan::ARGUMENT_ERROR;
     }
-    int status = 0;
+    int status = kilyan::SUCCESS;
     if (mode == '1')
     {
       status = kilyan::runFixed(input, output);
     }
-    else if (mode == '2')
+    else
     {
       status = kilyan::runDynamic(input, output);
     }
-    else
+    if (status == kilyan::INPUT_ERROR)
     {
-      std::cerr << "Error: Invalid mode\n";
-      return kilyan::INPUT_ERROR;
+      std::cerr << "Error: Invalid input data\n";
     }
     return status;
   }
