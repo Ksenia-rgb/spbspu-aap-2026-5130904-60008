@@ -135,43 +135,41 @@ int main(int argc, char* argv[])
     std::cerr << "Error: Invalid command line arguments\n";
     return kilyan::ARGUMENT_ERROR;
   }
-  if (argv[1] == nullptr)
-  {
-    std::cerr << "Error: Invalid command line arguments\n";
-    return kilyan::ARGUMENT_ERROR;
-  }
-  const std::string mode_str = argv[1];
-  if (mode_str != "1" && mode_str != "2")
-  {
-    std::cerr << "Error: Invalid command line arguments\n";
-    return kilyan::ARGUMENT_ERROR;
-  }
-  const char mode = mode_str[0];
-  std::ifstream input(argv[2]);
-  if (!input)
-  {
-    std::cerr << "Error: Failed to open input file\n";
-    return kilyan::INPUT_ERROR;
-  }
-  std::ofstream output(argv[3]);
-  if (!output)
-  {
-    std::cerr << "Error: Failed to open output file\n";
-    return kilyan::ARGUMENT_ERROR;
-  }
-  int status = 0;
-  if (mode == '1')
-  {
-    status = kilyan::runFixed(input, output);
-  }
-  else if (mode == '2')
-  {
-    status = kilyan::runDynamic(input, output);
-  }
   else
   {
-    std::cerr << "Error: Invalid mode\n";
-    return kilyan::INPUT_ERROR;
+    const std::string mode_str = argv[1];
+    if (mode_str != "1" && mode_str != "2")
+    {
+      std::cerr << "Error: Invalid command line arguments\n";
+      return kilyan::ARGUMENT_ERROR;
+    }
+    const char mode = mode_str[0];
+    std::ifstream input(argv[2]);
+    if (!input)
+    {
+      std::cerr << "Error: Failed to open input file\n";
+      return kilyan::INPUT_ERROR;
+    }
+    std::ofstream output(argv[3]);
+    if (!output)
+    {
+      std::cerr << "Error: Failed to open output file\n";
+      return kilyan::ARGUMENT_ERROR;
+    }
+    int status = 0;
+    if (mode == '1')
+    {
+      status = kilyan::runFixed(input, output);
+    }
+    else if (mode == '2')
+    {
+      status = kilyan::runDynamic(input, output);
+    }
+    else
+    {
+      std::cerr << "Error: Invalid mode\n";
+      return kilyan::INPUT_ERROR;
+    }
+    return status;
   }
-  return status;
 }
