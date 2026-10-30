@@ -81,7 +81,7 @@ namespace kilyan
   int runFixed(std::ifstream& infile, std::ofstream& outfile)
   {
     infile >> std::ws;
-    if (infile.peek() == std::char_traits<char>::eof())
+    if (infile.peek() == EOF)
     {
       return INPUT_ERROR;
     }
@@ -103,7 +103,7 @@ namespace kilyan
       return status;
     }
     infile >> std::ws;
-    if (infile.peek() != std::char_traits<char>::eof())
+    if (infile.peek() != EOF)
     {
       return INPUT_ERROR;
     }
@@ -113,7 +113,7 @@ namespace kilyan
   int runDynamic(std::ifstream& infile, std::ofstream& outfile)
   {
     infile >> std::ws;
-    if (infile.peek() == std::char_traits<char>::eof())
+    if (infile.peek() == EOF)
     {
       return INPUT_ERROR;
     }
@@ -131,7 +131,7 @@ namespace kilyan
       return status;
     }
     infile >> std::ws;
-    if (infile.peek() != std::char_traits<char>::eof())
+    if (infile.peek() != EOF)
     {
       delete[] dynamic_matrix;
       return INPUT_ERROR;
