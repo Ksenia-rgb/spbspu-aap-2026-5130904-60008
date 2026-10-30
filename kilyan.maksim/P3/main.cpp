@@ -98,7 +98,7 @@ namespace kilyan
       return status;
     }
     const int result = countSaddlePoints(static_matrix, rows, cols);
-    return write_result(outfile, result);
+    return writeResult(outfile, result);
   }
   int runDynamic(std::ifstream& infile, std::ofstream& outfile)
   {
