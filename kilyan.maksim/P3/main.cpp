@@ -149,17 +149,18 @@ int main(int argc, char* argv[])
     return kilyan::ARGUMENT_ERROR;
   }
   int status = 0;
-  switch (mode)
+  if (mode == '1')
   {
-    case '1':
-      status = kilyan::runFixed(input, output);
-      break;
-    case '2':
-      status = kilyan::runDynamic(input, output);
-      break;
-    default:
-      std::cerr << "Error: Invalid mode\n";
-      return kilyan::INPUT_ERROR;
+    status = kilyan::runFixed(input, output);
+  }
+  else if (mode == '2')
+  {
+    status = kilyan::runDynamic(input, output);
+  }
+  else
+  {
+    std::cerr << "Error: Invalid mode\n";
+    return kilyan::INPUT_ERROR;
   }
   return status;
 }
