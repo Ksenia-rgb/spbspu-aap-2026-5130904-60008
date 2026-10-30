@@ -9,13 +9,14 @@ namespace hedeya {
   const std::size_t MAXIMUM_STRING_LENGTH = 10000;
 
   void printCommonCharacters(char string_1[], char string_2[]);
-  int getIndexOfCharacter(const char arr[], char target);
+  long long getIndexOfCharacter(const char arr[hedeya::MAXIMUM_STRING_LENGTH], char target);
+  void deleteElementAtIndex(char array[hedeya::MAXIMUM_STRING_LENGTH], std::size_t index);
 }
 
 int main()
 {
-  char string_1[hedeya::MAXIMUM_STRING_LENGTH] = "abcd";
-  char string_2[hedeya::MAXIMUM_STRING_LENGTH] = "abcdef";
+  char string_1[hedeya::MAXIMUM_STRING_LENGTH] = "bc f";
+  char string_2[hedeya::MAXIMUM_STRING_LENGTH] = "abc ef";
 
   hedeya::printCommonCharacters(string_1, string_2);
 
@@ -25,7 +26,7 @@ int main()
 namespace hedeya {
   void printCommonCharacters(char string_1[], char string_2[])
   {
-    char seen[hedeya::MAXIMUM_STRING_LENGTH];
+    char seen[hedeya::MAXIMUM_STRING_LENGTH] = {};
     char common[hedeya::MAXIMUM_STRING_LENGTH] = {};
 
     const char* shortest_string = string_1;
@@ -38,28 +39,41 @@ namespace hedeya {
 
     strcpy(seen, shortest_string);  // NOLINT(clang-diagnostic-deprecated-declarations)
 
-    for (int i = 0; i < strlen(longest_string); ++i) {
+    std::size_t common_index = 0;
+
+    for (std::size_t i = 0; i < strlen(longest_string); ++i) {
       const char current_character = longest_string[i];
-      const int seen_index = getIndexOfCharacter(seen, current_character);
+      const long long seen_index = getIndexOfCharacter(seen, current_character);
 
       if (seen_index != -1) {
-        common[i] = current_character;
+        common[common_index] = current_character;
+        deleteElementAtIndex(seen, seen_index);
+        ++common_index;
       }
     }
 
     std::cout << common;
   }
 
-  int getIndexOfCharacter(const char arr[hedeya::MAXIMUM_STRING_LENGTH], char target)
+  long long getIndexOfCharacter(const char array[hedeya::MAXIMUM_STRING_LENGTH], char target)
   {
-    int size = sizeof(arr) / sizeof(arr[0]);
+    std::size_t length = strlen(array);
 
-    for (int i = 0; i < size; i++) {
-      if (arr[i] == target) {
+    for (long long i = 0; i < length; i++) {
+      if (array[i] == target) {
         return i;
       }
     }
     return -1;
+  }
+
+  void deleteElementAtIndex(char array[hedeya::MAXIMUM_STRING_LENGTH], std::size_t index)
+  {
+    std::size_t size = strlen(array);
+
+    for (std::size_t i = index; i < size - index; ++i) {
+      array[i] = array[i + 1];
+    }
   }
 }
 
