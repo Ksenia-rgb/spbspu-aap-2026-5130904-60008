@@ -7,7 +7,7 @@ namespace kilyan
   const int SUCCESS = 0;
   const int ARGUMENT_ERROR = 1;
   const int INPUT_ERROR = 2;
-  int read_dimensions(std::ifstream& infile, int& rows, int& cols)
+  int readDimensions(std::ifstream& infile, int& rows, int& cols)
   {
     if (!(infile >> rows >> cols) || rows <= 0 || cols <= 0)
     {
@@ -16,7 +16,7 @@ namespace kilyan
     }
     return SUCCESS;
   }
-  int read_elements(std::ifstream& infile, int* matrix_ptr, int rows, int cols)
+  int readElements(std::ifstream& infile, int* matrix_ptr, int rows, int cols)
   {
     for (int i = 0; i < rows; ++i)
     {
@@ -31,7 +31,7 @@ namespace kilyan
     }
     return SUCCESS;
   }
-  int count_saddle_points(const int* matrix_ptr, int rows, int cols)
+  int countSaddlePoints(const int* matrix_ptr, int rows, int cols)
   {
     int saddle_count = 0;
     for (int i = 0; i < rows; ++i)
@@ -68,7 +68,7 @@ namespace kilyan
     }
     return saddle_count;
   }
-  int write_result(std::ofstream& outfile, int result)
+  int writeResult(std::ofstream& outfile, int result)
   {
     outfile << result << "\n";
     if (!outfile)
@@ -78,10 +78,10 @@ namespace kilyan
     }
     return SUCCESS;
   }
-  int run_fixed(std::ifstream& infile, std::ofstream& outfile)
+  int runFixed(std::ifstream& infile, std::ofstream& outfile)
   {
     int rows = 0, cols = 0;
-    int status = read_dimensions(infile, rows, cols);
+    int status = readDimensions(infile, rows, cols);
     if (status != 0)
     {
       return status;
@@ -92,24 +92,24 @@ namespace kilyan
       std::cerr << "Error: Matrix size exceeds static limit of " << MAX_STATIC_ELEMENTS << "\n";
       return INPUT_ERROR;
     }
-    status = read_elements(infile, static_matrix, rows, cols);
+    status = readElements(infile, static_matrix, rows, cols);
     if (status != 0)
     {
       return status;
     }
-    const int result = count_saddle_points(static_matrix, rows, cols);
+    const int result = countSaddlePoints(static_matrix, rows, cols);
     return write_result(outfile, result);
   }
-  int run_dynamic(std::ifstream& infile, std::ofstream& outfile)
+  int runDynamic(std::ifstream& infile, std::ofstream& outfile)
   {
     int rows = 0, cols = 0;
-    int status = read_dimensions(infile, rows, cols);
+    int status = readDimensions(infile, rows, cols);
     if (status != 0)
     {
       return status;
     }
     int* const dynamic_matrix = new int[rows * cols];
-    status = read_elements(infile, dynamic_matrix, rows, cols);
+    status = readElements(infile, dynamic_matrix, rows, cols);
     if (status != 0)
     {
       delete[] dynamic_matrix;
@@ -122,8 +122,8 @@ namespace kilyan
       delete[] dynamic_matrix;
       return INPUT_ERROR;
     }
-    const int result = count_saddle_points(dynamic_matrix, rows, cols);
-    const int write_status = write_result(outfile, result);
+    const int result = countSaddlePoints(dynamic_matrix, rows, cols);
+    const int write_status = writeResult(outfile, result);
     delete[] dynamic_matrix;
     return write_status;
   }
@@ -152,10 +152,10 @@ int main(int argc, char* argv[])
   switch (mode)
   {
     case '1':
-      status = kilyan::run_fixed(input, output);
+      status = kilyan::runFixed(input, output);
       break;
     case '2':
-      status = kilyan::run_dynamic(input, output);
+      status = kilyan::runDynamic(input, output);
       break;
     default:
       std::cerr << "Error: Invalid mode\n";
