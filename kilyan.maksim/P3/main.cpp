@@ -130,7 +130,12 @@ namespace kilyan
 }
 int main(int argc, char* argv[])
 {
-  if (argc != 4 || *argv[1] == '\0' || *(argv[1] + 1) != '\0')
+  if (argc != 4)
+  {
+    std::cerr << "Error: Invalid command line arguments\n";
+    return kilyan::ARGUMENT_ERROR;
+  }
+  if (*argv[1] == '\0' || *(argv[1] + 1) != '\0')
   {
     std::cerr << "Error: Invalid command line arguments\n";
     return kilyan::ARGUMENT_ERROR;
