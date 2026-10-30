@@ -7,7 +7,7 @@ namespace kilyan
   const int SUCCESS = 0;
   const int ARGUMENT_ERROR = 1;
   const int INPUT_ERROR = 2;
-  int ReadDimensions(std::ifstream& infile, int& rows, int& cols)
+  int read_dimensions(std::ifstream& infile, int& rows, int& cols)
   {
     if (!(infile >> rows >> cols) || rows <= 0 || cols <= 0)
     {
@@ -16,7 +16,7 @@ namespace kilyan
     }
     return SUCCESS;
   }
-  int ReadElements(std::ifstream& infile, int* matrix_ptr, int rows, int cols)
+  int read_elements(std::ifstream& infile, int* matrix_ptr, int rows, int cols)
   {
     for (int i = 0; i < rows; ++i)
     {
@@ -31,14 +31,14 @@ namespace kilyan
     }
     return SUCCESS;
   }
-  int CountSaddlePoints(const int* matrix_ptr, int rows, int cols)
+  int count_saddle_points(const int* matrix_ptr, int rows, int cols)
   {
     int saddle_count = 0;
     for (int i = 0; i < rows; ++i)
     {
       for (int j = 0; j < cols; ++j)
       {
-        int current = matrix_ptr[i * cols + j];
+        const int current = matrix_ptr[i * cols + j];
         bool is_min_in_row = true;
         for (int k = 0; k < cols; ++k)
         {
@@ -68,7 +68,7 @@ namespace kilyan
     }
     return saddle_count;
   }
-  int WriteResult(std::ofstream& outfile, int result)
+  int write_result(std::ofstream& outfile, int result)
   {
     outfile << result << "\n";
     if (!outfile)
@@ -78,43 +78,43 @@ namespace kilyan
     }
     return SUCCESS;
   }
-  int RunFixed(std::ifstream& infile, std::ofstream& outfile)
+  int run_fixed(std::ifstream& infile, std::ofstream& outfile)
   {
     int rows = 0, cols = 0;
-    int status = ReadDimensions(infile, rows, cols);
+    int status = read_dimensions(infile, rows, cols);
     if (status != 0) return status;
-    int static_matrix[10000];
-    if (rows * cols > 10000)
+    int static_matrix[MAX_STATIC_ELEMENTS];
+    if (rows * cols > MAX_STATIC_ELEMENTS)
     {
       std::cerr << "Error: Matrix size exceeds static limit of " << MAX_STATIC_ELEMENTS << "\n";
       return INPUT_ERROR;
     }
-    status = ReadElements(infile, static_matrix, rows, cols);
+    status = read_elements(infile, static_matrix, rows, cols);
     if (status != 0) return status;
-    int result = CountSaddlePoints(static_matrix, rows, cols);
-    return WriteResult(outfile, result);
+    const int result = count_saddle_points(static_matrix, rows, cols);
+    return write_result(outfile, result);
   }
-  int RunDynamic(std::ifstream& infile, std::ofstream& outfile)
+  int run_dynamic(std::ifstream& infile, std::ofstream& outfile)
   {
     int rows = 0, cols = 0;
-    int status = ReadDimensions(infile, rows, cols);
+    int status = read_dimensions(infile, rows, cols);
     if (status != 0) return status;
-    int* dynamic_matrix = new int[rows * cols];
-    status = ReadElements(infile, dynamic_matrix, rows, cols);
+    int* const dynamic_matrix = new int[rows * cols];
+    status = read_elements(infile, dynamic_matrix, rows, cols);
     if (status != 0)
     {
       delete[] dynamic_matrix;
       return status;
     }
-    int extra_element;
+    int extra_element = 0;
     if (infile >> extra_element)
     {
       std::cerr << "Error: Redundant elements found at the end of the file\n";
       delete[] dynamic_matrix;
       return INPUT_ERROR;
     }
-    int result = CountSaddlePoints(dynamic_matrix, rows, cols);
-    int write_status = WriteResult(outfile, result);
+    const int result = count_saddle_points(dynamic_matrix, rows, cols);
+    const int write_status = write_result(outfile, result);
     delete[] dynamic_matrix;
     return write_status;
   }
@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
     std::cerr << "Error: Invalid command line arguments\n";
     return kilyan::ARGUMENT_ERROR;
   }
-  char mode = *argv[1];
+  const char mode = *argv[1];
   std::ifstream input(argv[2]);
   if (!input)
   {
@@ -140,13 +140,13 @@ int main(int argc, char* argv[])
     return kilyan::ARGUMENT_ERROR;
   }
   int status = 0;
-  switch(mode)
+  switch (mode)
   {
   case '1':
-      status = kilyan::RunFixed(input, output);
+      status = kilyan::run_fixed(input, output);
       break;
   case '2':
-      status = kilyan::RunDynamic(input, output);
+      status = kilyan::run_dynamic(input, output);
       break;
   default:
       std::cerr << "Error: Invalid mode\n";
