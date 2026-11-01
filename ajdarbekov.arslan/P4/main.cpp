@@ -8,43 +8,51 @@ namespace ajdarbekov
   const int EXIT_CODE_SUCCESS = 0;
   const int EXIT_CODE_FAIL = 1;
   const size_t EXIT_CODE_FAIL_READLINE = -1;
-  const char *str2 = "abc_ef";
+  const size_t INITAIL_CAPCITY = 16;
+  const char const *str2 = "abc_ef";
 
-  char *getuniquechars(char *, char *, const char *);
+  char *getuniquechars(char *, const char *, const char *);
   size_t readLine(size_t &, size_t &, char *&);
 }
 
 int main()
 {
-  size_t capacity = 16;
+  size_t capacity = INITAIL_CAPCITY;
   size_t size = 0;
 
   char *str1 = static_cast<char *>(std::malloc(capacity));
   if (!str1)
   {
-    std::cerr << "Memory allocation error";
+    std::cerr << "Memory allocation error" << '\n';
     return ajdarbekov::EXIT_CODE_FAIL;
   }
 
   size = ajdarbekov::readLine(size, capacity, str1);
   if (size == ajdarbekov::EXIT_CODE_FAIL_READLINE)
   {
-    std::cerr << "Memory allocation error";
+    std::cerr << "Memory allocation error" << '\n';
     return ajdarbekov::EXIT_CODE_FAIL;
   }
 
-  size_t result_capacity = size + std::strlen(ajdarbekov::str2) + 1;
+  if (str1[0] == '\0')
+  {
+    std::cerr << "Not found string" << '\n';
+
+    return ajdarbekov::EXIT_CODE_FAIL;
+  }
+
+  const size_t result_capacity = size + std::strlen(ajdarbekov::str2) + 1;
   char *buffer = static_cast<char *>(std::malloc(result_capacity));
 
   buffer = ajdarbekov::getuniquechars(buffer, str1, ajdarbekov::str2);
 
   if (!buffer)
   {
-    std::cerr << "Memory allocation error";
+    std::cerr << "Memory allocation error" << '\n';
     return ajdarbekov::EXIT_CODE_FAIL;
   }
 
-  std::cout << buffer;
+  std::cout << buffer << '\n';
 
   std::free(str1);
   std::free(buffer);
@@ -60,7 +68,7 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
     if (size + 1 >= capacity)
     {
       capacity *= 2;
-      char *term = static_cast<char *>(std::realloc(str1, capacity));
+      char  const *term = static_cast<char *>(std::realloc(str1, capacity));
       if (!term)
       {
         std::free(str1);
@@ -75,7 +83,7 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
   return size;
 }
 
-char *ajdarbekov::getuniquechars(char *buffer, char *str1, const char *str2)
+char *ajdarbekov::getuniquechars(char *buffer, const char *str1, const char *str2)
 {
   size_t sizebuffer = 0;
 
