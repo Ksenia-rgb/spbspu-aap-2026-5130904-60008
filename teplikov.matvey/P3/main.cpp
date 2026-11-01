@@ -157,11 +157,11 @@ namespace teplikov {
                 int left = j;
                 int right = col - 1 - j;
 
-                int vMin = (top < bott) ? top : bott;
-                int hMin = (left < right) ? left : right;
-                int minBordDst = (vMin < hMin) ? vMin : hMin;
+                int v_min = (top < bott) ? top : bott;
+                int h_min = (left < right) ? left : right;
+                const int min_bord_dst = (v_min < h_min) ? v_min : h_min;
 
-                arr[i * col + j] += (minBordDst + 1);
+                arr[i * col + j] += (min_bord_dst + 1);
             }
         }
     }
