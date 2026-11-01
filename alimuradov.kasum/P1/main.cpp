@@ -47,9 +47,8 @@ int maxRun(std::istream &in) {
 
 }
 
-
 int main() {
-  int result = alimuradov::maxRun(std::cin);
+  const int result = alimuradov::maxRun(std::cin);
   if (result < 0) {
     return 1;
   }
