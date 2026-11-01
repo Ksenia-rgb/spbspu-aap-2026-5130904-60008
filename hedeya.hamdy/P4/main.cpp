@@ -49,6 +49,10 @@ int main()
   }
 
   try {
+    if (std::strlen(string_1) == 0) {
+      delete[] string_1;
+      throw hedeya::InvalidInputError("No input provided for first string");
+    }
     const char string_2[] = "abc ef";
     const std::size_t string_2_length = std::strlen(string_2);
     const std::size_t max_length = (string_1_length < string_2_length) ? string_1_length : string_2_length;
