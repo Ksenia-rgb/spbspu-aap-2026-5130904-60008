@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        if (!(input >> row >> col)  row < 0  col < 0)
+        if (!(input >> row >> col) || row < 0 || col < 0)
         {
             throw std::invalid_argument(teplikov::INV_VAL);
         }
@@ -134,7 +134,7 @@ namespace teplikov
 
     int changeDynamicArray(std::ifstream &input, std::ofstream &output, int row, int col)
     {
-        if (row < 0  col < 0  (col != 0 && row > INT_MAX / col))
+        if (row < 0 ||  col < 0 ||  (col != 0 && row > INT_MAX / col))
         {
             throw std::invalid_argument(INV_VAL);
         }
