@@ -76,10 +76,7 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
   return size;
 }
 
-char *ajdarbekov::getuniquechars(
-  char *buffer,
-  const char *str1,
-  const char *str2)
+char *ajdarbekov::getuniquechars(char *buffer, const char *str1, const char *str2)
 {
   size_t sizebuffer = 0;
 
