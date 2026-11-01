@@ -32,7 +32,8 @@ int maxRun(std::istream& in)
     if (cur <= prev)
     {
       curlen++;
-    } else
+    }
+    else
     {
       if (curlen > maxlen)
       {
