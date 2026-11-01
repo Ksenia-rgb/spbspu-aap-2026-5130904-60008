@@ -5,14 +5,14 @@
 
 namespace ajdarbekov
 {
-const int EXIT_CODE_SUCCESS = 0;
-const int EXIT_CODE_FAIL = 1;
-const size_t READLINE_ERROR = static_cast< size_t >(-1);
-const char *const str2 = "abc_ef";
+  const int EXIT_CODE_SUCCESS = 0;
+  const int EXIT_CODE_FAIL = 1;
+  const size_t READLINE_ERROR = static_cast< size_t >(-1);
+  const char *const str2 = "abc_ef";
 
-char *getuniquechars(char *buffer, const char *str1, const char *str2);
-size_t readLine(size_t &size, size_t &capacity, char *&str1);
-} // namespace ajdarbekov
+  char *getuniquechars(char *buffer, const char *str1, const char *str2);
+  size_t readLine(size_t &size, size_t &capacity, char *&str1);
+}
 
 int main()
 {
