@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <cctype>  // для isdigit проверки
+#include <cctype>
 #include <fstream>
 #include <stdexcept>
 #include <climits>
@@ -27,24 +27,24 @@ int main(int argc, char* argv[])
 {
     if (argc < 4)
     {
-        std::cerr << teplikov::NOT_EN_ARG << "\n";  // проверка на 4 аргумента
+        std::cerr << teplikov::NOT_EN_ARG << "\n";
         return teplikov::BAD_ARGS;
     }
 
     if (argc > 4)
     {
-        std::cerr << teplikov::TO_MAN_ARG << "\n";  // проверка на 4 аргумента
+        std::cerr << teplikov::TO_MAN_ARG << "\n";
         return teplikov::BAD_ARGS;
     }
 
     if (!(std::isdigit(std::string(argv[1])[0])) || std::string(argv[1]).length() != 1)
-    {    // проверка что argv[1] - однозначное число
+    {
         std::cerr << teplikov::FR_PARAM_NOT_NUM << "\n";
         return teplikov::BAD_ARGS;
     }
 
     if (std::string(argv[1]) != "1" && std::string(argv[1]) != "2")
-    {  // проверка что это число либо 1 либо 2
+    {
         std::cerr << teplikov::FR_PARAM_OUT_RNG << "\n";
         return teplikov::BAD_ARGS;
     }
