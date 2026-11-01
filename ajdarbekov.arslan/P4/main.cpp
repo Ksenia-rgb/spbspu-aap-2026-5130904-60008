@@ -13,7 +13,8 @@ const char *const str2 = "abc_ef";
 
 char *getuniquechars(char *, const char *, const char *);
 size_t readLine(size_t &, size_t &, char *&);
-} // namespace ajdarbekov
+
+}
 
 int main() {
   size_t capacity = ajdarbekov::INITAIL_CAPCITY;
