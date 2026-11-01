@@ -1,9 +1,12 @@
-#include <iostream>
-#include <string>
+#include <algorithm>
 #include <cctype>
-#include <fstream>
-#include <stdexcept>
 #include <climits>
+#include <fstream>
+#include <iostream>
+#include <memory>
+#include <new>
+#include <stdexcept>
+#include <string>
 
 namespace teplikov
 {
@@ -12,66 +15,75 @@ namespace teplikov
   const std::string FR_PARAM_OUT_RNG = "First parameter is out of range";
   const std::string FR_PARAM_NOT_NUM = "First parameter is not a number";
   const std::string INV_VAL = "Invalid matrix data";
+  const std::string CANT_OPEN = "Cannot open file";
+  const std::string STATIC_MODE = "1";
+  const std::string DYNAMIC_MODE = "2";
 
   constexpr int EXIT_SUCCESS_CODE = 0;
   constexpr int BAD_ARGS = 1;
   constexpr int BAD_DATA = 2;
   constexpr int LEN = 10000;
+  constexpr int ARGS_COUNT = 4;
+  constexpr int MODE_IDX = 1;
+  constexpr int INPUT_IDX = 2;
+  constexpr int OUTPUT_IDX = 3;
+  constexpr char SEPARATOR = ' ';
 
-  int changeStaticArr(std::ifstream &input, std::ofstream &output, int row, int col);
-  int changeDynamicArray(std::ifstream &input, std::ofstream &output, int row, int col);
+  void changeStaticArr(std::istream &input, std::ostream &output, int row, int col);
+  void changeDynamicArray(std::istream &input, std::ostream &output, int row, int col);
+  void readMatrix(std::istream &input, int *arr, int size);
+  void writeMatrix(std::ostream &output, const int *arr, int row, int col);
   void increase(int *arr, int row, int col);
 }
 
 int main(int argc, char *argv[])
 {
-  if (argc < 4)
+  if (argc < teplikov::ARGS_COUNT)
   {
     std::cerr << teplikov::NOT_EN_ARG << "\n";
     return teplikov::BAD_ARGS;
   }
 
-  if (argc > 4)
+  if (argc > teplikov::ARGS_COUNT)
   {
     std::cerr << teplikov::TO_MAN_ARG << "\n";
     return teplikov::BAD_ARGS;
   }
 
-  const std::string arg1(argv[1]);
-  const bool is_not_single_char = arg1.length() != 1;
-  const bool is_not_digit = !std::isdigit(static_cast<unsigned char>(arg1[0]));
+  const std::string mode(argv[teplikov::MODE_IDX]);
 
-  if (is_not_single_char || is_not_digit)
+  if (mode.length() != 1 || !std::isdigit(static_cast< unsigned char >(mode[0])))
   {
     std::cerr << teplikov::FR_PARAM_NOT_NUM << "\n";
     return teplikov::BAD_ARGS;
   }
 
-  if (arg1 != "1" && arg1 != "2")
+  if (mode != teplikov::STATIC_MODE && mode != teplikov::DYNAMIC_MODE)
   {
     std::cerr << teplikov::FR_PARAM_OUT_RNG << "\n";
     return teplikov::BAD_ARGS;
   }
 
-  std::ifstream input(argv[2]);
-  std::ofstream output(argv[3]);
-
-  int row = 0;
-  int col = 0;
+  std::ifstream input(argv[teplikov::INPUT_IDX]);
+  std::ofstream output(argv[teplikov::OUTPUT_IDX]);
 
   if (!input || !output)
   {
-    std::cerr << teplikov::INV_VAL << "\n";
+    std::cerr << teplikov::CANT_OPEN << "\n";
     return teplikov::BAD_DATA;
   }
 
   try
   {
+    int row = 0;
+    int col = 0;
+
     if (!(input >> row >> col) || row < 0 || col < 0)
     {
       throw std::invalid_argument(teplikov::INV_VAL);
     }
-    if (arg1 == "1")
+
+    if (mode == teplikov::STATIC_MODE)
     {
       teplikov::changeStaticArr(input, output, row, col);
     }
@@ -80,9 +92,9 @@ int main(int argc, char *argv[])
       teplikov::changeDynamicArray(input, output, row, col);
     }
   }
-  catch (const std::invalid_argument &exspt)
+  catch (const std::invalid_argument &error)
   {
-    std::cerr << "Invalid_argument: " << exspt.what() << "\n";
+    std::cerr << "Invalid_argument: " << error.what() << "\n";
     return teplikov::BAD_DATA;
   }
   catch (const std::bad_alloc &)
@@ -94,117 +106,79 @@ int main(int argc, char *argv[])
   return teplikov::EXIT_SUCCESS_CODE;
 }
 
-namespace teplikov
+void teplikov::changeStaticArr(std::istream &input, std::ostream &output, int row, int col)
 {
-  int changeStaticArr(std::ifstream &input, std::ofstream &output, int row, int col)
+  if (row != 0 && col > LEN / row)
   {
-    if (row != 0 && col > LEN / row)
-    {
-      throw std::invalid_argument(INV_VAL);
-    }
-
-    int arr[LEN] = {0};
-
-    for (int i = 0; i < row; ++i)
-    {
-      for (int j = 0; j < col; ++j)
-      {
-        if (!(input >> arr[i * col + j]))
-        {
-          throw std::invalid_argument(INV_VAL);
-        }
-      }
-    }
-
-    int extra_num = 0;
-    if (input >> extra_num)
-    {
-      throw std::invalid_argument(INV_VAL);
-    }
-
-    increase(arr, row, col);
-
-    output << row << " " << col;
-    for (int i = 0; i < row; ++i)
-    {
-      for (int j = 0; j < col; ++j)
-      {
-        output << " " << arr[i * col + j];
-      }
-    }
-    output << "\n";
-
-    return 0;
+    throw std::invalid_argument(INV_VAL);
   }
 
-  int changeDynamicArray(std::ifstream &input, std::ofstream &output, int row, int col)
+  int arr[LEN] = {0};
+
+  readMatrix(input, arr, row * col);
+  increase(arr, row, col);
+  writeMatrix(output, arr, row, col);
+}
+
+void teplikov::changeDynamicArray(std::istream &input, std::ostream &output, int row, int col)
+{
+  if (col != 0 && row > INT_MAX / col)
   {
-    if (row < 0 || col < 0 || (col != 0 && row > INT_MAX / col))
-    {
-      throw std::invalid_argument(INV_VAL);
-    }
-
-    if (row == 0 || col == 0)
-    {
-      output << row << " " << col << "\n";
-      return 0;
-    }
-
-    int *const arr = new int[row * col]{0};
-
-    for (int i = 0; i < row; ++i)
-    {
-      for (int j = 0; j < col; ++j)
-      {
-        if (!(input >> arr[i * col + j]))
-        {
-          delete[] arr;
-          throw std::invalid_argument(INV_VAL);
-        }
-      }
-    }
-
-    int extra_num = 0;
-    if (input >> extra_num)
-    {
-      delete[] arr;
-      throw std::invalid_argument(INV_VAL);
-    }
-
-    increase(arr, row, col);
-
-    output << row << " " << col;
-    for (int i = 0; i < row; ++i)
-    {
-      for (int j = 0; j < col; ++j)
-      {
-        output << " " << arr[i * col + j];
-      }
-    }
-    output << "\n";
-
-    delete[] arr;
-
-    return 0;
+    throw std::invalid_argument(INV_VAL);
   }
 
-  void increase(int *arr, int row, int col)
+  if (row == 0 || col == 0)
   {
-    for (int i = 0; i < row; ++i)
+    writeMatrix(output, nullptr, row, col);
+    return;
+  }
+
+  const int size = row * col;
+  const std::unique_ptr< int[] > arr = std::make_unique< int[] >(size);
+
+  readMatrix(input, arr.get(), size);
+  increase(arr.get(), row, col);
+  writeMatrix(output, arr.get(), row, col);
+}
+
+void teplikov::readMatrix(std::istream &input, int *arr, int size)
+{
+  for (int i = 0; i < size; ++i)
+  {
+    if (!(input >> arr[i]))
     {
-      for (int j = 0; j < col; ++j)
-      {
-        const int top = i;
-        const int bott = row - 1 - i;
-        const int left = j;
-        const int right = col - 1 - j;
+      throw std::invalid_argument(INV_VAL);
+    }
+  }
 
-        const int v_min = (top < bott) ? top : bott;
-        const int h_min = (left < right) ? left : right;
-        const int min_bord_dst = (v_min < h_min) ? v_min : h_min;
+  int extraNum = 0;
+  if (input >> extraNum)
+  {
+    throw std::invalid_argument(INV_VAL);
+  }
+}
 
-        arr[i * col + j] += (min_bord_dst + 1);
-      }
+void teplikov::writeMatrix(std::ostream &output, const int *arr, int row, int col)
+{
+  output << row << SEPARATOR << col;
+
+  const int size = row * col;
+  for (int i = 0; i < size; ++i)
+  {
+    output << SEPARATOR << arr[i];
+  }
+
+  output << "\n";
+}
+
+void teplikov::increase(int *arr, int row, int col)
+{
+  for (int i = 0; i < row; ++i)
+  {
+    for (int j = 0; j < col; ++j)
+    {
+      const int borderDistance = std::min({i, row - 1 - i, j, col - 1 - j});
+      arr[i * col + j] += borderDistance + 1;
     }
   }
 }
