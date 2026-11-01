@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     std::ifstream input(argv[2]);
     std::ofstream output(argv[3]);
 
-    int row = 0, col = 0, rz = 0;
+    int row = 0, col = 0;
 
     if (!input || !output)
     {
@@ -68,11 +68,11 @@ int main(int argc, char* argv[])
         }
         if (std::string(argv[1]) == "1")
         {
-            rz = teplikov::changeStaticArr(input, output, row, col);
+            teplikov::changeStaticArr(input, output, row, col);
         }
         else
         {
-            rz = teplikov::changeDynamicArray(input, output, row, col);
+            teplikov::changeDynamicArray(input, output, row, col);
         }
     }
     catch (const std::invalid_argument &exspt)
