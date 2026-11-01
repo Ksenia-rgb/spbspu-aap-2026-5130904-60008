@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
   }
 
   const std::string arg1(argv[1]);
-  if (arg1.length() != 1 || !std::isdigit(static_cast<unsigned char>(arg1[0])))
+  if (arg1.length() != 1 ||
+      !std::isdigit(static_cast<unsigned char>(arg1[0])))
   {
     std::cerr << teplikov::FR_PARAM_NOT_NUM << "\n";
     return teplikov::BAD_ARGS;
