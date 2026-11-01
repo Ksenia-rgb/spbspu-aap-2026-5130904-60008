@@ -9,7 +9,7 @@ namespace ajdarbekov
   const int EXIT_CODE_FAIL = 1;
   const size_t EXIT_CODE_FAIL_READLINE = -1;
   const size_t INITAIL_CAPCITY = 16;
-  const char const *str2 = "abc_ef";
+  const char *const str2 = "abc_ef";
 
   char *getuniquechars(char *, const char *, const char *);
   size_t readLine(size_t &, size_t &, char *&);
@@ -17,7 +17,7 @@ namespace ajdarbekov
 
 int main()
 {
-  size_t capacity = INITAIL_CAPCITY;
+  size_t capacity = ajdarbekov::INITAIL_CAPCITY;
   size_t size = 0;
 
   char *str1 = static_cast<char *>(std::malloc(capacity));
@@ -68,7 +68,7 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
     if (size + 1 >= capacity)
     {
       capacity *= 2;
-      char  const *term = static_cast<char *>(std::realloc(str1, capacity));
+      char *const term = static_cast<char *>(std::realloc(str1, capacity));
       if (!term)
       {
         std::free(str1);
@@ -83,7 +83,8 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
   return size;
 }
 
-char *ajdarbekov::getuniquechars(char *buffer, const char *str1, const char *str2)
+char *ajdarbekov::getuniquechars(
+    char *buffer, const char *str1, const char *str2)
 {
   size_t sizebuffer = 0;
 
