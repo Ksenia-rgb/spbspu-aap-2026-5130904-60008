@@ -151,8 +151,8 @@ void teplikov::readMatrix(std::istream &input, int *arr, int size)
     }
   }
 
-  int extraNum = 0;
-  if (input >> extraNum)
+  int extra_num = 0;
+  if (input >> extra_num)
   {
     throw std::invalid_argument(INV_VAL);
   }
@@ -177,8 +177,8 @@ void teplikov::increase(int *arr, int row, int col)
   {
     for (int j = 0; j < col; ++j)
     {
-      const int borderDistance = std::min({i, row - 1 - i, j, col - 1 - j});
-      arr[i * col + j] += borderDistance + 1;
+      const int border_distance = std::min({i, row - 1 - i, j, col - 1 - j});
+      arr[i * col + j] += border_distance + 1;
     }
   }
 }
