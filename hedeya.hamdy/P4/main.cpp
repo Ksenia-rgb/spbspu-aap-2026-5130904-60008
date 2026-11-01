@@ -1,77 +1,157 @@
 #ifndef MAIN_CPP
 #define MAIN_CPP
 
+#include <stdio.h>
+
+#include <cctype>
+#include <climits>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <stdexcept>
+#include <new>
 
 namespace hedeya {
-  const std::size_t MAXIMUM_STRING_LENGTH = 10000;
+  const std::size_t DEFAULT_CAPACITY = 16;
+  const int INPUT_ERROR = 1;
+  const int OVERFLOW_ERROR = -2;
 
-  void printCommonCharacters(char string_1[], char string_2[]);
-  long long getIndexOfCharacter(const char arr[hedeya::MAXIMUM_STRING_LENGTH], char target);
-  void deleteElementAtIndex(char array[hedeya::MAXIMUM_STRING_LENGTH], std::size_t index);
+  class InvalidInputError: public std::runtime_error {
+  public:
+    explicit InvalidInputError(const char* message = "Invalid input"):
+      std::runtime_error(message)
+    {}
+  };
+
+  char* handleStringInput(char*& buffer, std::size_t& capacity, std::size_t& length);
+  char* getCommonCharacters(const char* string_1, const char* string_2, char* output, char* seen);
+  std::size_t getIndexOfCharacter(const char* array, char target);
+  void deleteElementAtIndex(char* array, std::size_t index);
 }
 
 int main()
 {
-  char string_1[hedeya::MAXIMUM_STRING_LENGTH] = "bc f";
-  char string_2[hedeya::MAXIMUM_STRING_LENGTH] = "abc ef";
+  std::size_t capacity = hedeya::DEFAULT_CAPACITY;
+  std::size_t string_1_length = 0;
 
-  hedeya::printCommonCharacters(string_1, string_2);
+  char* string_1 = new (std::nothrow) char[capacity];
+  if (!string_1) {
+    std::cerr << "Input error: Insufficient dynamic memory available.\n";
+    return hedeya::INPUT_ERROR;
+  }
 
-  return EXIT_SUCCESS;
+  const char* const input_result = hedeya::handleStringInput(string_1, capacity, string_1_length);
+
+  if (!input_result) {
+    delete[] string_1;
+    std::cerr << "Input error: Insufficient dynamic memory available during resizing.\n";
+    return hedeya::INPUT_ERROR;
+  }
+
+  try {
+    const char string_2[] = "abc ef";
+    const std::size_t string_2_length = std::strlen(string_2);
+    const std::size_t max_length = (string_1_length < string_2_length) ? string_1_length : string_2_length;
+
+    char* const common_buffer = new (std::nothrow) char[max_length + 1];
+    char* const seen_buffer = new (std::nothrow) char[max_length + 1];
+
+    if (!common_buffer || !seen_buffer) {
+      delete[] string_1;
+      delete[] common_buffer;
+      delete[] seen_buffer;
+      std::cerr << "Invalid input error: Insufficient dynamic memory available.\n";
+      return hedeya::INPUT_ERROR;
+    }
+
+    const char* const common = hedeya::getCommonCharacters(string_1, string_2, common_buffer, seen_buffer);
+
+    std::cout << common << "\n";
+
+    delete[] string_1;
+    delete[] common_buffer;
+    delete[] seen_buffer;
+    return EXIT_SUCCESS;
+
+  } catch (const hedeya::InvalidInputError& error) {
+    std::cerr << "Invalid input error: " << error.what() << "\n";
+    return hedeya::INPUT_ERROR;
+  }
 }
 
 namespace hedeya {
-  void printCommonCharacters(char string_1[], char string_2[])
+  char* handleStringInput(char*& buffer, std::size_t& capacity, std::size_t& length)
   {
-    char seen[hedeya::MAXIMUM_STRING_LENGTH] = {};
-    char common[hedeya::MAXIMUM_STRING_LENGTH] = {};
+    length = 0;
+    int character = 0;
 
-    const char* shortest_string = string_1;
-    const char* longest_string = string_2;
+    while ((character = std::cin.get()) != EOF && character != '\n') {
+      if (length + 1 >= capacity) {
+        capacity *= 2;
 
-    if (strlen(string_2) < strlen(string_1)) {
-      shortest_string = string_2;
-      longest_string = string_1;
+        char* const temp = new (std::nothrow) char[capacity];
+        if (!temp) {
+          return nullptr;
+        }
+
+        std::memcpy(temp, buffer, length);
+        delete[] buffer;
+        buffer = temp;
+      }
+      buffer[length++] = static_cast< char >(character);
     }
+    buffer[length] = '\0';
 
-    strcpy(seen, shortest_string);  // NOLINT(clang-diagnostic-deprecated-declarations)
+    return buffer;
+  }
+
+  char* getCommonCharacters(const char* string_1, const char* string_2, char* output, char* seen)
+  {
+    const std::size_t string_1_length = std::strlen(string_1);
+    const std::size_t string_2_length = std::strlen(string_2);
+
+    const char* const shortest_string = (string_1_length < string_2_length) ? string_1 : string_2;
+    const char* const longest_string = (string_1_length < string_2_length) ? string_2 : string_1;
+    const std::size_t longest_length = (string_1_length > string_2_length) ? string_1_length : string_2_length;
+
+    std::strcpy(seen, shortest_string);
 
     std::size_t common_index = 0;
 
-    for (std::size_t i = 0; i < strlen(longest_string); ++i) {
+    for (std::size_t i = 0; i < longest_length; ++i) {
       const char current_character = longest_string[i];
-      const long long seen_index = getIndexOfCharacter(seen, current_character);
 
-      if (seen_index != -1) {
-        common[common_index] = current_character;
+      if (std::iscntrl(static_cast< unsigned char >(current_character))) {
+        continue;
+      }
+
+      const std::size_t seen_index = getIndexOfCharacter(seen, current_character);
+
+      if (seen_index != static_cast< std::size_t >(-1)) {
+        output[common_index++] = current_character;
         deleteElementAtIndex(seen, seen_index);
-        ++common_index;
       }
     }
 
-    std::cout << common;
+    output[common_index] = '\0';
+    return output;
   }
 
-  long long getIndexOfCharacter(const char array[hedeya::MAXIMUM_STRING_LENGTH], char target)
+  std::size_t getIndexOfCharacter(const char* array, char target)
   {
-    std::size_t length = strlen(array);
-
-    for (long long i = 0; i < length; i++) {
+    const std::size_t length = std::strlen(array);
+    for (std::size_t i = 0; i < length; ++i) {
       if (array[i] == target) {
         return i;
       }
     }
-    return -1;
+    return static_cast< std::size_t >(-1);
   }
 
-  void deleteElementAtIndex(char array[hedeya::MAXIMUM_STRING_LENGTH], std::size_t index)
+  void deleteElementAtIndex(char* array, std::size_t index)
   {
-    std::size_t size = strlen(array);
-
-    for (std::size_t i = index; i < size - index; ++i) {
+    const std::size_t size = std::strlen(array);
+    for (std::size_t i = index; i < size; ++i) {
       array[i] = array[i + 1];
     }
   }
