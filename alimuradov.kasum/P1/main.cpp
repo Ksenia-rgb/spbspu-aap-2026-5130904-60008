@@ -2,62 +2,62 @@
 
 namespace alimuradov
 {
-
-int maxRun(std::istream& in)
-{
-  int prev = 0;
-  int cur = 0;
-  int curlen = 1;
-  int maxlen = 1;
-
-  if (!(in >> prev))
+  int maxRun(std::istream& in)
   {
-    std::cerr << "cannot read sequence\n";
-    return -1;
-  }
+    int prev = 0;
+    int cur = 0;
+    int curlen = 1;
+    int maxlen = 1;
 
-  if (prev == 0)
-  {
-  return 0;
-  }
-
-  bool terminated_by_zero = false;
-  while (in >> cur)
-  {
-    if (cur == 0)
+    if (!(in >> prev))
     {
-      terminated_by_zero = true;
-      break;
+      std::cerr << "cannot read sequence\n";
+      return -1;
     }
-    if(cur <= prev)
+
+    if (prev == 0)
     {
-      curlen++;
+      return 0;
     }
-    else
+
+    bool terminated_by_zero = false;
+    while (in >> cur)
     {
-      if (curlen > maxlen)
+      if (cur == 0)
       {
-        maxlen = curlen;
+        terminated_by_zero = true;
+        break;
       }
-      curlen = 1;
+
+      if (cur <= prev)
+      {
+        curlen++;
+      }
+      else
+      {
+        if (curlen > maxlen)
+        {
+          maxlen = curlen;
+        }
+        curlen = 1;
+      }
+
+      prev = cur;
     }
-    prev = cur;
+
+    if (!terminated_by_zero)
+    {
+      std::cerr << "cannot read sequence\n";
+      return -1;
+    }
+
+    if (curlen > maxlen)
+    {
+      maxlen = curlen;
+    }
+
+    return maxlen;
   }
-
-  if (!terminated_by_zero)
-  {
-    std::cerr << "cannot read sequence\n";
-    return -1;
-  }
-
-  if(curlen > maxlen)
-  {
-    maxlen = curlen;
-  }
-
-  return maxlen;
-}
-
 }
 
 int main()
