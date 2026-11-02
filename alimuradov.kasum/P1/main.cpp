@@ -18,7 +18,7 @@ int maxRun(std::istream& in)
 
   if (prev == 0)
   {
-    return 0;
+  return 0;
   }
 
   bool terminated_by_zero = false;
@@ -29,7 +29,7 @@ int maxRun(std::istream& in)
       terminated_by_zero = true;
       break;
     }
-    if (cur <= prev)
+    if(cur <= prev)
     {
       curlen++;
     }
@@ -50,7 +50,7 @@ int maxRun(std::istream& in)
     return -1;
   }
 
-  if (curlen > maxlen)
+  if(curlen > maxlen)
   {
     maxlen = curlen;
   }
@@ -59,7 +59,6 @@ int maxRun(std::istream& in)
 }
 
 }
-
 
 int main()
 {
