@@ -8,15 +8,16 @@ namespace ajdarbekov
 const int EXIT_CODE_SUCCESS = 0;
 const int EXIT_CODE_FAIL = 1;
 const size_t EXIT_CODE_FAIL_READLINE = -1;
-const char *str2 = "abc_ef";
+const char *const str2 = "abc_ef";
 
-char *getuniquechars(char *, char *, const char *);
+char *getuniquechars(char *, const char *, const char *);
 size_t readLine(size_t &, size_t &, char *&);
-}
+} // namespace ajdarbekov
 
 int main()
 {
-  size_t capacity = 16;
+  const size_t INITIAL_CAPACITY = 16;
+  size_t capacity = INITIAL_CAPACITY;
   size_t size = 0;
 
   char *str1 = static_cast< char * >(std::malloc(capacity));
@@ -29,11 +30,12 @@ int main()
   size = ajdarbekov::readLine(size, capacity, str1);
   if (size == ajdarbekov::EXIT_CODE_FAIL_READLINE)
   {
+    std::free(str1);
     std::cerr << "Memory allocation error";
     return ajdarbekov::EXIT_CODE_FAIL;
   }
 
-  size_t result_capacity = size + std::strlen(ajdarbekov::str2) + 1;
+  const size_t result_capacity = size + std::strlen(ajdarbekov::str2) + 1;
   char *buffer = static_cast< char * >(std::malloc(result_capacity));
   buffer = ajdarbekov::getuniquechars(buffer, str1, ajdarbekov::str2);
 
@@ -59,7 +61,7 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
     if (size + 1 >= capacity)
     {
       capacity *= 2;
-      char *term = static_cast< char * >(std::realloc(str1, capacity));
+      char *const term = static_cast< char * >(std::realloc(str1, capacity));
       if (!term)
       {
         std::free(str1);
@@ -80,7 +82,8 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
   return size;
 }
 
-char *ajdarbekov::getuniquechars(char *buffer, char *str1, const char *str2)
+char *ajdarbekov::getuniquechars(char *buffer, const char *str1,
+                                 const char *str2)
 {
   size_t sizebuffer = 0;
 
@@ -100,7 +103,6 @@ char *ajdarbekov::getuniquechars(char *buffer, char *str1, const char *str2)
 
       if (flag1 == 0)
       {
-
         int flag2 = 0;
         for (size_t k = 0; k < sizebuffer; ++k)
         {
@@ -135,7 +137,6 @@ char *ajdarbekov::getuniquechars(char *buffer, char *str1, const char *str2)
 
       if (flag1 == 0)
       {
-
         int flag2 = 0;
         for (size_t k = 0; k < sizebuffer; ++k)
         {
