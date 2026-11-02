@@ -13,7 +13,7 @@ namespace kilyan
     {
       return INPUT_ERROR;
     }
-    int next_char = infile.peek();
+    const int next_char = infile.peek();
     if (next_char == EOF || !std::isspace(next_char))
     {
       return INPUT_ERROR;
@@ -46,7 +46,7 @@ namespace kilyan
     {
       for (int j = 0; j < cols; ++j)
       {
-        int next_char = infile.peek();
+        const int next_char = infile.peek();
         if (next_char == EOF || !std::isspace(next_char))
         {
           return INPUT_ERROR;
