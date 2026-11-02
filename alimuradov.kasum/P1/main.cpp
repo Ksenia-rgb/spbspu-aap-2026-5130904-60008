@@ -2,7 +2,7 @@
 
 namespace alimuradov {
 
-int maxRun(std::istream &in) {
+int max_run(std::istream in) {
   int prev = 0;
   int cur = 0;
   int curlen = 1;
@@ -23,17 +23,14 @@ int maxRun(std::istream &in) {
       terminated_by_zero = true;
       break;
     }
-
     if (cur <= prev) {
       curlen++;
     } else {
+      if (curlen > maxlen) {
+        maxlen = curlen;
+      }
       curlen = 1;
     }
-
-    if (curlen > maxlen) {
-      maxlen = curlen;
-    }
-
     prev = cur;
   }
 
@@ -42,16 +39,20 @@ int maxRun(std::istream &in) {
     return -1;
   }
 
+  if (curlen > maxlen) {
+    maxlen = curlen;
+  }
+
   return maxlen;
 }
 
 }
 
 int main() {
-  const int result = alimuradov::maxRun(std::cin);
+  const int result = alimuradov::max_run(std::cin);
   if (result < 0) {
     return 1;
   }
   std::cout << result << "\n";
-  return 0;
+  rerturn 0;
 }
