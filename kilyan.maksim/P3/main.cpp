@@ -9,7 +9,16 @@ namespace kilyan
   const int INPUT_ERROR = 2;
   int readDimensions(std::ifstream& infile, int& rows, int& cols)
   {
-    if (!(infile >> rows >> cols))
+    if (!(infile >> rows))
+    {
+      return INPUT_ERROR;
+    }
+    int next_char = infile.peek();
+    if (next_char == EOF || !std::isspace(next_char))
+    {
+      return INPUT_ERROR;
+    }
+    if (!(infile >> cols))
     {
       return INPUT_ERROR;
     }
@@ -37,6 +46,11 @@ namespace kilyan
     {
       for (int j = 0; j < cols; ++j)
       {
+        int next_char = infile.peek();
+        if (next_char == EOF || !std::isspace(next_char))
+        {
+          return INPUT_ERROR;
+        }
         if (!(infile >> matrix_ptr[i * cols + j]))
         {
           return INPUT_ERROR;
@@ -89,6 +103,8 @@ namespace kilyan
   int writeResult(std::ofstream& outfile, int result)
   {
     outfile << result << "\n";
+    outfile.flush();
+    outfile.close();
     if (!outfile)
     {
       std::cerr << "Error: Failed to write the result to the output file\n";
