@@ -2,7 +2,7 @@
 
 namespace alimuradov {
 
-int max_run(std::istream in) {
+int max_run(std::istream& in) {
   int prev = 0;
   int cur = 0;
   int curlen = 1;
@@ -54,5 +54,5 @@ int main() {
     return 1;
   }
   std::cout << result << "\n";
-  rerturn 0;
+  return 0;
 }
