@@ -5,14 +5,14 @@
 
 namespace ajdarbekov
 {
-const int EXIT_CODE_SUCCESS = 0;
-const int EXIT_CODE_FAIL = 1;
-const size_t EXIT_CODE_FAIL_READLINE = -1;
-const char *const str2 = "abc_ef";
+  const int EXIT_CODE_SUCCESS = 0;
+  const int EXIT_CODE_FAIL = 1;
+  const size_t EXIT_CODE_FAIL_READLINE = -1;
+  const char *const str2 = "abc_ef";
 
-char *getuniquechars(char *, const char *, const char *);
-size_t readLine(size_t &, size_t &, char *&);
-} // namespace ajdarbekov
+  char *getuniquechars(char *, const char *, const char *);
+  size_t readLine(size_t &, size_t &, char *&);
+}
 
 int main()
 {
@@ -82,8 +82,7 @@ size_t ajdarbekov::readLine(size_t &size, size_t &capacity, char *&str1)
   return size;
 }
 
-char *ajdarbekov::getuniquechars(char *buffer, const char *str1,
-                                 const char *str2)
+char *ajdarbekov::getuniquechars(char *buffer, const char *str1, const char *str2)
 {
   size_t sizebuffer = 0;
 
