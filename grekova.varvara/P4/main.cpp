@@ -32,12 +32,10 @@ int main()
   if (grekova::findDuplicate(str) == grekova::EXIT_ERROR) {
     std::cerr << "Memory allocation error\n";
     std::free(str);
-    std::free(result);
     return grekova::EXIT_ERROR;
   }
 
   std::free(str);
-  std::free(result);
 
   return EXIT_SUCCESS;
 }
@@ -80,8 +78,9 @@ namespace grekova {
     for (; str[len] != '\0'; ++len) {
     }
 
-    const char *result = static_cast< char * >(std::malloc(len + 1));
+    char *result = static_cast< char * >(std::malloc(len + 1));
     if (result == nullptr) {
+      std::free(result);
       return grekova::EXIT_ERROR;
     }
 
@@ -116,6 +115,7 @@ namespace grekova {
 
     result[res_idx] = '\0';
     std::cout << result << '\n';
+    std::free(result);
 
     return EXIT_SUCCESS;
   }
