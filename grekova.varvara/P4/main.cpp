@@ -78,7 +78,7 @@ namespace grekova {
     for (; str[len] != '\0'; ++len) {
     }
 
-    char *result = static_cast< char * >(std::malloc(len + 1));
+    char *const result = static_cast< char * >(std::malloc(len + 1));
     if (result == nullptr) {
       std::free(result);
       return grekova::EXIT_ERROR;
