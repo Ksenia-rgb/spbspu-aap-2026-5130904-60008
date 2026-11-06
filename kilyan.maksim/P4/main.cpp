@@ -21,7 +21,7 @@ namespace kilyan
       if (current_length + 1 >= current_capacity)
       {
         const size_t next_capacity = current_capacity * 2;
-        char* extended_buffer = new(std::nothrow) char[next_capacity];
+        char *const extended_buffer = new(std::nothrow) char[next_capacity];
         if (extended_buffer == nullptr)
         {
           delete[] input_buffer;
@@ -36,7 +36,7 @@ namespace kilyan
         input_buffer = extended_buffer;
         current_capacity = next_capacity;
       }
-      input_buffer[current_length] = static_cast<char>(input_char);
+      input_buffer[current_length] = static_cast< char >(input_char);
       current_length++;
       input_char = std::cin.get();
     }
@@ -51,26 +51,26 @@ namespace kilyan
     }
     const char* reader = src;
     size_t write_pos = 0;
-    while (*reader != '\0' && std::isspace(static_cast<unsigned char>(*reader)))
+    while (*reader != '\0' && std::isspace(static_cast< unsigned char >(*reader)))
     {
       reader++;
     }
     while (*reader != '\0')
     {
-      if (!std::isspace(static_cast<unsigned char>(*reader)))
+      if (!std::isspace(static_cast< unsigned char >(*reader)))
       {
         dst[write_pos++] = *reader;
       }
       else
       {
-        if (write_pos > 0 && !std::isspace(static_cast<unsigned char>(dst[write_pos - 1])))
+        if (write_pos > 0 && !std::isspace(static_cast< unsigned char >(dst[write_pos - 1])))
         {
           dst[write_pos++] = ' ';
         }
       }
       reader++;
     }
-    if (write_pos > 0 && std::isspace(static_cast<unsigned char>(dst[write_pos - 1])))
+    if (write_pos > 0 && std::isspace(static_cast< unsigned char >(dst[write_pos - 1])))
     {
       write_pos--;
     }
@@ -93,7 +93,7 @@ int main()
     std::cerr << "Memory allocation failed during reading\n";
     return kilyan::MEMORY_ERROR;
   }
-  char* clean_string = new(std::nothrow) char[final_length + 1];
+  char *const clean_string = new(std::nothrow) char[final_length + 1];
   if (clean_string == nullptr)
   {
     delete[] src_string;
