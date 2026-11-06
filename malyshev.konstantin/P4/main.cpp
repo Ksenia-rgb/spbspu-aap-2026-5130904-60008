@@ -23,25 +23,24 @@ int main()
   {
     source = malyshev::readLine(std::cin);
 
-    if (std::cin.bad() || source == nullptr)
+    if (std::cin.bad())
     {
       delete[] source;
-      std::cerr << "ERROR INPUT";
+      std::cerr << "ERROR INPUT\n";
       return malyshev::ERROR_INPUT;
     }
 
-    if (source[0] == '\0')
+    if (source == nullptr)
     {
-      delete[] source;
-      std::cerr << "ERROR INPUT";
-      return malyshev::ERROR_INPUT;
+      std::cerr << "ERROR MEMORY\n";
+      return malyshev::ERROR_MEMORY;
     }
 
     const size_t length = std::strlen(source);
     if (length == std::numeric_limits< size_t >::max())
     {
       delete[] source;
-      std::cerr << "ERROR MEMORY";
+      std::cerr << "ERROR MEMORY\n";
       return malyshev::ERROR_MEMORY;
     }
 
@@ -49,12 +48,12 @@ int main()
     if (res == nullptr)
     {
       delete[] source;
-      std::cerr << "ERROR MEMORY";
+      std::cerr << "ERROR MEMORY\n";
       return malyshev::ERROR_MEMORY;
     }
 
     malyshev::convertCase(res, source);
-    std::cout << res;
+    std::cout << res << '\n';
 
     delete[] res;
     delete[] source;
@@ -64,7 +63,7 @@ int main()
   {
     delete[] res;
     delete[] source;
-    std::cerr << "ERROR MEMORY";
+    std::cerr << "ERROR MEMORY\n";
     return malyshev::ERROR_MEMORY;
   }
 }
