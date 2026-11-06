@@ -14,8 +14,7 @@ namespace kilyan
     int input_char = std::cin.get();
     if (input_char == EOF)
     {
-      input_buffer[0] = '\0';
-      return 0;
+      return static_cast< size_t >(-1);
     }
     while (input_char != '\n' && input_char != EOF)
     {
@@ -91,6 +90,12 @@ int main()
     return kilyan::MEMORY_ERROR;
   }
   const size_t final_length = kilyan::readStream(src_string, initial_capacity);
+  if (final_length == static_cast< size_t >(-1))
+  {
+    std::cerr << "Empty input error\n";
+    delete[] src_string;
+    return kilyan::MEMORY_ERROR;
+  }
   if (src_string == nullptr)
   {
     std::cerr << "Memory allocation failed during reading\n";
