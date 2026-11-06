@@ -26,14 +26,14 @@ int main()
     if (std::cin.bad() || source == nullptr)
     {
       delete[] source;
-      std::cerr << "ERROR INPUT\n";
+      std::cerr << "ERROR INPUT";
       return malyshev::ERROR_INPUT;
     }
 
     if (source[0] == '\0')
     {
       delete[] source;
-      std::cerr << "ERROR INPUT\n";
+      std::cerr << "ERROR INPUT";
       return malyshev::ERROR_INPUT;
     }
 
@@ -41,7 +41,7 @@ int main()
     if (length == std::numeric_limits< size_t >::max())
     {
       delete[] source;
-      std::cerr << "ERROR MEMORY\n";
+      std::cerr << "ERROR MEMORY";
       return malyshev::ERROR_MEMORY;
     }
 
@@ -49,12 +49,12 @@ int main()
     if (res == nullptr)
     {
       delete[] source;
-      std::cerr << "ERROR MEMORY\n";
+      std::cerr << "ERROR MEMORY";
       return malyshev::ERROR_MEMORY;
     }
 
     malyshev::convertCase(res, source);
-    std::cout << res << '\n';
+    std::cout << res;
 
     delete[] res;
     delete[] source;
@@ -64,7 +64,7 @@ int main()
   {
     delete[] res;
     delete[] source;
-    std::cerr << "ERROR MEMORY\n";
+    std::cerr << "ERROR MEMORY";
     return malyshev::ERROR_MEMORY;
   }
 }
@@ -89,7 +89,6 @@ namespace malyshev
       return nullptr;
     }
 
-    // Если первый символ не Enter, обрабатываем строку
     if (ch != '\n')
     {
       data[size++] = ch;
@@ -104,7 +103,6 @@ namespace malyshev
           }
 
           const size_t newCapacity = capacity * 2;
-          // Исправили ошибку 2: добавили const к неизменяемому указателю exp
           char* const exp = new (std::nothrow) char[newCapacity];
           if (exp == nullptr)
           {
