@@ -5,89 +5,97 @@
 namespace kilyan
 {
   const int SUCCESS = 0;
-  const int INPUT_ERROR = 1;
+  const int MEMORY_ERROR = 1;
+  size_t readStream(char*& inputBuffer, size_t& currentCapacity)
+  {
+    size_t currentLength = 0;
+    int inputChar = 0;
+    while ((inputChar = std::cin.get()) != '\n' && inputChar != EOF)
+    {
+      if (currentLength + 1 >= currentCapacity)
+      {
+        size_t nextCapacity = currentCapacity * 2;
+        char* extendedBuffer = new(std::nothrow) char[nextCapacity];
+        if (extendedBuffer == nullptr)
+        {
+          delete[] inputBuffer;
+          inputBuffer = nullptr;
+          return 0;
+        }
+        for (size_t i = 0; i < currentLength; ++i)
+        {
+          extendedBuffer[i] = inputBuffer[i];
+        }
+        delete[] inputBuffer;
+        inputBuffer = extendedBuffer;
+        currentCapacity = nextCapacity;
+      }
+      inputBuffer[currentLength] = static_cast<char>(inputChar);
+      currentLength++;
+    }
+    inputBuffer[currentLength] = '\0';
+    return currentLength;
+  }
   char* removeExtraSpaces(const char* src, char* dst)
   {
     if (src == nullptr || dst == nullptr)
     {
       return dst;
     }
-    size_t readIndex = 0;
-    size_t writeIndex = 0;
-    while (src[readIndex] != '\0' && std::isspace(static_cast<unsigned char>(src[readIndex])))
+    const char* reader = src;
+    size_t writePos = 0;
+    while (*reader != '\0' && std::isspace(static_cast<unsigned char>(*reader)))
     {
-      readIndex++;
+      reader++;
     }
-    while (src[readIndex] != '\0')
+    while (*reader != '\0')
     {
-      if (!std::isspace(static_cast<unsigned char>(src[readIndex])))
+      if (!std::isspace(static_cast<unsigned char>(*reader)))
       {
-        dst[writeIndex] = src[readIndex];
-        writeIndex++;
+        dst[writePos++] = *reader;
       }
       else
       {
-        if (writeIndex > 0 && !std::isspace(static_cast<unsigned char>(dst[writeIndex - 1])))
+        if (writePos > 0 && !std::isspace(static_cast<unsigned char>(dst[writePos - 1])))
         {
-          dst[writeIndex] = ' ';
-          writeIndex++;
+          dst[writePos++] = ' ';
         }
       }
-      readIndex++;
+      reader++;
     }
-    if (writeIndex > 0 && std::isspace(static_cast<unsigned char>(dst[writeIndex - 1])))
+    if (writePos > 0 && std::isspace(static_cast<unsigned char>(dst[writePos - 1])))
     {
-      writeIndex--;
+      writePos--;
     }
-    dst[writeIndex] = '\0';
+    dst[writePos] = '\0';
     return dst;
   }
 }
 int main()
 {
-  size_t capacity = 10;
-  size_t length = 0;
-  char* src = new(std::nothrow) char[capacity];
-  if (src == nullptr)
+  size_t initialCapacity = 16;
+  char* srcString = new(std::nothrow) char[initialCapacity];
+  if (srcString == nullptr)
   {
-    std::cerr << "Error\n";
-    return kilyan::INPUT_ERROR;
+    std::cerr << "Memory allocation failed\n";
+    return kilyan::MEMORY_ERROR;
   }
-  int ch;
-  while ((ch = std::cin.get()) != '\n' && ch != EOF)
+  size_t finalLength = kilyan::readStream(srcString, initialCapacity);
+  if (srcString == nullptr)
   {
-    if (length + 1 >= capacity)
-    {
-      size_t newCapacity = capacity * 2;
-      char* new_src = new(std::nothrow) char[newCapacity];
-      if (new_src == nullptr)
-      {
-        delete[] src;
-        std::cerr << "Error\n";
-        return kilyan::INPUT_ERROR;
-      }
-      for (size_t i = 0; i < length; i++)
-      {
-        new_src[i] = src[i];
-      }
-      delete[] src;
-      src = new_src;
-      capacity = newCapacity;
-    }
-    src[length] = static_cast<char>(ch);
-    length++;
+    std::cerr << "Memory allocation failed during reading\n";
+    return kilyan::MEMORY_ERROR;
   }
-  src[length] = '\0';
-  char* dst = new(std::nothrow) char[length + 1];
-  if (dst == nullptr)
+  char* cleanString = new(std::nothrow) char[finalLength + 1];
+  if (cleanString == nullptr)
   {
-    delete[] src;
-    std::cerr << "Error\n";
-    return kilyan::INPUT_ERROR;
+    delete[] srcString;
+    std::cerr << "Memory allocation failed for destination\n";
+    return kilyan::MEMORY_ERROR;
   }
-  kilyan::removeExtraSpaces(src, dst);
-  std::cout << dst << '\n';
-  delete[] dst;
-  delete[] src;
+  kilyan::removeExtraSpaces(srcString, cleanString);
+  std::cout << cleanString << '\n';
+  delete[] cleanString;
+  delete[] srcString;
   return kilyan::SUCCESS;
 }
