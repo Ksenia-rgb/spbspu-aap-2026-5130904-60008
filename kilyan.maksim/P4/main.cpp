@@ -21,7 +21,7 @@ namespace kilyan
       if (current_length + 1 >= current_capacity)
       {
         const size_t next_capacity = current_capacity * 2;
-        char *const extended_buffer = new(std::nothrow) char[next_capacity];
+        char *const extended_buffer = new (std::nothrow) char[next_capacity];
         if (extended_buffer == nullptr)
         {
           delete[] input_buffer;
@@ -43,7 +43,7 @@ namespace kilyan
     input_buffer[current_length] = '\0';
     return current_length;
   }
-  char* removeExtraSpaces(const char* src, char* dst)
+  char *removeExtraSpaces(const char *src, char *dst)
   {
     if (src == nullptr || dst == nullptr)
     {
@@ -81,7 +81,7 @@ namespace kilyan
 int main()
 {
   size_t initial_capacity = kilyan::DEFAULT_CAPACITY;
-  char* src_string = new(std::nothrow) char[initial_capacity];
+  char *src_string = new (std::nothrow) char[initial_capacity];
   if (src_string == nullptr)
   {
     std::cerr << "Memory allocation failed\n";
@@ -93,7 +93,7 @@ int main()
     std::cerr << "Memory allocation failed during reading\n";
     return kilyan::MEMORY_ERROR;
   }
-  char *const clean_string = new(std::nothrow) char[final_length + 1];
+  char *const clean_string = new (std::nothrow) char[final_length + 1];
   if (clean_string == nullptr)
   {
     delete[] src_string;
