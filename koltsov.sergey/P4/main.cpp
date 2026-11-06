@@ -8,7 +8,7 @@ namespace koltsov {
   constexpr int SUCCESS_CODE = 0;
   constexpr int ERR_CODE = 1;
   constexpr std::size_t INIT_BUF = 2;
-  constexpr std::size_t INVALID_LEN = static_cast<std::size_t>(-1);
+  constexpr std::size_t INVALID_LEN = static_cast< std::size_t >(-1);
 
   int loadLine(char *&buf, std::size_t &len, std::size_t &cap);
   int growBuf(char *&buf, std::size_t &cap);
@@ -19,7 +19,7 @@ int main()
 {
   std::size_t len = 0;
   std::size_t cap = koltsov::INIT_BUF;
-  char *line = static_cast<char *>(std::malloc(cap));
+  char *line = static_cast< char * >(std::malloc(cap));
 
   if (line == nullptr) {
     std::cerr << "Memory allocation error\n";
@@ -32,7 +32,7 @@ int main()
     return koltsov::ERR_CODE;
   }
 
-  char *clean = static_cast<char *>(std::malloc(len + 1));
+  char *const clean = static_cast< char * >(std::malloc(len + 1));
   if (clean == nullptr) {
     std::free(line);
     std::cerr << "Memory allocation error\n";
@@ -62,7 +62,7 @@ int main()
 int koltsov::growBuf(char *&buf, std::size_t &cap)
 {
   cap *= 2;
-  char *const tmp = static_cast<char *>(std::realloc(buf, cap));
+  char *const tmp = static_cast< char * >(std::realloc(buf, cap));
   if (tmp == nullptr) {
     return ERR_CODE;
   }
@@ -82,7 +82,7 @@ int koltsov::loadLine(char *&buf, std::size_t &len, std::size_t &cap)
         return ERR_CODE;
       }
     }
-    buf[len] = static_cast<char>(ch);
+    buf[len] = static_cast< char >(ch);
     ++len;
     ch = std::getchar();
   }
@@ -101,7 +101,7 @@ std::size_t koltsov::squeezeSpaces(const char *in, char *out)
   int at_start = 1;
 
   for (std::size_t i = 0; in[i] != '\0'; ++i) {
-    const unsigned char c = static_cast<unsigned char>(in[i]);
+    const unsigned char c = static_cast< unsigned char >(in[i]);
 
     if (std::isspace(c)) {
       if ((at_start != 0) || (had_space != 0)) {
