@@ -8,6 +8,7 @@ namespace malyshev
 {
   const int ERROR_MEMORY = 1;
   const int ERROR_INPUT = 2;
+  const size_t CAPACITY = 16;
 
   char* readLine(std::istream& input);
   char* convertCase(char* dst, const char* src) noexcept;
@@ -22,24 +23,25 @@ int main()
   {
     source = malyshev::readLine(std::cin);
 
-    if (std::cin.bad())
+    if (std::cin.bad() || source == nullptr)
     {
       delete[] source;
-      std::cerr << "ERROR INPUT";
+      std::cerr << "ERROR INPUT\n";
       return malyshev::ERROR_INPUT;
     }
 
-    if (source == nullptr)
+    if (source[0] == '\0')
     {
-      std::cerr << "ERROR MEMORY";
-      return malyshev::ERROR_MEMORY;
+      delete[] source;
+      std::cerr << "ERROR INPUT\n";
+      return malyshev::ERROR_INPUT;
     }
 
     const size_t length = std::strlen(source);
     if (length == std::numeric_limits< size_t >::max())
     {
       delete[] source;
-      std::cerr << "ERROR MEMORY";
+      std::cerr << "ERROR MEMORY\n";
       return malyshev::ERROR_MEMORY;
     }
 
@@ -47,12 +49,12 @@ int main()
     if (res == nullptr)
     {
       delete[] source;
-      std::cerr << "ERROR MEMORY";
+      std::cerr << "ERROR MEMORY\n";
       return malyshev::ERROR_MEMORY;
     }
 
     malyshev::convertCase(res, source);
-    std::cout << res;
+    std::cout << res << '\n';
 
     delete[] res;
     delete[] source;
@@ -62,7 +64,7 @@ int main()
   {
     delete[] res;
     delete[] source;
-    std::cerr << "ERROR MEMORY";
+    std::cerr << "ERROR MEMORY\n";
     return malyshev::ERROR_MEMORY;
   }
 }
@@ -71,7 +73,7 @@ namespace malyshev
 {
   char* readLine(std::istream& input)
   {
-    size_t capacity = 16;
+    size_t capacity = CAPACITY;
     size_t size = 0;
 
     char* data = new (std::nothrow) char[capacity];
@@ -81,36 +83,49 @@ namespace malyshev
     }
 
     char ch = '\0';
-    while (input.get(ch) && ch != '\n')
+    if (!input.get(ch))
     {
-      if (size == capacity - 1)
-      {
-        if (capacity > std::numeric_limits< std::size_t >::max() / 2)
-        {
-          delete[] data;
-          return nullptr;
-        }
-
-        const size_t newCapacity = capacity * 2;
-        char* exp = new (std::nothrow) char[newCapacity];
-        if (exp == nullptr)
-        {
-          delete[] data;
-          return nullptr;
-        }
-
-        for (size_t i = 0; i < size; i++)
-        {
-          exp[i] = data[i];
-        }
-
-        delete[] data;
-        data = exp;
-        capacity = newCapacity;
-      }
-
-      data[size++] = ch;
+      delete[] data;
+      return nullptr;
     }
+
+    // Если первый символ не Enter, обрабатываем строку
+    if (ch != '\n')
+    {
+      data[size++] = ch;
+      while (input.get(ch) && ch != '\n')
+      {
+        if (size == capacity - 1)
+        {
+          if (capacity > std::numeric_limits< std::size_t >::max() / 2)
+          {
+            delete[] data;
+            return nullptr;
+          }
+
+          const size_t newCapacity = capacity * 2;
+          // Исправили ошибку 2: добавили const к неизменяемому указателю exp
+          char* const exp = new (std::nothrow) char[newCapacity];
+          if (exp == nullptr)
+          {
+            delete[] data;
+            return nullptr;
+          }
+
+          for (size_t i = 0; i < size; i++)
+          {
+            exp[i] = data[i];
+          }
+
+          delete[] data;
+          data = exp;
+          capacity = newCapacity;
+        }
+
+        data[size++] = ch;
+      }
+    }
+
     data[size] = '\0';
     return data;
   }
