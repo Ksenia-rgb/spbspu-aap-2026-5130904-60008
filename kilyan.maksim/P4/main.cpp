@@ -9,8 +9,13 @@ namespace kilyan
   size_t readStream(char*& inputBuffer, size_t& currentCapacity)
   {
     size_t currentLength = 0;
-    int inputChar = 0;
-    while ((inputChar = std::cin.get()) != '\n' && inputChar != EOF)
+    int inputChar = std::cin.get();
+    if (inputChar == EOF)
+    {
+      inputBuffer[0] = '\0';
+      return 0;
+    }
+    while (inputChar != '\n' && inputChar != EOF)
     {
       if (currentLength + 1 >= currentCapacity)
       {
@@ -32,6 +37,7 @@ namespace kilyan
       }
       inputBuffer[currentLength] = static_cast<char>(inputChar);
       currentLength++;
+      inputChar = std::cin.get();
     }
     inputBuffer[currentLength] = '\0';
     return currentLength;
