@@ -10,19 +10,19 @@ namespace lab4 {
   constexpr std::size_t kInitialCapacity = 16;
   char* interleave(char* dst, const char* s1, const char* s2) noexcept
   {
-    std::size_t i = 0;
-    std::size_t j = 0;
+    const std::size_t len1 = std::strlen(s1);
+    const std::size_t len2 = std::strlen(s2);
+    const std::size_t n = (len1 > len2) ? len1 : len2;
 
-    while (s1[i] != '\0' || s2[i] != '\0') {
-      if (s1[i] != '\0') {
+    std::size_t j = 0;
+    for (std::size_t i = 0; i < n; ++i) {
+      if (i < len1) {
         dst[j++] = s1[i];
       }
-      if (s2[i] != '\0') {
+      if (i < len2) {
         dst[j++] = s2[i];
       }
-      ++i;
     }
-
     dst[j] = '\0';
     return dst;
   }
@@ -34,7 +34,7 @@ namespace lab4 {
     std::size_t capacity = kInitialCapacity;
     std::size_t size = 0;
 
-    char* data = new char[capacity]();
+    char* data = new char[capacity];
 
     char ch = '\0';
     while (in.get(ch) && ch != '\n') {
@@ -45,7 +45,7 @@ namespace lab4 {
         }
 
         const std::size_t newCapacity = capacity * 2;
-        char* const expanded = new char[newCapacity]();
+        char* const expanded = new char[newCapacity];
 
         for (std::size_t k = 0; k < size; ++k) {
           expanded[k] = data[k];
