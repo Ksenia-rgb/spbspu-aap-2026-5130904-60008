@@ -7,6 +7,7 @@
 #include <stdexcept>
 
 namespace lab4 {
+  constexpr std::size_t kInitialCapacity = 16;
   char* interleave(char* dst, const char* s1, const char* s2) noexcept
   {
     std::size_t i = 0;
@@ -30,10 +31,10 @@ namespace lab4 {
   {
     const std::size_t maxSize = std::numeric_limits< std::size_t >::max();
 
-    std::size_t capacity = 16;
+    std::size_t capacity = kInitialCapacity;
     std::size_t size = 0;
 
-    char* data = new char[capacity];
+    char* data = new char[capacity]();
 
     char ch = '\0';
     while (in.get(ch) && ch != '\n') {
@@ -44,7 +45,7 @@ namespace lab4 {
         }
 
         const std::size_t newCapacity = capacity * 2;
-        char* expanded = new char[newCapacity];
+        char* const expanded = new char[newCapacity]();
 
         for (std::size_t k = 0; k < size; ++k) {
           expanded[k] = data[k];
@@ -64,6 +65,11 @@ namespace lab4 {
     }
 
     data[size] = '\0';
+
+    if (size == 0) {
+      delete[] data;
+      throw std::runtime_error("empty input line");
+    }
     return data;
   }
 
