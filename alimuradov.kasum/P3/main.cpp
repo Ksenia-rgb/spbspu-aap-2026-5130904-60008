@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-int main(int argc, char** argv)
+intmain(int argc, char** argv)
 {
   if (argc != 4)
   {
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  int* const* const matrix = new int*[n];
+  int** const matrix = new int*[n];
   for (int i = 0; i < n; ++i)
   {
     matrix[i] = new int[m];
