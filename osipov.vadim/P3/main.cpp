@@ -2,10 +2,11 @@
 #include <fstream>
 #include <iostream>
 int const matrix_size = 100;
-void obrabotka_matric(int martix[][matrix_size], int rows, int cols);
-void obrabotka_matric_dynamic(int *matrix, int rows, int cols);
+void obrabotkamatric(int martix[][matrix_size], int rows, int cols);
+void obrabotkamatricdynamic(int *matrix, int rows, int cols);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   if (argc < 4) {
     std::cerr << "Not enough arguments" << "/n";
     return 1;
@@ -14,8 +15,7 @@ int main(int argc, char *argv[]) {
     std::cerr << "Too many arguments" << "/n";
     return 1;
   }
-  if ((argv[1][0] == '-') || (argv[1][0] == '0') ||
-      ((argv[1][0] >= '3') && (argv[1][0] <= '9'))) {
+  if ((argv[1][0] == '-') || (argv[1][0] == '0') || ((argv[1][0] >= '3') && (argv[1][0] <= '9'))) {
     std::cerr << "Ferst parametr if out of range";
     return 1;
   }
@@ -29,12 +29,13 @@ int main(int argc, char *argv[]) {
   std::ifstream fin(argv[2]);
   fin >> rows >> cols;
   for (int i = 0; i < rows; ++i) {
-    for (int j = 0; j < cols; ++j) {
+    for (int j = 0; j < cols; ++j)
+    {
       fin >> matrix[i][j];
     }
   }
   if (std::strcmp(argv[1], "1") == 0) {
-    obrabotka_matric(matrix, rows, cols);
+    obrabotkamatric(matrix, rows, cols);
     std::ofstream fout(argv[3]);
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
@@ -50,7 +51,7 @@ int main(int argc, char *argv[]) {
         dynamic_matrix[i * cols + j] = matrix[i][j];
       }
     }
-    obrabotka_matric_dynamic(dynamic_matrix, rows, cols);
+    obrabotkamatricdynamic(dynamic_matrix, rows, cols);
     std::ofstream fout(argv[3]);
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
@@ -62,12 +63,12 @@ int main(int argc, char *argv[]) {
   }
   return 0;
 }
-void obrabotka_matric(int matrix[][matrix_size], int rows, int cols) {
+void obrabotkamatric(int matrix[][matrix_size], int rows, int cols) {
   int j = 0;
   int k = 0;
 
-  while (k < rows && k < cols) {
-
+  while (k < rows && k < cols)
+    {
     for (int i = k; i < cols - k; ++i) {
       matrix[rows - 1 - k][i] = matrix[rows - 1 - k][i] + j;
       j = j + 1;
@@ -95,12 +96,12 @@ void obrabotka_matric(int matrix[][matrix_size], int rows, int cols) {
     k = k + 1;
   }
 }
-void obrabotka_matric_dynamic(int *matrix, int rows, int cols) {
+void obrabotkamatricdynamic(int *matrix, int rows, int cols) {
   int j = 0;
   int k = 0;
 
-  while (k < rows && k < cols) {
-
+  while (k < rows && k < cols)
+  {
     for (int i = k; i < cols - k; ++i) {
       matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
       j = j + 1;
