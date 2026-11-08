@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-intmain(int argc, char** argv)
+int main(int argc, char** argv)
 {
   if (argc != 4)
   {
