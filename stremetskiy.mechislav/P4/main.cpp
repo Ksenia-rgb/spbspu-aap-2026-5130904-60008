@@ -10,7 +10,7 @@ namespace stremetskiy
   constexpr int SUCCESS_CODE = 0;
   constexpr int FAIL_CODE = 1;
   constexpr std::size_t MAX_SIZE_T = std::numeric_limits<std::size_t>::max();
-  constexpr std::size_t CAPACITY = 16;
+  constexpr std::size_t INITIAL_CAPACITY = 8;
   constexpr unsigned char ASCII_LIMIT = 128;
 
   char *readLine(std::istream &);
@@ -28,7 +28,7 @@ int main()
 
     if (input == nullptr)
     {
-      std::cerr << "Cannot allocate input buffer\n";
+      std::cerr << "Cannot allocate input buffer or empty input\n";
       return stremetskiy::FAIL_CODE;
     }
 
@@ -72,21 +72,9 @@ namespace stremetskiy
   char *readLine(std::istream &input)
   {
     char *data = nullptr;
-    std::size_t capacity = stremetskiy::CAPACITY;
+    std::size_t capacity = stremetskiy::INITIAL_CAPACITY;
     std::size_t size = 0;
     char ch = '\0';
-
-    if (!input.get(ch))
-    {
-      delete[] data;
-      return nullptr;
-    }
-
-    if (ch == '\n')
-    {
-      data[size] = '\0';
-      return data;
-    }
 
     try
     {
@@ -96,6 +84,20 @@ namespace stremetskiy
       {
         throw;
       }
+
+      if (!input.get(ch))
+      {
+        delete[] data;
+        return nullptr;
+      }
+
+      if (ch == '\n')
+      {
+        data[size] = '\0';
+        return data;
+      }
+
+      data[size++] = ch;
 
       while (input.get(ch) && ch != '\n')
       {
