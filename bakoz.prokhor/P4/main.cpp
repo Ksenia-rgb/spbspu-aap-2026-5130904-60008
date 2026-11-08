@@ -5,16 +5,16 @@
 
 namespace bakoz
 {
-  constexpr int         SUCCESS_CODE = 0;
-  constexpr int         ERR_CODE = 1;
-  constexpr int         SEQUENCE_FOUND = 1;
-  constexpr int         SEQUENCE_NOT_FOUND = 0;
+  constexpr int SUCCESS_CODE = 0;
+  constexpr int ERR_CODE = 1;
+  constexpr int SEQUENCE_FOUND = 1;
+  constexpr int SEQUENCE_NOT_FOUND = 0;
   constexpr std::size_t INIT_BUF = 2;
 
   int readLine(char *&buffer, std::size_t &length, std::size_t &cap);
   int expandBuffer(char *&buffer, std::size_t &cap);
   int hasRepeatChars(const char *str);
-} // namespace bakoz
+}
 
 int main()
 {
