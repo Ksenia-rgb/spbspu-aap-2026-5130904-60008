@@ -60,6 +60,11 @@ char * dumina::readLine()
   }
 
   int symbol = std::getchar();
+  if (symbol == EOF)
+  {
+    delete[] buffer;
+    return nullptr;
+  }
   while (symbol != EOF && symbol != new_line)
   {
     if (size + 1 >= capacity)
