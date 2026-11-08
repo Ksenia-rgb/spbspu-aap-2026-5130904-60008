@@ -24,20 +24,20 @@ int increaseLine(char *&line, std::size_t &capacity, std::size_t size) {
     return MEMORY_ERROR_CODE;
   }
 
-  char *newLine = new (std::nothrow) char[newCapacity];
+  char *const new_line = new (std::nothrow) char[newCapacity];
 
-  if (newLine == nullptr) {
+  if (new_line == nullptr) {
     return MEMORY_ERROR_CODE;
   }
 
   for (std::size_t i = 0; i < size; ++i) {
-    newLine[i] = line[i];
+    new_line[i] = line[i];
   }
 
-  newLine[size] = '\0';
+  new_line[size] = '\0';
 
   delete[] line;
-  line = newLine;
+  line = new_line;
   capacity = newCapacity;
 
   return EXIT_SUCCESS_CODE;
@@ -111,7 +111,7 @@ int main() {
     return tirkacheva::EXIT_FAIL_CODE;
   }
 
-  char *dest = new (std::nothrow) char[capacity];
+  char *const dest = new (std::nothrow) char[capacity];
 
   if (dest == nullptr) {
     delete[] src;
