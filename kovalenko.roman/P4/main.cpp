@@ -6,7 +6,7 @@
 #include <new>
 #include <stdexcept>
 
-namespace lab4 {
+namespace kovalenko {
   constexpr std::size_t kInitialCapacity = 16;
   char* interleave(char* dst, const char* s1, const char* s2) noexcept
   {
@@ -45,7 +45,13 @@ namespace lab4 {
         }
 
         const std::size_t newCapacity = capacity * 2;
-        char* const expanded = new char[newCapacity];
+        char* expanded = nullptr;
+        try {
+          expanded = new char[newCapacity];
+        } catch (...) {
+          delete[] data;
+          throw;
+        }
 
         for (std::size_t k = 0; k < size; ++k) {
           expanded[k] = data[k];
@@ -65,11 +71,6 @@ namespace lab4 {
     }
 
     data[size] = '\0';
-
-    if (size == 0) {
-      delete[] data;
-      throw std::runtime_error("empty input line");
-    }
     return data;
   }
 
@@ -119,7 +120,7 @@ namespace lab4 {
 int main()
 {
   try {
-    lab4::run();
+    kovalenko::run();
   } catch (const std::bad_alloc&) {
     std::cerr << "Not enough memory\n";
     return 1;
