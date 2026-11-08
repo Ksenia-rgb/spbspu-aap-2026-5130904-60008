@@ -37,12 +37,6 @@ int main()
     input_buffer[string_length++] = static_cast< char >(input_char);
   }
 
-  if (string_length == 0) {
-    std::cerr << "Error: No input data provided." << "\n";
-    std::free(input_buffer);
-    return 1;
-  }
-
   input_buffer[string_length] = '\0';
 
   const int result = savenko::checkDuplicates(input_buffer);
