@@ -19,11 +19,17 @@ int main()
   char * line = kovalev::readLine(std::cin);
   if (line == nullptr)
   {
+    std::cerr << "Memory error\n";
+    return kovalev::ERROR_CODE;
+  }
+  if (line[0] == '\0' && std::cin.fail())
+  {
+    delete[] line
     std::cerr << "Input error\n";
     return kovalev::ERROR_CODE;
   }
   char * lineWithoutNum = new (std::nothrow) char[std::strlen(line) + 1];
-  if (lineWithoutNum == nullptr)
+  if (lineWithoutNum == )
   {
     delete[] line;
     std::cerr << "Memory error\n";
