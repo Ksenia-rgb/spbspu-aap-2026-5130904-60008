@@ -1,18 +1,27 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-
-void obrabotka_matric(int martix[][100], int rows, int cols);
+int const matrix_size = 100;
+void obrabotka_matric(int martix[][matrix_size], int rows, int cols);
 void obrabotka_matric_dynamic(int *matrix, int rows, int cols);
 
 int main(int argc, char *argv[]) {
-  if (argc != 4) {
+  if (argc < 4) {
+   std::cerr << "Not enough arguments" << "/n";
     return 1;
   }
-  if (std::strcmp(argv[1], "1") != 0 && std::strcmp(argv[1], "2") != 0) {
+  if (argc > 4){
+    std::cerr << "Too many arguments" << "/n";
     return 1;
   }
-  int const matrix_size = 100;
+  if (argv[1][0] == '-'] || argv[1][0] == '0' || (argv[1][0] >= '3' && argv[1][0] <= '9')){
+    std::cerr << "Ferst parametr if out of range";
+    return 1;
+  }
+  if (argv[1][0] >= '0' && argv[1][0] <= '9'){
+    std::cerr << "First parametr is not a nimber";
+    return 1;
+  }
   int matrix[matrix_size][matrix_size];
   int rows = 0;
   int cols = 0;
@@ -36,6 +45,7 @@ int main(int argc, char *argv[]) {
     int *const dynamic_matrix = new int[rows * cols];
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
+
         dynamic_matrix[i * cols + j] = matrix[i][j];
       }
     }
@@ -51,7 +61,7 @@ int main(int argc, char *argv[]) {
   }
   return 0;
 }
-void obrabotka_matric(int matrix[][100], int rows, int cols) {
+void obrabotka_matric(int matrix[][matrix_size], int rows, int cols) {
   int j = 0;
   int k = 0;
 
