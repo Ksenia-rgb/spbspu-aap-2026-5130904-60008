@@ -16,7 +16,7 @@ namespace kovalev
 
 int main()
 {
-  char * line = kovalev::readLine(std::cin);
+  char * const line = kovalev::readLine(std::cin);
   if (line == nullptr)
   {
     std::cerr << "Memory error\n";
@@ -28,17 +28,17 @@ int main()
     std::cerr << "Input error\n";
     return kovalev::ERROR_CODE;
   }
-  char * lineWithoutNum = new (std::nothrow) char[std::strlen(line) + 1];
-  if (lineWithoutNum == nullptr)
+  char * line_without_num = new (std::nothrow) char[std::strlen(line) + 1];
+  if (line_without_num == nullptr)
   {
     delete[] line;
     std::cerr << "Memory error\n";
     return kovalev::ERROR_CODE;
   }
-  lineWithoutNum = kovalev::removeNum(lineWithoutNum, line);
-  std::cout << lineWithoutNum << '\n';
+  line_without_num = kovalev::removeNum(line_without_num, line);
+  std::cout << line_without_num << '\n';
   delete[] line;
-  delete[] lineWithoutNum;
+  delete[] line_without_num;
   return 0;
 }
 
@@ -64,19 +64,19 @@ namespace kovalev
           return nullptr;
         }
         const std::size_t newCapacity = capacity * MULTIPLICATION_NUMBER;
-        char * expandedData = new (std::nothrow) char[newCapacity];
-        if (expandedData == nullptr)
+        char * const expanded_data = new (std::nothrow) char[newCapacity];
+        if (expanded_data == nullptr)
         {
           delete[] data;
           return nullptr;
         }
         for (std::size_t i = 0; i < size; i++)
         {
-          expandedData[i] = data[i];
+          expanded_data[i] = data[i];
         }
         delete[] data;
         capacity = newCapacity;
-        data = expandedData;
+        data = expanded_data;
       }
       data[size++] = ch;
     }
