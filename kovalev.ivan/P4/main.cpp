@@ -10,7 +10,7 @@ namespace kovalev
   const int ERROR_CODE = 1;
   const int INITIAL_CAPACITY = 8;
   const int MULTIPLICATION_NUMBER = 2;
-  char * readLine(std::istream& input);
+  char * readLine(std::istream & input);
   char * removeNum(char * dst, const char * src) noexcept;
 }
 
@@ -24,12 +24,12 @@ int main()
   }
   if (line[0] == '\0' && std::cin.fail())
   {
-    delete[] line
+    delete[] line;
     std::cerr << "Input error\n";
     return kovalev::ERROR_CODE;
   }
   char * lineWithoutNum = new (std::nothrow) char[std::strlen(line) + 1];
-  if (lineWithoutNum == )
+  if (lineWithoutNum == nullptr)
   {
     delete[] line;
     std::cerr << "Memory error\n";
@@ -44,7 +44,7 @@ int main()
 
 namespace kovalev
 {
-  char * readLine(std::istream& input)
+  char * readLine(std::istream & input)
   {
     std::size_t capacity = INITIAL_CAPACITY;
     std::size_t size = 0;
@@ -83,7 +83,8 @@ namespace kovalev
     data[size] = '\0';
     return data;
   }
-  char * removeNum (char * dst, const char * src) noexcept
+
+  char * removeNum(char * dst, const char * src) noexcept
   {
     std::size_t j = 0;
     for (std::size_t i = 0; src[i] != '\0'; i++)
