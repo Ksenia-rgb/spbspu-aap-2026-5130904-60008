@@ -10,6 +10,8 @@ namespace stremetskiy
   constexpr int SUCCESS_CODE = 0;
   constexpr int FAIL_CODE = 1;
   constexpr std::size_t MAX_SIZE_T = std::numeric_limits<std::size_t>::max();
+  constexpr std::size_t CAPACITY = 16;
+  constexpr unsigned char ASCII_LIMIT = 128;
 
   char *readLine(std::istream &);
   char *deleteLatSymb(const char *, char *) noexcept;
@@ -70,9 +72,21 @@ namespace stremetskiy
   char *readLine(std::istream &input)
   {
     char *data = nullptr;
-    std::size_t capacity = 8;
+    std::size_t capacity = stremetskiy::CAPACITY;
     std::size_t size = 0;
     char ch = '\0';
+
+    if (!input.get(ch))
+    {
+      delete[] data;
+      return nullptr;
+    }
+
+    if (ch == '\n')
+    {
+      data[size] = '\0';
+      return data;
+    }
 
     try
     {
@@ -93,9 +107,9 @@ namespace stremetskiy
             throw;
           }
 
-          const std::size_t newCapacity = capacity * 2;
-          char *expandedData = new (std::nothrow) char[newCapacity];
-          if (expandedData == nullptr)
+          const std::size_t new_capacity = capacity * 2;
+          char *const expanded_data = new (std::nothrow) char[new_capacity];
+          if (expanded_data == nullptr)
           {
             delete[] data;
             throw;
@@ -103,12 +117,12 @@ namespace stremetskiy
 
           for (std::size_t i = 0; i < size; i++)
           {
-            expandedData[i] = data[i];
+            expanded_data[i] = data[i];
           }
 
           delete[] data;
-          data = expandedData;
-          capacity = newCapacity;
+          data = expanded_data;
+          capacity = new_capacity;
         }
         data[size++] = ch;
       }
@@ -129,8 +143,8 @@ namespace stremetskiy
 
     for (std::size_t i = 0; inp[i] != '\0'; i++)
     {
-      unsigned char ch = static_cast<unsigned char>(inp[i]);
-      if (ch < 128 && std::isalpha(ch))
+      const unsigned char ch = static_cast<unsigned char>(inp[i]);
+      if (ch < stremetskiy::ASCII_LIMIT && std::isalpha(ch))
       {
         continue;
       }
