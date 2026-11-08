@@ -84,6 +84,7 @@ void transform(const char *src, char *dest, std::size_t size) {
 
   dest[size] = '\0';
 }
+}
 
 int main() {
   std::size_t capacity = tirkacheva::INITIAL_CAPACITY;
