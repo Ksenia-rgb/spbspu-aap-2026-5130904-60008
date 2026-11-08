@@ -29,7 +29,7 @@ int main()
     return grekova::EXIT_ERROR;
   }
 
-  char *result = static_cast<char *>(std::malloc(size + 1));
+  char *const result = static_cast<char *>(std::malloc(size + 1));
   if (result == nullptr) {
     std::free(str);
     std::cerr << "Memory allocation error\n";
