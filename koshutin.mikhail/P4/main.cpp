@@ -24,7 +24,12 @@ int main()
       std::cerr << "Cannot allocate input buffer" << "\n";
       return 1;
     }
-
+    if (source[0] == '\0')
+    {
+      delete[] source;
+      std::cerr << "Empty input" << "\n";
+      return 1;
+    }
     const std::size_t length = std::strlen(source);
     if (length == std::numeric_limits< std::size_t >::max())
     {
