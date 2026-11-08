@@ -8,65 +8,67 @@
 namespace kovalev
 {
   const int ERROR_CODE = 1;
-  char * readline(std::istream& input);
-  char * dst remove_num (char dst, const char * src) noexcept;
+  const int INITIAL_CAPACITY = 8;
+  const int MULTIPLICATION_NUMBER = 2;
+  char * readLine(std::istream& input);
+  char * removeNum(char * dst, const char * src) noexcept;
 }
 
 int main()
 {
-  char * line = kovalev::readline(std::cin);
-  if ( line == nullptr )
+  char * line = kovalev::readLine(std::cin);
+  if (line == nullptr)
   {
     std::cerr << "Input error\n";
     return kovalev::ERROR_CODE;
   }
-  char * lineWithoutNum = new(std::nothrow) char[std::strlen(line)+1];
-  if (LineWithoutNum == nullptr)
+  char * lineWithoutNum = new (std::nothrow) char[std::strlen(line) + 1];
+  if (lineWithoutNum == nullptr)
   {
-    delete [] line;
+    delete[] line;
     std::cerr << "Memory error\n";
     return kovalev::ERROR_CODE;
   }
-  lineWithoutNum = kovalev::remove_num(lineWithoutNum, line);
+  lineWithoutNum = kovalev::removeNum(lineWithoutNum, line);
   std::cout << lineWithoutNum << '\n';
-  delete [] line;
-  delete [] lineWithoutNum;
+  delete[] line;
+  delete[] lineWithoutNum;
   return 0;
 }
 
 namespace kovalev
 {
-  char * readline(std::istream& input)
+  char * readLine(std::istream& input)
   {
-    std::size_t capacity = 2;
+    std::size_t capacity = INITIAL_CAPACITY;
     std::size_t size = 0;
     char * data = new (std::nothrow) char[capacity];
-    ch = '\0'
     if (data == nullptr)
     {
       return nullptr;
     }
+    char ch = '\0';
     while (input.get(ch) && ch != '\n')
     {
       if (size == capacity - 1)
       {
-        if (capacity > std::numeric_limits<std::size_t>::max() / 2)
+        if (capacity > std::numeric_limits< std::size_t >::max() / MULTIPLICATION_NUMBER)
         {
-          delete [] data;
+          delete[] data;
           return nullptr;
         }
-        const std::size_t newCapacity = capacity * 2;
+        const std::size_t newCapacity = capacity * MULTIPLICATION_NUMBER;
         char * expandedData = new (std::nothrow) char[newCapacity];
         if (expandedData == nullptr)
         {
-          delete [] data;
+          delete[] data;
           return nullptr;
         }
-        for (std::size_t i =0; i < size; i++)
+        for (std::size_t i = 0; i < size; i++)
         {
           expandedData[i] = data[i];
         }
-        delete [] data;
+        delete[] data;
         capacity = newCapacity;
         data = expandedData;
       }
@@ -75,15 +77,15 @@ namespace kovalev
     data[size] = '\0';
     return data;
   }
-  char * remove_num (char * dst, const char * src) noexcept
+  char * removeNum (char * dst, const char * src) noexcept
   {
     std::size_t j = 0;
     for (std::size_t i = 0; src[i] != '\0'; i++)
     {
-        const unsigned char num = static_cast<unsigned char>(src[i]);
+      const unsigned char num = static_cast< unsigned char >(src[i]);
       if (!std::isdigit(num))
       {
-        dst[j++] = src [i];
+        dst[j++] = src[i];
       }
     }
     dst[j] = '\0';
