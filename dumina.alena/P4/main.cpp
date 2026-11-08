@@ -19,14 +19,14 @@ namespace dumina
   const char * const read_error = "UNABLE TO ALLOCATE MEMORY FOR INPUT STRING";
   const char * const result_error = "UNABLE TO ALLOCATE MEMORY FOR RESULT STRING";
 
-  char * read_line();
+  char * readLine();
   std::size_t length(const char * str);
-  char * replace_symbol(const char * src, char * dst, char from, char to);
+  char * replaceSymbol(const char * src, char * dst, char from, char to);
 }
 
 int main()
 {
-  char * const input = dumina::read_line();
+  char * const input = dumina::readLine();
   if (input == nullptr)
   {
     std::cerr << dumina::read_error << '\n';
@@ -41,7 +41,7 @@ int main()
     return dumina::failure_code;
   }
 
-  dumina::replace_symbol(input, result, dumina::replace_from, dumina::replace_to);
+  dumina::replaceSymbol(input, result, dumina::replace_from, dumina::replace_to);
   std::cout << result << '\n';
 
   delete[] result;
@@ -49,7 +49,7 @@ int main()
   return dumina::success_code;
 }
 
-char * dumina::read_line()
+char * dumina::readLine()
 {
   std::size_t capacity = initial_capacity;
   std::size_t size = 0;
@@ -96,7 +96,7 @@ std::size_t dumina::length(const char * str)
   return size;
 }
 
-char * dumina::replace_symbol(const char * src, char * dst, char from, char to)
+char * dumina::replaceSymbol(const char * src, char * dst, char from, char to)
 {
   std::size_t i = 0;
   while (src[i] != null_terminator)
