@@ -60,11 +60,13 @@ size_t inashevskiy::readLine(size_t &size, size_t &capacity, char *&str1)
 {
   int ch = 0;
 
-  while ((ch = std::cin.get()) != '\n' && ch != EOF) {
-    if (size + 1 >= capacity) {
+  while ((ch = std::cin.get()) != '\n' && ch != EOF)
+  {
+    if (size + 1 >= capacity)
+    {
       capacity *= 2;
 
-      char *const term = static_cast< char *>(std::realloc(str1, capacity));
+      char *const term = static_cast< char * >(std::realloc(str1, capacity));
 
       if (!term)
       {
@@ -89,8 +91,8 @@ size_t inashevskiy::readLine(size_t &size, size_t &capacity, char *&str1)
   return size;
 }
 
-char *inashevskiy::getuniquechars(char *buffer, const char *str1,
-                                  const char *str2) {
+char *inashevskiy::getuniquechars(char *buffer, const char *str1, const char *str2)
+{
   size_t sizebuffer = 0;
 
   for (size_t i = 0; str1[i] != '\0'; ++i)
@@ -123,7 +125,8 @@ char *inashevskiy::getuniquechars(char *buffer, const char *str1,
           }
         }
 
-        if (repeated == 0) {
+        if (repeated == 0)
+{
           buffer[sizebuffer++] = current;
         }
       }
