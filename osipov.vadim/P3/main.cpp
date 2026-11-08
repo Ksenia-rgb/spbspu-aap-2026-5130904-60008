@@ -8,19 +8,19 @@ void obrabotkamatricdynamic(int *matrix, int rows, int cols);
 int main(int argc, char *argv[])
 {
   if (argc < 4) {
-    std::cerr << "Not enough arguments" << "/n";
+    std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
   if (argc > 4) {
-    std::cerr << "Too many arguments" << "/n";
+    std::cerr << "Too many arguments" << "\n";
     return 1;
   }
-  if ((argv[1][0] == '-') || (argv[1][0] == '0') || ((argv[1][0] >= '3') && (argv[1][0] <= '9'))) {
-    std::cerr << "Ferst parametr if out of range";
+ if (!(argv[1][0] >= '0' && argv[1][0] <= '9')) {
+    std::cerr << "First parameter is not a number" <<"\n";
     return 1;
   }
-  if (argv[1][0] >= '0' && argv[1][0] <= '9') {
-    std::cerr << "First parametr is not a nimber";
+  if (argv[1][0] != '1' && argv[1][0] != '2') {
+    std::cerr << "First parameter if out of range" << "\n";
     return 1;
   }
   int matrix[matrix_size][matrix_size];
@@ -29,8 +29,7 @@ int main(int argc, char *argv[])
   std::ifstream fin(argv[2]);
   fin >> rows >> cols;
   for (int i = 0; i < rows; ++i) {
-    for (int j = 0; j < cols; ++j)
-    {
+    for (int j = 0; j < cols; ++j) {
       fin >> matrix[i][j];
     }
   }
@@ -67,8 +66,8 @@ void obrabotkamatric(int matrix[][matrix_size], int rows, int cols) {
   int j = 0;
   int k = 0;
 
-  while (k < rows && k < cols)
-    {
+  while (k < rows && k < cols){
+
     for (int i = k; i < cols - k; ++i) {
       matrix[rows - 1 - k][i] = matrix[rows - 1 - k][i] + j;
       j = j + 1;
@@ -100,8 +99,8 @@ void obrabotkamatricdynamic(int *matrix, int rows, int cols) {
   int j = 0;
   int k = 0;
 
-  while (k < rows && k < cols)
-  {
+  while (k < rows && k < cols){
+
     for (int i = k; i < cols - k; ++i) {
       matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
       j = j + 1;
