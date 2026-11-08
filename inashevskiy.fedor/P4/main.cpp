@@ -126,7 +126,7 @@ char *inashevskiy::getuniquechars(char *buffer, const char *str1, const char *st
         }
 
         if (repeated == 0)
-{
+        {
           buffer[sizebuffer++] = current;
         }
       }
