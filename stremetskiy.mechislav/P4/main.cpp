@@ -11,15 +11,15 @@ namespace stremetskiy
 	constexpr int FAIL_CODE = 1;
 	constexpr std::size_t MAX_SIZE_T = std::numeric_limits<std::size_t>::max();
 
-	char* readLine(std::istream&);
-	char* deleteLatSymb(const char*, char*) noexcept;
+	char *readLine(std::istream &);
+	char *deleteLatSymb(const char *, char *) noexcept;
 }
 
 int main()
 {
-	char* input = nullptr;
-	char* result = nullptr;
-	
+	char *input = nullptr;
+	char *result = nullptr;
+
 	try
 	{
 		input = stremetskiy::readLine(std::cin);
@@ -56,20 +56,20 @@ int main()
 		delete[] input;
 		return stremetskiy::SUCCESS_CODE;
 	}
-	catch (const std::bad_alloc&)
-  {
-    delete[] result;
-    delete[] input;
-    std::cerr << "Not enough memory\n";
-    return stremetskiy::FAIL_CODE;
-  }
+	catch (const std::bad_alloc &)
+	{
+		delete[] result;
+		delete[] input;
+		std::cerr << "Not enough memory\n";
+		return stremetskiy::FAIL_CODE;
+	}
 }
 
 namespace stremetskiy
 {
-	char* readLine(std::istream& input)
+	char *readLine(std::istream &input)
 	{
-		char* data = nullptr;
+		char *data = nullptr;
 		std::size_t capacity = 8;
 		std::size_t size = 0;
 		char ch = '\0';
@@ -94,7 +94,7 @@ namespace stremetskiy
 					}
 
 					const std::size_t newCapacity = capacity * 2;
-					char* expandedData = new (std::nothrow) char[newCapacity];
+					char *expandedData = new (std::nothrow) char[newCapacity];
 					if (expandedData == nullptr)
 					{
 						delete[] data;
@@ -123,7 +123,7 @@ namespace stremetskiy
 		}
 	}
 
-	char* deleteLatSymb(const char* inp, char* res) noexcept
+	char *deleteLatSymb(const char *inp, char *res) noexcept
 	{
 		std::size_t j = 0;
 
