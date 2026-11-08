@@ -11,7 +11,7 @@ const char *const str2 = "abc_ef";
 
 char *getuniquechars(char *, const char *, const char *);
 size_t readLine(size_t &, size_t &, char *&);
-} // namespace inashevskiy
+}
 
 int main() {
   const size_t INITIAL_CAPACITY = 16;
@@ -86,7 +86,7 @@ char *inashevskiy::getuniquechars(char *buffer, const char *str1,
   size_t sizebuffer = 0;
 
   for (size_t i = 0; str1[i] != '\0'; ++i) {
-   const  char current = str1[i];
+    const char current = str1[i];
 
     if (std::isalnum(static_cast<unsigned char>(current)) ||
         std::ispunct(static_cast<unsigned char>(current))) {
