@@ -16,7 +16,7 @@ namespace grekova {
 int main()
 {
   std::size_t size = 0, capacity = grekova::START_CAPACITY;
-  char *str = static_cast<char *>(std::malloc(capacity));
+  char *str = static_cast< char * >(std::malloc(capacity));
 
   if (str == nullptr) {
     std::cerr << "Memory allocation error\n";
@@ -29,7 +29,7 @@ int main()
     return grekova::EXIT_ERROR;
   }
 
-  char *const result = static_cast<char *>(std::malloc(size + 1));
+  char *const result = static_cast< char * >(std::malloc(size + 1));
   if (result == nullptr) {
     std::free(str);
     std::cerr << "Memory allocation error\n";
@@ -50,7 +50,7 @@ namespace grekova {
   int increaseCapacity(char *&str, std::size_t &capacity)
   {
     capacity *= 2;
-    char *const temp = static_cast<char *>(std::realloc(str, capacity));
+    char *const temp = static_cast< char * >(std::realloc(str, capacity));
     if (temp == nullptr) {
       return EXIT_ERROR;
     }
@@ -70,7 +70,7 @@ namespace grekova {
           return EXIT_ERROR;
         }
       }
-      str[size] = static_cast<char>(sym);
+      str[size] = static_cast< char >(sym);
       ++size;
       sym = std::getchar();
     }
