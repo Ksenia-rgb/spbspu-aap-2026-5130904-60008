@@ -20,7 +20,7 @@ int main()
 {
   std::size_t length = 0;
   std::size_t cap = bakoz::INIT_BUF;
-  char       *line = static_cast<char *>(std::malloc(cap));
+  char *line = static_cast< char * >(std::malloc(cap));
 
   if (line == nullptr)
   {
@@ -31,7 +31,7 @@ int main()
   if (bakoz::readLine(line, length, cap) != bakoz::SUCCESS_CODE)
   {
     std::free(line);
-    std::cerr << "input error" << "\n";
+    std::cerr << "Input error" << "\n";
     return bakoz::ERR_CODE;
   }
 
@@ -46,7 +46,7 @@ int main()
 int bakoz::expandBuffer(char *&buffer, std::size_t &cap)
 {
   cap *= 2;
-  char *const tmp = static_cast<char *>(std::realloc(buffer, cap));
+  char *const tmp = static_cast< char * >(std::realloc(buffer, cap));
   if (tmp == nullptr)
   {
     return ERR_CODE;
@@ -71,7 +71,7 @@ int bakoz::readLine(char *&buffer, std::size_t &length, std::size_t &cap)
         return ERR_CODE;
       }
     }
-    buffer[length] = static_cast<char>(ch);
+    buffer[length] = static_cast< char >(ch);
     ++length;
     ch = std::getchar();
   }
@@ -95,3 +95,4 @@ int bakoz::hasRepeatChars(const char *str)
   }
   return SEQUENCE_NOT_FOUND;
 }
+
