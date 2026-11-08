@@ -8,8 +8,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <stdexcept>
 #include <new>
+#include <stdexcept>
 
 namespace hedeya {
   const std::size_t DEFAULT_CAPACITY = 16;
@@ -20,7 +20,8 @@ namespace hedeya {
   public:
     explicit InvalidInputError(const char* message = "Invalid input"):
       std::runtime_error(message)
-    {}
+    {
+    }
   };
 
   char* handleStringInput(char*& buffer, std::size_t& capacity, std::size_t& length);
@@ -49,7 +50,7 @@ int main()
   }
 
   try {
-    if (std::strlen(string_1) == 0) {
+    if (std::strlen(string_1) == 0 && ((std::strcmp(string_1, "\0") != 0) || (std::strcmp(string_1, "\n") != 0))) {
       delete[] string_1;
       throw hedeya::InvalidInputError("No input provided for first string");
     }
