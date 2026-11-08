@@ -5,8 +5,8 @@ int const matrix_size = 100;
 void obrabotka_matric(int martix[][matrix_size], int rows, int cols);
 void obrabotka_matric_dynamic(int *matrix, int rows, int cols);
 
-int main(int argc, char* argv[]) {
-  if (argc < 4){
+int main(int argc, char *argv[]) {
+  if (argc < 4) {
     std::cerr << "Not enough arguments" << "/n";
     return 1;
   }
@@ -14,7 +14,8 @@ int main(int argc, char* argv[]) {
     std::cerr << "Too many arguments" << "/n";
     return 1;
   }
-  if ((argv[1][0] == '-') || (argv[1][0] == '0') || ((argv[1][0] >= '3') && (argv[1][0] <= '9'))){
+  if ((argv[1][0] == '-') || (argv[1][0] == '0') ||
+      ((argv[1][0] >= '3') && (argv[1][0] <= '9'))) {
     std::cerr << "Ferst parametr if out of range";
     return 1;
   }
