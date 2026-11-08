@@ -9,7 +9,7 @@ namespace stremetskiy
 {
   constexpr int SUCCESS_CODE = 0;
   constexpr int FAIL_CODE = 1;
-  constexpr std::size_t MAX_SIZE_T = std::numeric_limits<std::size_t>::max();
+  constexpr std::size_t MAX_SIZE_T = std::numeric_limits< std::size_t >::max();
   constexpr std::size_t INITIAL_CAPACITY = 8;
   constexpr unsigned char ASCII_LIMIT = 128;
 
@@ -145,7 +145,7 @@ namespace stremetskiy
 
     for (std::size_t i = 0; inp[i] != '\0'; i++)
     {
-      const unsigned char ch = static_cast<unsigned char>(inp[i]);
+      const unsigned char ch = static_cast< unsigned char >(inp[i]);
       if (ch < stremetskiy::ASCII_LIMIT && std::isalpha(ch))
       {
         continue;
