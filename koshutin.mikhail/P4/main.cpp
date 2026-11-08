@@ -46,7 +46,7 @@ int main()
     }
     koshutin::replaceSymbol(result, source, 'c', 'b');
     std::cout << result << "\n";
-  } 
+  }
   catch (const std::bad_alloc &)
   {
     delete[] source;
