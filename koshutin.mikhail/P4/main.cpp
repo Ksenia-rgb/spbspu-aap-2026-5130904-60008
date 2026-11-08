@@ -46,23 +46,24 @@ int main()
     }
     koshutin::replaceSymbol(result, source, 'c', 'b');
     std::cout << result << "\n";
-  } catch (const std::bad_alloc &)
-    {
-      delete[] source;
-      delete[] result;
-      std::cerr << "Not enough memory" << "\n";
-      return 1;
-    }
-    catch (const std::exception &e)
-    {
-      delete[] source;
-      delete[] result;
-      std::cerr << "Error:" << e.what() << "\n";
-      return 2;
-    }
-    delete[] result;
+  } 
+  catch (const std::bad_alloc &)
+  {
     delete[] source;
-    return 0;
+    delete[] result;
+    std::cerr << "Not enough memory" << "\n";
+    return 1;
+  }
+  catch (const std::exception &e)
+  {
+    delete[] source;
+    delete[] result;
+    std::cerr << "Error:" << e.what() << "\n";
+    return 2;
+  }
+  delete[] result;
+  delete[] source;
+  return 0;
 }
 
 namespace koshutin
@@ -103,13 +104,13 @@ namespace koshutin
       {
         if (size + 1 >= capacity)
         {
-          if (capacity > std::numeric_limits<std::size_t>::max() / 2)
+          if (capacity > std::numeric_limits< std::size_t >::max() / 2)
           {
             delete[] data;
             return nullptr;
           }
           const std::size_t newCapacity = capacity * 2;
-          char* const expanded = new (std::nothrow) char[newCapacity];
+          char *const expanded = new (std::nothrow) char[newCapacity];
           if (expanded == nullptr)
           {
             delete[] data;
