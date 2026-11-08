@@ -48,14 +48,14 @@ int main()
 
 int babikov::increaseLine(char*& str, std::size_t& size, std::size_t& capacity)
 {
-  if (capacity > std::numeric_limits<std::size_t>::max() / 2)
+  if (capacity > std::numeric_limits< std::size_t >::max() / 2)
   {
     return babikov::EXIT_FAIL_CODE;
   }
 
   const std::size_t new_capacity = capacity * 2;
 
-  char* temp = new (std::nothrow) char[new_capacity];
+  char* const temp = new (std::nothrow) char[new_capacity];
 
   if (temp == nullptr)
   {
@@ -94,7 +94,7 @@ int babikov::readLine(char*& str, std::size_t& size, std::size_t& capacity)
       }
     }
 
-    str[size] = static_cast<char>(symbol);
+    str[size] = static_cast< char >(symbol);
     ++size;
 
     symbol = std::getchar();
