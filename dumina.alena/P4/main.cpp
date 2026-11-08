@@ -19,21 +19,21 @@ namespace dumina
   const char * const read_error = "UNABLE TO ALLOCATE MEMORY FOR INPUT STRING";
   const char * const result_error = "UNABLE TO ALLOCATE MEMORY FOR RESULT STRING";
 
-  char * readLine();
+  char * read_line();
   std::size_t length(const char * str);
-  char * replaceSymbol(const char * src, char * dst, char from, char to);
+  char * replace_symbol(const char * src, char * dst, char from, char to);
 }
 
 int main()
 {
-  char * input = dumina::readLine();
+  char * const input = dumina::read_line();
   if (input == nullptr)
   {
     std::cerr << dumina::read_error << '\n';
     return dumina::failure_code;
   }
 
-  char * result = new (std::nothrow) char[dumina::length(input) + 1];
+  char * const result = new (std::nothrow) char[dumina::length(input) + 1];
   if (result == nullptr)
   {
     delete[] input;
@@ -41,7 +41,7 @@ int main()
     return dumina::failure_code;
   }
 
-  dumina::replaceSymbol(input, result, dumina::replace_from, dumina::replace_to);
+  dumina::replace_symbol(input, result, dumina::replace_from, dumina::replace_to);
   std::cout << result << '\n';
 
   delete[] result;
@@ -49,7 +49,7 @@ int main()
   return dumina::success_code;
 }
 
-char * dumina::readLine()
+char * dumina::read_line()
 {
   std::size_t capacity = initial_capacity;
   std::size_t size = 0;
@@ -64,20 +64,20 @@ char * dumina::readLine()
   {
     if (size + 1 >= capacity)
     {
-      std::size_t newCapacity = capacity * growth_factor;
-      char * newBuffer = new (std::nothrow) char[newCapacity];
-      if (newBuffer == nullptr)
+      const std::size_t new_capacity = capacity * growth_factor;
+      char * const new_buffer = new (std::nothrow) char[new_capacity];
+      if (new_buffer == nullptr)
       {
         delete[] buffer;
         return nullptr;
       }
       for (std::size_t i = 0; i < size; ++i)
       {
-        newBuffer[i] = buffer[i];
+        new_buffer[i] = buffer[i];
       }
       delete[] buffer;
-      buffer = newBuffer;
-      capacity = newCapacity;
+      buffer = new_buffer;
+      capacity = new_capacity;
     }
     buffer[size++] = static_cast< char >(symbol);
     symbol = std::getchar();
@@ -96,7 +96,7 @@ std::size_t dumina::length(const char * str)
   return size;
 }
 
-char * dumina::replaceSymbol(const char * src, char * dst, char from, char to)
+char * dumina::replace_symbol(const char * src, char * dst, char from, char to)
 {
   std::size_t i = 0;
   while (src[i] != null_terminator)
