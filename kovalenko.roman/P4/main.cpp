@@ -37,7 +37,12 @@ namespace kovalenko {
     char* data = new char[capacity];
 
     char ch = '\0';
-    while (in.get(ch) && ch != '\n') {
+    bool got_any = false;
+    while (in.get(ch)) {
+      got_any = true;
+      if (ch == '\n') {
+        break;
+      }
       if (size == capacity - 1) {
         if (capacity > maxSize / 2) {
           delete[] data;
@@ -69,7 +74,10 @@ namespace kovalenko {
       delete[] data;
       throw std::runtime_error("input stream failure");
     }
-
+    if (!got_any) {
+      delete[] data;
+      throw std::runtime_error("no input data");
+    }
     data[size] = '\0';
     return data;
   }
