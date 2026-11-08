@@ -70,10 +70,10 @@ namespace koshutin
   char *replaceSymbol(char *dst, const char *src, char a, char b) noexcept
   {
     size_t j = 0;
-    const unsigned char aa = static_cast<unsigned char>(a);
+    const unsigned char aa = static_cast< unsigned char >(a);
     for (size_t i = 0; src[i] != '\0'; i++)
     {
-      const unsigned char ch = static_cast<unsigned char>(src[i]);
+      const unsigned char ch = static_cast< unsigned char >(src[i]);
       if (ch == aa)
       {
         dst[j++] = b;
@@ -98,7 +98,7 @@ namespace koshutin
     }
     try
     {
-      char ch;
+      char ch = '\0';
       while (input.get(ch) && ch != '\n')
       {
         if (size + 1 >= capacity)
@@ -109,7 +109,7 @@ namespace koshutin
             return nullptr;
           }
           const std::size_t newCapacity = capacity * 2;
-          char *expanded = new (std::nothrow) char[newCapacity];
+          char* const expanded = new (std::nothrow) char[newCapacity];
           if (expanded == nullptr)
           {
             delete[] data;
