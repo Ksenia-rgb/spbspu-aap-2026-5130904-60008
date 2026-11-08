@@ -10,13 +10,13 @@ namespace grekova {
 
   int readStr(char *&str, std::size_t &size, std::size_t &capacity);
   int increaseCapacity(char *&str, std::size_t &capacity);
-  int findDuplicate(char *&str);
+  void findDuplicate(const char *str, char *result);
 }
 
 int main()
 {
   std::size_t size = 0, capacity = grekova::START_CAPACITY;
-  char *str = static_cast< char * >(std::malloc(capacity));
+  char *str = static_cast<char *>(std::malloc(capacity));
 
   if (str == nullptr) {
     std::cerr << "Memory allocation error\n";
@@ -29,13 +29,19 @@ int main()
     return grekova::EXIT_ERROR;
   }
 
-  if (grekova::findDuplicate(str) == grekova::EXIT_ERROR) {
-    std::cerr << "Memory allocation error\n";
+  char *result = static_cast<char *>(std::malloc(size + 1));
+  if (result == nullptr) {
     std::free(str);
+    std::cerr << "Memory allocation error\n";
     return grekova::EXIT_ERROR;
   }
 
+  grekova::findDuplicate(str, result);
+
+  std::cout << result << '\n';
+
   std::free(str);
+  std::free(result);
 
   return EXIT_SUCCESS;
 }
@@ -44,7 +50,7 @@ namespace grekova {
   int increaseCapacity(char *&str, std::size_t &capacity)
   {
     capacity *= 2;
-    char *const temp = static_cast< char * >(std::realloc(str, capacity));
+    char *const temp = static_cast<char *>(std::realloc(str, capacity));
     if (temp == nullptr) {
       return EXIT_ERROR;
     }
@@ -64,7 +70,7 @@ namespace grekova {
           return EXIT_ERROR;
         }
       }
-      str[size] = static_cast< char >(sym);
+      str[size] = static_cast<char>(sym);
       ++size;
       sym = std::getchar();
     }
@@ -72,16 +78,10 @@ namespace grekova {
     return EXIT_SUCCESS;
   }
 
-  int findDuplicate(char *&str)
+  void findDuplicate(const char *str, char *result)
   {
     std::size_t len = 0;
     for (; str[len] != '\0'; ++len) {
-    }
-
-    char *const result = static_cast< char * >(std::malloc(len + 1));
-    if (result == nullptr) {
-      std::free(result);
-      return grekova::EXIT_ERROR;
     }
 
     std::size_t res_idx = 0;
@@ -114,9 +114,5 @@ namespace grekova {
     }
 
     result[res_idx] = '\0';
-    std::cout << result << '\n';
-    std::free(result);
-
-    return EXIT_SUCCESS;
   }
 }
