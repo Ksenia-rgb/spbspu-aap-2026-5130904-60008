@@ -20,8 +20,7 @@ namespace hedeya {
   public:
     explicit InvalidInputError(const char* message = "Invalid input"):
       std::runtime_error(message)
-    {
-    }
+    {}
   };
 
   char* handleStringInput(char*& buffer, std::size_t& capacity, std::size_t& length);
