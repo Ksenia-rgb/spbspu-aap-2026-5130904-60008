@@ -24,7 +24,7 @@ int main()
       std::cerr << "Cannot allocate input buffer" << "\n";
       return 1;
     }
-    if (std::cin.eof() && source[0]=='\0')
+    if (std::cin.eof() && source[0] == '\0')
     {
       delete[] source;
       std::cerr << "Input error: no data" << "\n";
