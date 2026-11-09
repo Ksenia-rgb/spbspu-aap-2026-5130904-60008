@@ -107,7 +107,7 @@ int babikov::readLine(char*& str, std::size_t& size, std::size_t& capacity)
 
 int babikov::findAdjacentEqual(const char* str)
 {
-  for (std::size_t i = 0; str[i + 1] != '\0'; ++i)
+  for (std::size_t i = 0; str[i] != '\0' && str[i + 1] != '\0'; ++i)
   {
     if (str[i] == str[i + 1])
     {
