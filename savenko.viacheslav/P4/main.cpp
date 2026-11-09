@@ -39,6 +39,12 @@ int main()
 
   input_buffer[string_length] = '\0';
 
+  if (string_length == 0 && input_char == EOF) {
+    std::cerr << "Error: Empty input and EOF reached." << "\n";
+    std::free(input_buffer);
+    return 1;
+  }
+
   const int result = savenko::checkDuplicates(input_buffer);
 
   std::cout << result << "\n";
