@@ -53,9 +53,9 @@ int main()
     return 1;
   }
 
-  if (input[0] == '\0') {
+  if (input[0] == '\0' && std::feof(stdin) != 0) {
     std::free(input);
-    std::fputs("Error: empty input\n", stderr);
+    std::fputs("Error: no input\n", stderr);
     return 1;
   }
 
