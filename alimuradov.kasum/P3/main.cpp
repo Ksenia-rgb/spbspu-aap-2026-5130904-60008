@@ -73,7 +73,7 @@ int main(int argc, char** argv)
         return 2;
       }
       char c = 0;
-      if (in.get(c) && !std::isspace(static_cast<unsigned char>(c)))
+      if (in.get(c) && !std::isspace(static_cast< unsigned char >(c)))
       {
         std::cerr << "Bad data\n";
         if (dynamic)
@@ -115,14 +115,14 @@ int main(int argc, char** argv)
     for (int j = left; j <= right; ++j)
     {
       int* const cell = dynamic ? &matrix[top][j] : &fixed[top][j];
-      *cell = static_cast<int>(*cell - sub++);
+      *cell = static_cast< int >(*cell - sub++);
     }
     ++top;
 
     for (int i = top; i <= bottom; ++i)
     {
       int* const cell = dynamic ? &matrix[i][right] : &fixed[i][right];
-      *cell = static_cast<int>(*cell - sub++);
+      *cell = static_cast< int >(*cell - sub++);
     }
     --right;
 
@@ -131,7 +131,7 @@ int main(int argc, char** argv)
       for (int j = right; j >= left; --j)
       {
         int* const cell = dynamic ? &matrix[bottom][j] : &fixed[bottom][j];
-        *cell = static_cast<int>(*cell - sub++);
+        *cell = static_cast< int >(*cell - sub++);
       }
       --bottom;
     }
@@ -141,7 +141,7 @@ int main(int argc, char** argv)
       for (int i = bottom; i >= top; --i)
       {
         int* const cell = dynamic ? &matrix[i][left] : &fixed[i][left];
-        *cell = static_cast<int>(*cell - sub++);
+        *cell = static_cast< int >(*cell - sub++);
       }
       ++left;
     }
