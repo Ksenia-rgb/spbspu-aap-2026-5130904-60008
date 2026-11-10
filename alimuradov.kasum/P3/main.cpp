@@ -2,6 +2,15 @@
 #include <fstream>
 #include <iostream>
 
+namespace alimuradov
+{
+
+constexpr int kMaxSize = 100;
+
+}
+
+using alimuradov::kMaxSize;
+
 int main(int argc, char** argv)
 {
   if (argc != 4)
@@ -26,14 +35,14 @@ int main(int argc, char** argv)
 
   int n = 0;
   int m = 0;
-  if (!(in >> n >> m) || n < 0 || m < 0 || n > 100 || m > 100)
+  if (!(in >> n >> m) || n < 0 || m < 0 || n > kMaxSize || m > kMaxSize)
   {
     std::cerr << "Bad size\n";
     return 2;
   }
 
   int** matrix = nullptr;
-  int fixed[100][100] = {};
+  int fixed[kMaxSize][kMaxSize] = {};
   const bool dynamic = (argv[1][0] == '2');
 
   if (dynamic)
@@ -49,13 +58,16 @@ int main(int argc, char** argv)
   {
     for (int j = 0; j < m; ++j)
     {
-      int* cell = dynamic ? &matrix[i][j] : &fixed[i][j];
+      int* const cell = dynamic ? &matrix[i][j] : &fixed[i][j];
       if (!(in >> *cell))
       {
         std::cerr << "Bad data\n";
         if (dynamic)
         {
-          for (int k = 0; k < n; ++k) delete[] matrix[k];
+          for (int k = 0; k < n; ++k)
+          {
+            delete[] matrix[k];
+          }
           delete[] matrix;
         }
         return 2;
@@ -66,7 +78,10 @@ int main(int argc, char** argv)
         std::cerr << "Bad data\n";
         if (dynamic)
         {
-          for (int k = 0; k < n; ++k) delete[] matrix[k];
+          for (int k = 0; k < n; ++k)
+          {
+            delete[] matrix[k];
+          }
           delete[] matrix;
         }
         return 2;
@@ -80,42 +95,53 @@ int main(int argc, char** argv)
     std::cerr << "Trailing data\n";
     if (dynamic)
     {
-      for (int k = 0; k < n; ++k) delete[] matrix[k];
+      for (int k = 0; k < n; ++k)
+      {
+        delete[] matrix[k];
+      }
       delete[] matrix;
     }
     return 2;
   }
 
-  int top = 0, bottom = n - 1, left = 0, right = m - 1, sub = 1;
+  int top = 0;
+  int bottom = n - 1;
+  int left = 0;
+  int right = m - 1;
+  long long sub = 1;
+
   while (top <= bottom && left <= right)
   {
     for (int j = left; j <= right; ++j)
     {
-      int* cell = dynamic ? &matrix[top][j] : &fixed[top][j];
-      *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
+      int* const cell = dynamic ? &matrix[top][j] : &fixed[top][j];
+      *cell = static_cast<int>(*cell - sub++);
     }
     ++top;
+
     for (int i = top; i <= bottom; ++i)
     {
-      int* cell = dynamic ? &matrix[i][right] : &fixed[i][right];
-      *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
+      int* const cell = dynamic ? &matrix[i][right] : &fixed[i][right];
+      *cell = static_cast<int>(*cell - sub++);
     }
     --right;
+
     if (top <= bottom)
     {
       for (int j = right; j >= left; --j)
       {
-        int* cell = dynamic ? &matrix[bottom][j] : &fixed[bottom][j];
-        *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
+        int* const cell = dynamic ? &matrix[bottom][j] : &fixed[bottom][j];
+        *cell = static_cast<int>(*cell - sub++);
       }
       --bottom;
     }
+
     if (left <= right)
     {
       for (int i = bottom; i >= top; --i)
       {
-        int* cell = dynamic ? &matrix[i][left] : &fixed[i][left];
-        *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
+        int* const cell = dynamic ? &matrix[i][left] : &fixed[i][left];
+        *cell = static_cast<int>(*cell - sub++);
       }
       ++left;
     }
@@ -126,8 +152,11 @@ int main(int argc, char** argv)
   {
     for (int j = 0; j < m; ++j)
     {
-      int value = dynamic ? matrix[i][j] : fixed[i][j];
-      if (j > 0) out << " ";
+      const int value = dynamic ? matrix[i][j] : fixed[i][j];
+      if (j > 0)
+      {
+        out << " ";
+      }
       out << value;
     }
     out << "\n";
@@ -135,7 +164,10 @@ int main(int argc, char** argv)
 
   if (dynamic)
   {
-    for (int i = 0; i < n; ++i) delete[] matrix[i];
+    for (int i = 0; i < n; ++i)
+    {
+      delete[] matrix[i];
+    }
     delete[] matrix;
   }
 
