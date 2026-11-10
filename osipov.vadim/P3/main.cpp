@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     std::cerr << "Too many arguments" << "\n";
     return 1;
   }
-  if (argv[1][0] >= '0' && argv[1][0] <= '9') {
+  if(!(argv[1][0] >= '0' && argv[1][0] <= '9')) {
     std::cerr << "First parameter is not a number" << "\n";
     return 1;
   }
