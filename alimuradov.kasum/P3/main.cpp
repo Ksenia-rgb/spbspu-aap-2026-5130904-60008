@@ -10,7 +10,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  if (!((argv[1][0] == '1' || argv[1][0] == '2') && argv[1][1] == '\0'))
+  if ((argv[1][0] != '1' && argv[1][0] != '2') || argv[1][1] != '\0')
   {
     std::cerr << "Bad type\n";
     return 1;
@@ -60,8 +60,8 @@ int main(int argc, char** argv)
         }
         return 2;
       }
-      int c = 0;
-      if (in.get(c) && !std::isspace(c))
+      char c = 0;
+      if (in.get(c) && !std::isspace(static_cast<unsigned char>(c)))
       {
         std::cerr << "Bad data\n";
         if (dynamic)
@@ -92,13 +92,13 @@ int main(int argc, char** argv)
     for (int j = left; j <= right; ++j)
     {
       int* cell = dynamic ? &matrix[top][j] : &fixed[top][j];
-      *cell -= sub++;
+      *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
     }
     ++top;
     for (int i = top; i <= bottom; ++i)
     {
       int* cell = dynamic ? &matrix[i][right] : &fixed[i][right];
-      *cell -= sub++;
+      *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
     }
     --right;
     if (top <= bottom)
@@ -106,7 +106,7 @@ int main(int argc, char** argv)
       for (int j = right; j >= left; --j)
       {
         int* cell = dynamic ? &matrix[bottom][j] : &fixed[bottom][j];
-        *cell -= sub++;
+        *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
       }
       --bottom;
     }
@@ -115,7 +115,7 @@ int main(int argc, char** argv)
       for (int i = bottom; i >= top; --i)
       {
         int* cell = dynamic ? &matrix[i][left] : &fixed[i][left];
-        *cell -= sub++;
+        *cell = static_cast<int>(static_cast<long long>(*cell) - sub++);
       }
       ++left;
     }
