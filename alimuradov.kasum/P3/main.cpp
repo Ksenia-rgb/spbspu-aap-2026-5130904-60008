@@ -4,9 +4,7 @@
 
 namespace alimuradov
 {
-
-constexpr int kMaxSize = 100;
-
+  constexpr int kMaxSize = 100;
 }
 
 using alimuradov::kMaxSize;
