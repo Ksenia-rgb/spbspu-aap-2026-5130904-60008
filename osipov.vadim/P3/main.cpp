@@ -1,7 +1,9 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-int const matrix_size = 100;
+
+const int matrix_size = 100;
+
 void obrabotkamatric(int matrix[][matrix_size], int rows, int cols);
 void obrabotkamatricdynamic(int *matrix, int rows, int cols);
 
@@ -11,22 +13,28 @@ int main(int argc, char *argv[])
     std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
+
   if (argc > 4) {
     std::cerr << "Too many arguments" << "\n";
     return 1;
   }
+
   if (!(argv[1][0] >= '0' && argv[1][0] <= '9')) {
     std::cerr << "First parameter is not a number" << "\n";
     return 1;
   }
+
   if (argv[1][0] != '1' && argv[1][0] != '2') {
     std::cerr << "First parameter if out of range" << "\n";
     return 1;
   }
+
   int matrix[matrix_size][matrix_size];
   int rows = 0;
   int cols = 0;
+
   std::ifstream fin(argv[2]);
+
   if (!(fin >> rows >> cols)) {
     if (fin.eof()) {
       std::cerr << "Input file is empty" << "\n";
@@ -36,6 +44,7 @@ int main(int argc, char *argv[])
       return 2;
     }
   }
+
   for (int i = 0; i < rows; ++i) {
     for (int j = 0; j < cols; ++j) {
       if (!(fin >> matrix[i][j])) {
@@ -44,43 +53,52 @@ int main(int argc, char *argv[])
       }
     }
   }
+
   if (std::strcmp(argv[1], "1") == 0) {
     obrabotkamatric(matrix, rows, cols);
+
     std::ofstream fout(argv[3]);
+
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         fout << matrix[i][j] << " ";
       }
+
       fout << "\n";
     }
   } else {
     int *const dynamic_matrix = new int[rows * cols];
+
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-
         dynamic_matrix[i * cols + j] = matrix[i][j];
       }
     }
+
     obrabotkamatricdynamic(dynamic_matrix, rows, cols);
+
     std::ofstream fout(argv[3]);
+
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         fout << dynamic_matrix[(i * cols) + j] << " ";
       }
+
       fout << "\n";
     }
+
     delete[] dynamic_matrix;
   }
+
   return 0;
 }
+
 void obrabotkamatric(int matrix[][matrix_size], int rows, int cols)
 {
   int j = 0;
   int k = 0;
 
-  while (k < rows && k < cols)
- {
-
+  while (k < rows && k < cols) {
     for (int i = k; i < cols - k; ++i) {
       matrix[rows - 1 - k][i] = matrix[rows - 1 - k][i] + j;
       j = j + 1;
@@ -108,14 +126,13 @@ void obrabotkamatric(int matrix[][matrix_size], int rows, int cols)
     k = k + 1;
   }
 }
+
 void obrabotkamatricdynamic(int *matrix, int rows, int cols)
 {
   int j = 0;
   int k = 0;
 
-  while (k < rows && k < cols)
- {
-
+  while (k < rows && k < cols) {
     for (int i = k; i < cols - k; ++i) {
       matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
       j = j + 1;
