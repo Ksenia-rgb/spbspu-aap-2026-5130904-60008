@@ -7,20 +7,19 @@
 #include <string>
 
 namespace melnikov {
-  const std::string INC_NUM_OF_ARG = "Incorrect number of arguments";
-  const std::string INC_NUM = "Incorrect task number";
-  const std::string INV_VAL = "Invalid matrix data";
-  const int INVALID_ARGS_EXIT_CODE = 1;
-  const int INVALID_DATA_EXIT_CODE = 2;
-  const int MAX_SIZE_ARR = 10000;
+const std::string INC_NUM_OF_ARG = "Incorrect number of arguments";
+const std::string INC_NUM = "Incorrect task number";
+const std::string INV_VAL = "Invalid matrix data";
+const int INVALID_ARGS_EXIT_CODE = 1;
+const int INVALID_DATA_EXIT_CODE = 2;
+const int MAX_SIZE_ARR = 10000;
 
-  int getFixArray(std::ifstream &input, int row, int col);
-  int getDynamicArray(std::ifstream &input, int row, int col);
-  int countEl(const int *arr, int row, int col);
-}
+int getFixArray(std::ifstream &input, int row, int col);
+int getDynamicArray(std::ifstream &input, int row, int col);
+int countEl(const int *arr, int row, int col);
+} // namespace melnikov
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   if (argc != 4) {
     std::cerr << melnikov::INC_NUM_OF_ARG << "\n";
     return melnikov::INVALID_ARGS_EXIT_CODE;
@@ -66,91 +65,88 @@ int main(int argc, char *argv[])
 }
 
 namespace melnikov {
-  int getFixArray(std::ifstream &input, int row, int col)
-  {
-    if (row != 0 && col > MAX_SIZE_ARR / row) {
-      throw std::invalid_argument(INV_VAL);
-    }
-
-    int arr[MAX_SIZE_ARR] = {0};
-
-    for (int i = 0; i < row; ++i) {
-      for (int j = 0; j < col; ++j) {
-        if (!(input >> arr[i * col + j])) {
-          throw std::invalid_argument(INV_VAL);
-        }
-      }
-    }
-
-    return countEl(arr, row, col);
+int getFixArray(std::ifstream &input, int row, int col) {
+  if (row != 0 && col > MAX_SIZE_ARR / row) {
+    throw std::invalid_argument(INV_VAL);
   }
 
-  int getDynamicArray(std::ifstream &input, int row, int col)
-  {
-    if (col != 0 && row > INT_MAX / col) {
-      throw std::invalid_argument(INV_VAL);
-    }
+  int arr[MAX_SIZE_ARR] = {0};
 
-    if (row == 0 || col == 0) {
-      return 0;
-    }
-
-    const int size = row * col;
-    int *const arr = new int[size]{0};
-
-    for (int i = 0; i < row; ++i) {
-      for (int j = 0; j < col; ++j) {
-        if (!(input >> arr[i * col + j])) {
-          delete[] arr;
-          throw std::invalid_argument(INV_VAL);
-        }
+  for (int i = 0; i < row; ++i) {
+    for (int j = 0; j < col; ++j) {
+      if (!(input >> arr[i * col + j])) {
+        throw std::invalid_argument(INV_VAL);
       }
     }
-
-    const int res = countEl(arr, row, col);
-
-    delete[] arr;
-
-    return res;
   }
 
-  int countEl(const int *arr, int row, int col)
-  {
-    int res = 0;
+  return countEl(arr, row, col);
+}
 
-    if (row < 3 || col < 3) {
-      return 0;
+int getDynamicArray(std::ifstream &input, int row, int col) {
+  if (col != 0 && row > INT_MAX / col) {
+    throw std::invalid_argument(INV_VAL);
+  }
+
+  if (row == 0 || col == 0) {
+    return 0;
+  }
+
+  const int size = row * col;
+  int *const arr = new int[size]{0};
+
+  for (int i = 0; i < row; ++i) {
+    for (int j = 0; j < col; ++j) {
+      if (!(input >> arr[i * col + j])) {
+        delete[] arr;
+        throw std::invalid_argument(INV_VAL);
+      }
     }
+  }
 
-    for (int i = 1; i < row - 1; ++i) {
-      for (int j = 1; j < col - 1; ++j) {
-        const int current = arr[i * col + j];
+  const int res = countEl(arr, row, col);
 
-        bool isMin = true;
+  delete[] arr;
 
-        for (int di = -1; di <= 1; ++di) {
-          for (int dj = -1; dj <= 1; ++dj) {
-            if (di == 0 && dj == 0) {
-              continue;
-            }
+  return res;
+}
 
-            if (current >= arr[(i + di) * col + (j + dj)]) {
-              isMin = false;
-              break;
-            }
+int countEl(const int *arr, int row, int col) {
+  int res = 0;
+
+  if (row < 3 || col < 3) {
+    return 0;
+  }
+
+  for (int i = 1; i < row - 1; ++i) {
+    for (int j = 1; j < col - 1; ++j) {
+      const int current = arr[i * col + j];
+
+      bool isMin = true;
+
+      for (int di = -1; di <= 1; ++di) {
+        for (int dj = -1; dj <= 1; ++dj) {
+          if (di == 0 && dj == 0) {
+            continue;
           }
 
-          if (!isMin) {
+          if (current >= arr[(i + di) * col + (j + dj)]) {
+            isMin = false;
             break;
           }
         }
 
-        if (isMin) {
-          ++res;
+        if (!isMin) {
+          break;
         }
       }
-    }
 
-    return res;
+      if (isMin) {
+        ++res;
+      }
+    }
   }
+
+  return res;
 }
+} // namespace melnikov
