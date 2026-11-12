@@ -17,7 +17,7 @@ const int MAX_SIZE_ARR = 10000;
 int getFixArray(std::ifstream &input, int row, int col);
 int getDynamicArray(std::ifstream &input, int row, int col);
 int countEl(const int *arr, int row, int col);
-} // namespace melnikov
+}
 
 int main(int argc, char *argv[]) {
   if (argc != 4) {
@@ -149,4 +149,4 @@ int countEl(const int *arr, int row, int col) {
 
   return res;
 }
-} // namespace melnikov
+}
