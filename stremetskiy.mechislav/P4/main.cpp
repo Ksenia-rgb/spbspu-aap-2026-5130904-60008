@@ -82,7 +82,7 @@ namespace stremetskiy
 
       if (data == nullptr)
       {
-        throw;
+        throw std::bad_alloc();
       }
 
       if (!input.get(ch))
@@ -106,7 +106,7 @@ namespace stremetskiy
           if (capacity > (stremetskiy::MAX_SIZE_T / 2))
           {
             delete[] data;
-            throw;
+            throw std::bad_alloc();
           }
 
           const std::size_t new_capacity = capacity * 2;
@@ -114,7 +114,7 @@ namespace stremetskiy
           if (expanded_data == nullptr)
           {
             delete[] data;
-            throw;
+            throw std::bad_alloc();
           }
 
           for (std::size_t i = 0; i < size; i++)
