@@ -6,11 +6,11 @@ namespace osipov
 {
 const int matrix_size = 100;
 
-void obrabotkamatric(int matrix[][matrix_size], int rows, int cols);
-void obrabotkamatricdynamic(int *matrix, int rows, int cols);
+void obrabotkamatric(long long int matrix[][matrix_size], long long int rows,long long int cols);
+void obrabotkamatricdynamic(long long int *matrix, long long int rows, long long int cols);
 }
 
-int main(int argc, char *argv[])
+int main(long long int argc, char *argv[])
 {
   if (argc < 4) {
     std::cerr << "Not enough arguments" << "\n";
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
       }
     }
 
-    obrabotkamatricdynamic(dynamic_matrix, rows, cols);
+   osipov::obrabotkamatricdynamic(dynamic_matrix, rows, cols);
 
     std::ofstream fout(argv[3]);
 
@@ -97,9 +97,9 @@ int main(int argc, char *argv[])
 }
 namespace osipov
 {
-void obrabotkamatric(int matrix[][matrix_size], int rows, int cols)
+void obrabotkamatric(long long  int matrix[][matrix_size], long long int rows, long long int cols)
 {
-  int j = 0;
+  int j = 1;
   int k = 0;
 
   while (k < rows && k < cols) {
@@ -131,9 +131,9 @@ void obrabotkamatric(int matrix[][matrix_size], int rows, int cols)
   }
 }
 
-void obrabotkamatricdynamic(int *matrix, int rows, int cols)
+void obrabotkamatricdynamic(long long int *matrix,long long int rows,long long int cols)
 {
-  int j = 0;
+  int j = 1;
   int k = 0;
 
   while (k < rows && k < cols) {
