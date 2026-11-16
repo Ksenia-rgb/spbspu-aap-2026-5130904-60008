@@ -70,27 +70,27 @@ int main(int argc, char *argv[])
       fout << "\n";
     }
   } else {
-    int *const osipov::dynamic_matrix = new int[rows * cols];
+    int *const dynamic_matrix = new int[rows * cols];
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        osipov::dynamic_matrix[i * cols + j] = matrix[i][j];
+        dynamic_matrix[i * cols + j] = matrix[i][j];
       }
     }
 
-    osipov::obrabotkamatricdynamic(dynamic_matrix, rows, cols);
+    obrabotkamatricdynamic(dynamic_matrix, rows, cols);
 
     std::ofstream fout(argv[3]);
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        fout << osipov::dynamic_matrix[(i * cols) + j] << " ";
+        fout << dynamic_matrix[(i * cols) + j] << " ";
       }
 
       fout << "\n";
     }
 
-    delete[] osipov::dynamic_matrix;
+    delete[] dynamic_matrix;
   }
 
   return 0;
