@@ -4,13 +4,13 @@
 
 namespace osipov
 {
-const int matrix_size = 100;
+const long long int matrix_size = 100;
 
 void obrabotkamatric(long long int matrix[][matrix_size], long long int rows,long long int cols);
 void obrabotkamatricdynamic(long long int *matrix, long long int rows, long long int cols);
 }
 
-int main(long long int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   if (argc < 4) {
     std::cerr << "Not enough arguments" << "\n";
@@ -33,8 +33,8 @@ int main(long long int argc, char *argv[])
   }
 
   int matrix[osipov::matrix_size][osipov::matrix_size];
-  int rows = 0;
-  int cols = 0;
+  long long int rows = 0;
+  long long int cols = 0;
 
   std::ifstream fin(argv[2]);
 
@@ -61,13 +61,21 @@ int main(long long int argc, char *argv[])
    osipov::obrabotkamatric(matrix, rows, cols);
 
     std::ofstream fout(argv[3]);
-
+    if(!fout.is_open()){
+      std::cerr <<"error opening output file" << "\n";
+      return 1;
+    }
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         fout << matrix[i][j] << " ";
       }
 
       fout << "\n";
+    }
+  fout.close();
+  if (fout.fail()) {
+    std::cerr << "error output" << "\n";
+    return 1;
     }
   } else {
     int *const dynamic_matrix = new int[rows * cols];
@@ -81,6 +89,10 @@ int main(long long int argc, char *argv[])
    osipov::obrabotkamatricdynamic(dynamic_matrix, rows, cols);
 
     std::ofstream fout(argv[3]);
+      if(!fout.is_open()){
+      std::cerr <<"error opening output file" << "\n";
+      return 1;
+    }
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
@@ -89,7 +101,12 @@ int main(long long int argc, char *argv[])
 
       fout << "\n";
     }
-
+    fout.close();
+    if (fout.fail()) {
+      std::cerr << "error output" << "\n";
+      delete[] dynamic_matrix;
+      return 1;
+      }
     delete[] dynamic_matrix;
   }
 
