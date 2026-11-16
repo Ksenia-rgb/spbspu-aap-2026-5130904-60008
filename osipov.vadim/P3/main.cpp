@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  int matrix[matrix_size][matrix_size];
+  int matrix[osipov::matrix_size][osipov::matrix_size];
   int rows = 0;
   int cols = 0;
 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   }
 
   if (std::strcmp(argv[1], "1") == 0) {
-    obrabotkamatric(matrix, rows, cols);
+   osipov::obrabotkamatric(matrix, rows, cols);
 
     std::ofstream fout(argv[3]);
 
@@ -70,27 +70,27 @@ int main(int argc, char *argv[])
       fout << "\n";
     }
   } else {
-    int *const dynamic_matrix = new int[rows * cols];
+    int *const osipov::dynamic_matrix = new int[rows * cols];
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        dynamic_matrix[i * cols + j] = matrix[i][j];
+        osipov::dynamic_matrix[i * cols + j] = matrix[i][j];
       }
     }
 
-    obrabotkamatricdynamic(dynamic_matrix, rows, cols);
+    osipov::obrabotkamatricdynamic(dynamic_matrix, rows, cols);
 
     std::ofstream fout(argv[3]);
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        fout << dynamic_matrix[(i * cols) + j] << " ";
+        fout << osipov::dynamic_matrix[(i * cols) + j] << " ";
       }
 
       fout << "\n";
     }
 
-    delete[] dynamic_matrix;
+    delete[] osipov::dynamic_matrix;
   }
 
   return 0;
