@@ -2,10 +2,13 @@
 #include <fstream>
 #include <iostream>
 
+namespace osipov
+{
 const int matrix_size = 100;
 
 void obrabotkamatric(int matrix[][matrix_size], int rows, int cols);
 void obrabotkamatricdynamic(int *matrix, int rows, int cols);
+}
 
 int main(int argc, char *argv[])
 {
@@ -92,7 +95,8 @@ int main(int argc, char *argv[])
 
   return 0;
 }
-
+namespace osipov
+{
 void obrabotkamatric(int matrix[][matrix_size], int rows, int cols)
 {
   int j = 0;
@@ -159,4 +163,5 @@ void obrabotkamatricdynamic(int *matrix, int rows, int cols)
 
     k = k + 1;
   }
+}
 }
