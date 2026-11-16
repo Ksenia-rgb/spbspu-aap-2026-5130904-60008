@@ -1,6 +1,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <cctype>
 
 namespace osipov
 {
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  int matrix[osipov::matrix_size][osipov::matrix_size];
+  long long int matrix[osipov::matrix_size][osipov::matrix_size];
   long long int rows = 0;
   long long int cols = 0;
 
@@ -55,8 +56,26 @@ int main(int argc, char *argv[])
         return 2;
       }
     }
+    for (int i = 0; i < rows; ++i) {
+      for (int j = 0; j < cols: ++j) {
+        long long int temp = 0;
+        if (!(fin >> temp)) {
+          std::cerr << "invalid argument" << "\n";
+          return 2;
+         }
+        long long int next_char = fin.peek();
+        if (next_char != EOF && !std::isspace(next_char)) {
+          std::cerr << "invalid element" << "\n"
+          return 2;
+        }
+        matrix[i][j] = temp;
+      }
+    }
+  char test = 0;
+  if (fin >> test) {
+    std::cerr <<"error input" << "\n";
+    return 2;
   }
-
   if (std::strcmp(argv[1], "1") == 0) {
    osipov::obrabotkamatric(matrix, rows, cols);
 
@@ -78,7 +97,7 @@ int main(int argc, char *argv[])
     return 1;
     }
   } else {
-    int *const dynamic_matrix = new int[rows * cols];
+    long long int *const dynamic_matrix = new long long int[rows * cols];
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
