@@ -28,8 +28,12 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  if (argv[1][0] != '1' && argv[1][0] != '2') {
+  if ((argv[1][0] != '1') && (argv[1][0] != '2')) {
     std::cerr << "First parameter if out of range" << "\n";
+    return 1;
+  }
+  if (std::strcmp(argv[1], "1") != 0 && std::strcmp(argv[1], "2") !=0){
+    std::cerr << "first parameter incorrect";
     return 1;
   }
 
@@ -49,7 +53,7 @@ int main(int argc, char *argv[])
     }
   }
   if (rows < 0 || cols < 0) {
-  std::cerr << "invalid size" << "\n"
+  std::cerr << "invalid size" << "\n";
   return 2;
   }
   for (int i = 0; i < rows; ++i) {
@@ -68,7 +72,7 @@ int main(int argc, char *argv[])
          }
         long long int next_char = fin.peek();
         if (next_char != EOF && !std::isspace(next_char)) {
-          std::cerr << "invalid element" << "\n"
+          std::cerr << "invalid element" << "\n";
           return 2;
         }
         matrix[i][j] = temp;
@@ -133,6 +137,7 @@ int main(int argc, char *argv[])
   }
 
   return 0;
+}
 }
 namespace osipov
 {
