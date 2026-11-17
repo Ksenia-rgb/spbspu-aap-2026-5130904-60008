@@ -3,14 +3,12 @@
 #include <fstream>
 #include <iostream>
 
-namespace osipov
-{
+namespace osipov {
+
   const int Size_prime = 10000;
 
-  void obrabotkamatric(long long int *matrix, long long int rows,
-                       long long int cols);
-  void obrabotkamatricdynamic(long long int *matrix, long long int rows,
-                              long long int cols);
+  void obrabotkamatric(long long int *matrix, long long int rows, long long int cols);
+  void obrabotkamatricdynamic(long long int *matrix, long long int rows, long long int cols);
 }
 
 int main(int argc, char *argv[])
@@ -158,22 +156,19 @@ int main(int argc, char *argv[])
 
 namespace osipov
 {
-  void obrabotkamatric(long long int *matrix, long long int rows,
-                       long long int cols)
+  void obrabotkamatric(long long int *matrix, long long int rows, long long int cols)
   {
     long long int j = 1;
     int k = 0;
 
     while (2 * k < rows && 2 * k < cols) {
       for (int i = k; i < cols - k; ++i) {
-        matrix[(rows - 1 - k) * cols + i] =
-            matrix[(rows - 1 - k) * cols + i] + j;
+        matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
         j = j + 1;
       }
 
       for (int i = rows - 2 - k; i >= k; --i) {
-        matrix[(i * cols) + cols - 1 - k] =
-            matrix[(i * cols) + cols - 1 - k] + j;
+        matrix[(i * cols) + cols - 1 - k] = matrix[(i * cols) + cols - 1 - k] + j;
         j = j + 1;
       }
 
@@ -183,10 +178,9 @@ namespace osipov
           j = j + 1;
         }
       }
-if (k < cols
-- 1 - k) {
+
+      if (k < cols - 1 - k) {
         for (int i = k + 1; i < rows - 1 - k; ++i) {
-          matrix[(i * cols) + k] = matrix[(i * cols) + k] + j;
           matrix[(i * cols) + k] = matrix[(i * cols) + k] + j;
           j = j + 1;
         }
@@ -196,22 +190,20 @@ if (k < cols
     }
   }
 
-  void obrabotkamatricdynamic(long long int *matrix, long long int rows,
-                              long long int cols)
+
+  void obrabotkamatricdynamic(long long int *matrix, long long int rows, long long int cols)
   {
     long long int j = 1;
     int k = 0;
 
     while (2 * k < rows && 2 * k < cols) {
       for (int i = k; i < cols - k; ++i) {
-        matrix[(rows - 1 - k) * cols + i] =
-            matrix[(rows - 1 - k) * cols + i] + j;
+        matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
         j = j + 1;
       }
 
       for (int i = rows - 2 - k; i >= k; --i) {
-        matrix[(i * cols) + cols - 1 - k] =
-            matrix[(i * cols) + cols - 1 - k] + j;
+        matrix[(i * cols) + cols - 1 - k] = matrix[(i * cols) + cols - 1 - k] + j;
         j = j + 1;
       }
 
