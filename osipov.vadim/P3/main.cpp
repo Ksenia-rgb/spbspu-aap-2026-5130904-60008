@@ -6,8 +6,8 @@
 namespace osipov
 {
 const long long int matrix_size = 100;
-
-void obrabotkamatric(long long int matrix[][matrix_size], long long int rows,long long int cols);
+const int Size_prime = 10000;
+void obrabotkamatric(long long int *matrix, long long int rows,long long int cols);
 void obrabotkamatricdynamic(long long int *matrix, long long int rows, long long int cols);
 }
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  long long int matrix[osipov::matrix_size][osipov::matrix_size];
+  long long int matrix[osipov::Size_prime];
   long long int rows = 0;
   long long int cols = 0;
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
           std::cerr << "invalid element" << "\n";
           return 2;
         }
-        matrix[i][j] = temp;
+        matrix[i * cols + j] = temp;
       }
     }
   char test = 0;
@@ -84,10 +84,10 @@ int main(int argc, char *argv[])
       std::cerr <<"error opening output file" << "\n";
       return 1;
     }
-    fout << rows << " " << cols << "\n"
+    fout << rows << " " << cols << "\n";
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        fout << matrix[i][j] << " ";
+        fout << matrix[i * cols + j] << " ";
       }
 
       fout << "\n";
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
       std::cerr <<"error opening output file" << "\n";
       return 1;
     }
-  fout << rows << " " << "\n";
+  fout << rows << " " << cols << "\n";
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         fout << dynamic_matrix[(i * cols) + j] << " ";
@@ -132,35 +132,35 @@ int main(int argc, char *argv[])
 
   return 0;
 }
-}
+
 namespace osipov
 {
 void obrabotkamatric(long long  int matrix[][matrix_size], long long int rows, long long int cols)
 {
-  int j = 1;
+  long long int j = 1;
   int k = 0;
 
-  while (k < rows && k < cols) {
+  while (2 * k < rows && 2 * k < cols) {
     for (int i = k; i < cols - k; ++i) {
-      matrix[rows - 1 - k][i] = matrix[rows - 1 - k][i] + j;
+      matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
       j = j + 1;
     }
 
     for (int i = rows - 2 - k; i >= k; --i) {
-      matrix[i][cols - 1 - k] = matrix[i][cols - 1 - k] + j;
+      matrix[(i * cols) + cols - 1 - k] = matrix[(i * cols) + cols - 1 - k] + j;
       j = j + 1;
     }
 
     if (k < rows - 1 - k) {
       for (int i = cols - 2 - k; i >= k; --i) {
-        matrix[k][i] = matrix[k][i] + j;
+        matrix[(k * cols) + i] = matrix[(k * cols) + i] + j;
         j = j + 1;
       }
     }
 
     if (k < cols - 1 - k) {
       for (int i = k + 1; i < rows - 1 - k; ++i) {
-        matrix[i][k] = matrix[i][k] + j;
+        matrix[(i * cols) + k] = matrix[(i * cols) + k] + j;
         j = j + 1;
       }
     }
@@ -171,10 +171,10 @@ void obrabotkamatric(long long  int matrix[][matrix_size], long long int rows, l
 
 void obrabotkamatricdynamic(long long int *matrix,long long int rows,long long int cols)
 {
-  int j = 1;
+  long long int j = 1;
   int k = 0;
 
-  while (k < rows && k < cols) {
+  while (2 * k < rows && 2 * k < cols) {
     for (int i = k; i < cols - k; ++i) {
       matrix[(rows - 1 - k) * cols + i] = matrix[(rows - 1 - k) * cols + i] + j;
       j = j + 1;
