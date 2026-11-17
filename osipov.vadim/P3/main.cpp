@@ -16,27 +16,27 @@ namespace osipov
 int main(int argc, char *argv[])
 {
   if (argc < 4) {
-    std::cerr « "Not enough arguments" « "\n";
+    std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
 
   if (argc > 4) {
-    std::cerr « "Too many arguments" « "\n";
+    std::cerr << "Too many arguments" << "\n";
     return 1;
   }
 
   if (!(argv[1][0] >= '0' && argv[1][0] <= '9')) {
-    std::cerr « "First parameter is not a number" « "\n";
+    std::cerr << "First parameter is not a number" << "\n";
     return 1;
   }
 
   if ((argv[1][0] != '1') && (argv[1][0] != '2')) {
-    std::cerr « "First parameter if out of range" « "\n";
+    std::cerr << "First parameter if out of range" << "\n";
     return 1;
   }
 
   if (std::strcmp(argv[1], "1") != 0 && std::strcmp(argv[1], "2") != 0) {
-    std::cerr « "first parameter incorrect";
+    std::cerr << "first parameter incorrect";
     return 1;
   }
 
@@ -46,18 +46,18 @@ int main(int argc, char *argv[])
 
   std::ifstream fin(argv[2]);
 
-  if (!(fin » rows » cols)) {
+  if (!(fin >> rows >> cols)) {
     if (fin.eof()) {
-      std::cerr « "Input file is empty" « "\n";
+      std::cerr << "Input file is empty" << "\n";
       return 2;
     } else {
-      std::cerr « "Invalid input format" « "\n";
+      std::cerr << "Invalid input format" << "\n";
       return 2;
     }
   }
 
   if (rows < 0 || cols < 0) {
-    std::cerr « "invalid size" « "\n";
+    std::cerr << "invalid size" << "\n";
     return 2;
   }
 
@@ -66,14 +66,14 @@ int main(int argc, char *argv[])
       long long int temp = 0;
 
       if (!(fin » temp)) {
-        std::cerr « "invalid argument" « "\n";
+        std::cerr << "invalid argument" << "\n";
         return 2;
       }
 
       const int next_char = fin.peek();
 
       if (next_char != EOF && !std::isspace(next_char)) {
-        std::cerr « "invalid element" « "\n";
+        std::cerr << "invalid element" << "\n";
         return 2;
       }
 
@@ -83,8 +83,8 @@ int main(int argc, char *argv[])
 
   char test = 0;
 
-  if (fin » test) {
-    std::cerr « "error input" « "\n";
+  if (fin >> test) {
+    std::cerr << "error input" << "\n";
     return 2;
   }
 
@@ -94,24 +94,24 @@ int main(int argc, char *argv[])
     std::ofstream fout(argv[3]);
 
     if (!fout.is_open()) {
-      std::cerr « "error opening output file" « "\n";
+      std::cerr << "error opening output file" << "\n";
       return 1;
     }
 
-    fout « rows « " " « cols « "\n";
+    fout << rows << " " << cols << "\n";
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        fout « matrix[i * cols + j] « " ";
+        fout << matrix[i * cols + j] << " ";
       }
 
-      fout « "\n";
+      fout << "\n";
     }
 
     fout.close();
 
     if (fout.fail()) {
-      std::cerr « "error output" « "\n";
+      std::cerr << "error output" << "\n";
       return 1;
     }
   } else {
@@ -128,24 +128,24 @@ int main(int argc, char *argv[])
     std::ofstream fout(argv[3]);
 
     if (!fout.is_open()) {
-      std::cerr « "error opening output file" « "\n";
+      std::cerr << "error opening output file" << "\n";
       return 1;
     }
 
-    fout « rows « " " « cols « "\n";
+    fout << rows << " " << cols << "\n";
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        fout « dynamic_matrix[(i * cols) + j] « " ";
+        fout << dynamic_matrix[(i * cols) + j] << " ";
       }
 
-      fout « "\n";
+      fout << "\n";
     }
 
     fout.close();
 
     if (fout.fail()) {
-      std::cerr « "error output" « "\n";
+      std::cerr << "error output" << "\n";
       delete[] dynamic_matrix;
       return 1;
     }
