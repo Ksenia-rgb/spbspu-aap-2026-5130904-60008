@@ -5,7 +5,6 @@
 
 namespace osipov
 {
-const long long int matrix_size = 100;
 const int Size_prime = 10000;
 void obrabotkamatric(long long int *matrix, long long int rows,long long int cols);
 void obrabotkamatricdynamic(long long int *matrix, long long int rows, long long int cols);
@@ -102,7 +101,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
-        dynamic_matrix[i * cols + j] = matrix[i][j];
+        dynamic_matrix[i * cols + j] = matrix[i * cols +j];
       }
     }
 
@@ -135,7 +134,7 @@ int main(int argc, char *argv[])
 
 namespace osipov
 {
-void obrabotkamatric(long long  int matrix[][matrix_size], long long int rows, long long int cols)
+void obrabotkamatric(long long int *matrix, long long int rows, long long int cols)
 {
   long long int j = 1;
   int k = 0;
