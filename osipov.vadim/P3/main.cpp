@@ -56,13 +56,6 @@ int main(int argc, char *argv[])
   std::cerr << "invalid size" << "\n";
   return 2;
   }
-  for (int i = 0; i < rows; ++i) {
-    for (int j = 0; j < cols; ++j) {
-      if (!(fin >> matrix[i][j])) {
-        std::cerr << "Invalid matrix size" << "\n";
-        return 2;
-      }
-    }
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         long long int temp = 0;
@@ -70,7 +63,7 @@ int main(int argc, char *argv[])
           std::cerr << "invalid argument" << "\n";
           return 2;
          }
-        long long int next_char = fin.peek();
+        int next_char = fin.peek();
         if (next_char != EOF && !std::isspace(next_char)) {
           std::cerr << "invalid element" << "\n";
           return 2;
@@ -91,6 +84,7 @@ int main(int argc, char *argv[])
       std::cerr <<"error opening output file" << "\n";
       return 1;
     }
+    fout << rows << " " << cols << "\n"
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         fout << matrix[i][j] << " ";
@@ -119,7 +113,7 @@ int main(int argc, char *argv[])
       std::cerr <<"error opening output file" << "\n";
       return 1;
     }
-
+  fout << rows << " " << "\n";
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         fout << dynamic_matrix[(i * cols) + j] << " ";
