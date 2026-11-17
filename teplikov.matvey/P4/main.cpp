@@ -6,15 +6,14 @@
 namespace teplikov
 {
   constexpr int SUCCESS_CODE = 0;
-  constexpr int INVALID_INPUT_CODE = 1;
-  constexpr int SYSTEM_ERROR_CODE = 2;
+  constexpr int FAIL_CODE = 1;
 
   constexpr std::size_t MAX_SIZE = std::numeric_limits< std::size_t >::max();
   constexpr std::size_t INITIAL_CAPACITY = 8;
   constexpr std::size_t GROWTH_FACTOR = 2;
 
   char *readLine(std::istream &);
-  bool hasRepeats(const char *) noexcept;
+  int hasRepeats(const char *) noexcept;
 }
 
 int main()
@@ -35,7 +34,7 @@ int main()
       {
         std::cerr << "Empty input\n";
       }
-      return teplikov::INVALID_INPUT_CODE;
+      return teplikov::FAIL_CODE;
     }
 
     std::cout << teplikov::hasRepeats(input) << '\n';
@@ -47,7 +46,7 @@ int main()
   {
     delete[] input;
     std::cerr << "Not enough memory\n";
-    return teplikov::SYSTEM_ERROR_CODE;
+    return teplikov::FAIL_CODE;
   }
 }
 
@@ -101,15 +100,15 @@ char *teplikov::readLine(std::istream &input)
   }
 }
 
-bool teplikov::hasRepeats(const char *str) noexcept
+int teplikov::hasRepeats(const char *str) noexcept
 {
   for (std::size_t i = 0; str[i] != '\0'; ++i)
   {
     if (std::strchr(str + i + 1, str[i]) != nullptr)
     {
-      return true;
+      return 1;
     }
   }
 
-  return false;
+  return 0;
 }
