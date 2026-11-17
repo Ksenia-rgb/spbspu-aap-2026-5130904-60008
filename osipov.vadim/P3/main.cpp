@@ -154,8 +154,7 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-namespace osipov
-{
+namespace osipov {
   void obrabotkamatric(long long int *matrix, long long int rows, long long int cols)
   {
     long long int j = 1;
