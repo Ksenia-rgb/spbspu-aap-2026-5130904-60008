@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     for (int j = 0; j < cols; ++j) {
       long long int temp = 0;
 
-      if (!(fin » temp)) {
+      if (!(fin >> temp)) {
         std::cerr << "invalid argument" << "\n";
         return 2;
       }
