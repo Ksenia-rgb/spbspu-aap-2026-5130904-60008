@@ -14,11 +14,11 @@ size_t unc_sym(const char* s1, const char* s2, char* out, size_t out_size)
 
   for (const char* p = s1; *p; ++p)
   {
-    seen[(unsigned char)*p] |= 1;
+    seen[static_cast<unsigned char>(*p)] |= 1;
   }
   for (const char* p = s2; *p; ++p)
   {
-    seen[(unsigned char)*p] |= 2;
+    seen[static_cast<unsigned char>(*p)] |= 2;
   }
 
   for (int c = 0; c < 256; ++c)
