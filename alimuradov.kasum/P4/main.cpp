@@ -2,11 +2,11 @@
 #include <cstring>
 #include <cctype>
 
-namespace
+namespace alimuradov
 {
 constexpr size_t kCharCount = 256;
 constexpr size_t kInitialCapacity = 64;
-}  // namespace
+}
 
 size_t uncSym(const char* s1, const char* s2, char* out, size_t out_size)
 {
@@ -16,7 +16,7 @@ size_t uncSym(const char* s1, const char* s2, char* out, size_t out_size)
   }
 
   size_t len = 0;
-  unsigned char seen[kCharCount] = {0};
+  unsigned char seen[alimuradov::kCharCount] = {0};
 
   for (const char* p = s1; *p; ++p)
   {
@@ -27,7 +27,7 @@ size_t uncSym(const char* s1, const char* s2, char* out, size_t out_size)
     seen[static_cast< unsigned char >(*p)] |= 2;
   }
 
-  for (size_t c = 0; c < kCharCount; ++c)
+  for (size_t c = 0; c < alimuradov::kCharCount; ++c)
   {
     if (seen[c] == 1 || seen[c] == 2)
     {
@@ -44,7 +44,7 @@ size_t uncSym(const char* s1, const char* s2, char* out, size_t out_size)
 
 int main()
 {
-  size_t cap1 = kInitialCapacity, len1 = 0;
+  size_t cap1 = alimuradov::kInitialCapacity, len1 = 0;
   char* first = new (std::nothrow) char[cap1];
   if (!first)
   {
@@ -74,7 +74,7 @@ int main()
   }
   first[len1] = '\0';
 
-  size_t cap2 = kInitialCapacity, len2 = 0;
+  size_t cap2 = alimuradov::kInitialCapacity, len2 = 0;
   char* second = new (std::nothrow) char[cap2];
   if (!second)
   {
