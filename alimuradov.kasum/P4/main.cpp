@@ -4,8 +4,8 @@
 
 namespace alimuradov
 {
-constexpr size_t kCharCount = 256;
-constexpr size_t kInitialCapacity = 64;
+  constexpr size_t kCharCount = 256;
+  constexpr size_t kInitialCapacity = 64;
 }
 
 size_t uncSym(const char* s1, const char* s2, char* out, size_t out_size)
