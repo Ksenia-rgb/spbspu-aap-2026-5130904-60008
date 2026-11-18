@@ -130,6 +130,12 @@ int main()
       std::cerr << "Input error!\n";
       return 2;
     }
+    if (source[0] == '\0')
+    {
+      delete[] source;
+      std::cerr << "Empty input!\n";
+      return 1;
+    }
 
     const std::size_t length = std::strlen(source);
 
