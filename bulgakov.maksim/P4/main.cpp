@@ -7,7 +7,7 @@
 
 namespace bulgakov
 {
-  int bracketDigits(char* dst, const char* src, const std::size_t length) noexcept
+  int bracketDigits(char* dst, const char* src) noexcept
   {
     std::size_t q = 0;
     for (std::size_t i = 0; src[i] != '\0'; ++i)
@@ -141,7 +141,7 @@ int main()
       return 1;
     }
 
-    std::cout << bulgakov::bracketDigits(result, source, length) << '\n';
+    std::cout << bulgakov::bracketDigits(result, source) << '\n';
 
     delete[] result;
     delete[] source;
