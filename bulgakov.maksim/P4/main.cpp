@@ -12,7 +12,7 @@ namespace bulgakov
     std::size_t q = 0;
     for (std::size_t i = 0; src[i] != '\0'; ++i)
     {
-      const unsigned char letter = static_cast<unsigned char>(src[i]);
+      const unsigned char letter = static_cast< unsigned char >(src[i]);
 
       if (std::isalpha(letter))
       {
@@ -28,7 +28,7 @@ namespace bulgakov
     }
 
     q = 0;
-    char* resurce = new (std::nothrow) char[dst_len + 1]();
+    char* const resurce = new (std::nothrow) char[dst_len + 1]();
     if (resurce == nullptr)
     {
       return 0;
@@ -64,7 +64,8 @@ namespace bulgakov
 
   char* readline(std::istream& input)
   {
-    std::size_t capacity = 16;
+    const std::size_t initialCapasity = 16;
+    std::size_t capacity = initialCapasity;
     std::size_t size = 0;
 
     char* data = new (std::nothrow) char[capacity];
@@ -81,7 +82,7 @@ namespace bulgakov
         if (size == capacity - 1)
         {
           const std::size_t newCapacity = capacity * 2;
-          char* expanded = new (std::nothrow) char[newCapacity];
+          char* const expanded = new (std::nothrow) char[newCapacity];
           if (expanded == nullptr)
           {
             delete[] data;
