@@ -51,7 +51,7 @@ int main()
   try {
     if (std::strlen(string_1) == 0 && ((std::strcmp(string_1, "\0") != 0) || (std::strcmp(string_1, "\n") != 0))) {
       delete[] string_1;
-      throw hedeya::InvalidInputError("No input provided for first string");
+      throw hedeya::InvalidInputError("No input provided for first string.\n");
     }
     const char string_2[] = "abc ef";
     const std::size_t string_2_length = std::strlen(string_2);
