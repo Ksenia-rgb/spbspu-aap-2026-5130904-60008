@@ -55,31 +55,47 @@ int main()
     return 1;
   }
 
-  int ch = 0;
-  while ((ch = std::cin.get()) != EOF && ch != '\n')
-  {
-    if (std::iscntrl(static_cast< unsigned char >(ch)) != 0)
-    {
-      continue;
-    }
+  int ch = std::cin.get();
+  int eof_without_input = 0;
 
-    if (len1 + 1 >= cap1)
-    {
-      const size_t newcap = cap1 * 2;
-      char* const tmp = new (std::nothrow) char[newcap];
-      if (!tmp)
-      {
-        delete[] first;
-        std::cerr << "failed to allocate memory\n";
-        return 1;
-      }
-      std::memcpy(tmp, first, len1);
-      delete[] first;
-      first = tmp;
-      cap1 = newcap;
-    }
-    first[len1++] = static_cast< char >(ch);
+  if (ch == EOF)
+  {
+    eof_without_input = 1;
   }
+  else
+  {
+    while (ch != EOF && ch != '\n')
+    {
+      if (std::iscntrl(static_cast< unsigned char >(ch)) == 0)
+      {
+        if (len1 + 1 >= cap1)
+        {
+          const size_t newcap = cap1 * 2;
+          char* const tmp = new (std::nothrow) char[newcap];
+          if (!tmp)
+          {
+            delete[] first;
+            std::cerr << "failed to allocate memory\n";
+            return 1;
+          }
+          std::memcpy(tmp, first, len1);
+          delete[] first;
+          first = tmp;
+          cap1 = newcap;
+        }
+        first[len1++] = static_cast< char >(ch);
+      }
+      ch = std::cin.get();
+    }
+  }
+
+  if (eof_without_input != 0)
+  {
+    delete[] first;
+    std::cerr << "empty input\n";
+    return 1;
+  }
+
   first[len1] = '\0';
 
   const size_t out_cap = len1 + std::strlen(second) + 1;
