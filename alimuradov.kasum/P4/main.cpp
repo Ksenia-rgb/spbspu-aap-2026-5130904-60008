@@ -44,7 +44,7 @@ namespace alimuradov
 
 int main()
 {
-  const char* second = "abc_ef";
+  const char* const second = "abc_ef";
 
   size_t cap1 = alimuradov::kInitialCapacity;
   size_t len1 = 0;
