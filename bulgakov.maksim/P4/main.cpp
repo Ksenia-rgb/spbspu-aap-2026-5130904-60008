@@ -2,6 +2,7 @@
 #include <cctype>
 #include <cstring>
 #include <cstddef>
+#include <limits>
 #include <new>
 
 namespace bulgakov
@@ -19,7 +20,8 @@ namespace bulgakov
     }
     dst[q] = '\0';
 
-    bool seen[256] = {};
+    constexpr std::size_t charSetSize = std::numeric_limits< unsigned char >::max() + 1;
+    bool seen[charSetSize] = {};
     std::size_t non_rep_count = 0;
 
     for (std::size_t j = 0; j < q; ++j)
@@ -75,7 +77,7 @@ namespace bulgakov
 
 int main()
 {
-  char* source = bulgakov::readline(std::cin);
+  const char* const source = bulgakov::readline(std::cin);
   if (source == nullptr)
   {
     std::cerr << "Cannot allocate input buffer!\n";
@@ -90,7 +92,14 @@ int main()
   }
 
   const std::size_t length = std::strlen(source);
-  char* result = new (std::nothrow) char[length + 1];
+  if (length == 0 && std::cin.eof())
+  {
+    delete[] source;
+    std::cerr << "Empty input!\n";
+    return 2;
+  }
+
+  char* const result = new (std::nothrow) char[length + 1];
   if (result == nullptr)
   {
     delete[] source;
