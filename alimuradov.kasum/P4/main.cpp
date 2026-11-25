@@ -55,41 +55,38 @@ int main()
     return 1;
   }
 
-  int ch = std::cin.get();
-  int eof_without_input = 0;
+  int ch = 0;
+  int got_newline = 0;
 
-  if (ch == EOF)
+  while ((ch = std::cin.get()) != EOF && ch != '\n')
   {
-    eof_without_input = 1;
-  }
-  else
-  {
-    while (ch != EOF && ch != '\n')
+    if (std::iscntrl(static_cast< unsigned char >(ch)) == 0)
     {
-      if (std::iscntrl(static_cast< unsigned char >(ch)) == 0)
+      if (len1 + 1 >= cap1)
       {
-        if (len1 + 1 >= cap1)
+        const size_t newcap = cap1 * 2;
+        char* const tmp = new (std::nothrow) char[newcap];
+        if (!tmp)
         {
-          const size_t newcap = cap1 * 2;
-          char* const tmp = new (std::nothrow) char[newcap];
-          if (!tmp)
-          {
-            delete[] first;
-            std::cerr << "failed to allocate memory\n";
-            return 1;
-          }
-          std::memcpy(tmp, first, len1);
           delete[] first;
-          first = tmp;
-          cap1 = newcap;
+          std::cerr << "failed to allocate memory\n";
+          return 1;
         }
-        first[len1++] = static_cast< char >(ch);
+        std::memcpy(tmp, first, len1);
+        delete[] first;
+        first = tmp;
+        cap1 = newcap;
       }
-      ch = std::cin.get();
+      first[len1++] = static_cast< char >(ch);
     }
   }
 
-  if (eof_without_input != 0)
+  if (ch == '\n')
+  {
+    got_newline = 1;
+  }
+
+  if (got_newline == 0 && len1 == 0)
   {
     delete[] first;
     std::cerr << "empty input\n";
