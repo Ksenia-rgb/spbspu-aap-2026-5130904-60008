@@ -5,7 +5,7 @@
 
 namespace melnikov
 {
-  class Rectangle : public Shape
+  class Rectangle: public Shape
   {
   public:
     Rectangle(double, double, point_t);

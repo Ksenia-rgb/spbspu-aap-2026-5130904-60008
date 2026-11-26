@@ -5,7 +5,7 @@
 
 namespace melnikov
 {
-  class Xquare : public Shape
+  class Xquare: public Shape
   {
   public:
     Xquare(double, point_t);

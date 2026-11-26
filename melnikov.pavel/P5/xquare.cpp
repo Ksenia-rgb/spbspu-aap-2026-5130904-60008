@@ -1,3 +1,4 @@
+
 #include <cmath>
 #include <stdexcept>
 #include <string>
@@ -10,15 +11,13 @@ const std::string INV_SCALE_FAC = "Invalid scale factor";
 
 namespace melnikov
 {
-  Xquare::Xquare(double side, point_t center)
-    : data_{side, center}
+  Xquare::Xquare(double side, point_t center):
+    data_{side, center}
   {
-    if (!std::isfinite(side) || side <= 0.0)
-    {
+    if (!std::isfinite(side) || side <= 0.0) {
       throw std::invalid_argument(INV_SIDE);
     }
-    if (!std::isfinite(center.x) || !std::isfinite(center.y))
-    {
+    if (!std::isfinite(center.x) || !std::isfinite(center.y)) {
       throw std::invalid_argument(INV_COORDS);
     }
   }
@@ -36,8 +35,7 @@ namespace melnikov
 
   void Xquare::move(double dx, double dy)
   {
-    if (!std::isfinite(dx) || !std::isfinite(dy))
-    {
+    if (!std::isfinite(dx) || !std::isfinite(dy)) {
       throw std::invalid_argument(INV_COORDS);
     }
     data_.pos.x += dx;
@@ -46,8 +44,7 @@ namespace melnikov
 
   void Xquare::move(point_t center)
   {
-    if (!std::isfinite(center.x) || !std::isfinite(center.y))
-    {
+    if (!std::isfinite(center.x) || !std::isfinite(center.y)) {
       throw std::invalid_argument(INV_COORDS);
     }
     data_.pos = center;
@@ -55,8 +52,7 @@ namespace melnikov
 
   void Xquare::scale(double k)
   {
-    if (!std::isfinite(k) || k <= 0.0)
-    {
+    if (!std::isfinite(k) || k <= 0.0) {
       throw std::invalid_argument(INV_SCALE_FAC);
     }
     data_.side *= k;
