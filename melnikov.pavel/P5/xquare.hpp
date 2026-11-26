@@ -1,11 +1,12 @@
-#ifndef MELNIKOV_XQUARE_HPP
-#define MELNIKOV_XQUARE_HPP
+#ifndef XQUARE_HPP
+#define XQUARE_HPP
 
 #include "shape.hpp"
 
 namespace melnikov
 {
-  class Xquare : public Shape {
+  class Xquare : public Shape
+  {
   public:
     Xquare(double, point_t);
     double getArea() const override;

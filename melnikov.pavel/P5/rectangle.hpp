@@ -1,11 +1,12 @@
-#ifndef MELNIKOV_RECTANGLE_HPP
-#define MELNIKOV_RECTANGLE_HPP
+#ifndef RECTANGLE_HPP
+#define RECTANGLE_HPP
 
 #include "shape.hpp"
 
 namespace melnikov
 {
-  class Rectangle : public Shape {
+  class Rectangle : public Shape
+  {
   public:
     Rectangle(double, double, point_t);
     double getArea() const override;

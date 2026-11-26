@@ -12,15 +12,18 @@ const std::string INV_SCALE_FAC = "Invalid scale factor";
 namespace melnikov
 {
   Rectangle::Rectangle(double width, double height, point_t center)
-      : data_{width, height, center}
+    : data_{width, height, center}
   {
-    if (!std::isfinite(width) || width <= 0.0) {
+    if (!std::isfinite(width) || width <= 0.0)
+    {
       throw std::invalid_argument(INV_WIDTH);
     }
-    if (!std::isfinite(height) || height <= 0.0) {
+    if (!std::isfinite(height) || height <= 0.0)
+    {
       throw std::invalid_argument(INV_HEIGHT);
     }
-    if (!std::isfinite(center.x) || !std::isfinite(center.y)) {
+    if (!std::isfinite(center.x) || !std::isfinite(center.y))
+    {
       throw std::invalid_argument(INV_COORDS);
     }
   }
@@ -37,7 +40,8 @@ namespace melnikov
 
   void Rectangle::move(double dx, double dy)
   {
-    if (!std::isfinite(dx) || !std::isfinite(dy)) {
+    if (!std::isfinite(dx) || !std::isfinite(dy))
+    {
       throw std::invalid_argument(INV_COORDS);
     }
     data_.pos.x += dx;
@@ -46,7 +50,8 @@ namespace melnikov
 
   void Rectangle::move(point_t center)
   {
-    if (!std::isfinite(center.x) || !std::isfinite(center.y)) {
+    if (!std::isfinite(center.x) || !std::isfinite(center.y))
+    {
       throw std::invalid_argument(INV_COORDS);
     }
     data_.pos = center;
@@ -54,7 +59,8 @@ namespace melnikov
 
   void Rectangle::scale(double k)
   {
-    if (!std::isfinite(k) || k <= 0.0) {
+    if (!std::isfinite(k) || k <= 0.0)
+    {
       throw std::invalid_argument(INV_SCALE_FAC);
     }
     data_.height *= k;
