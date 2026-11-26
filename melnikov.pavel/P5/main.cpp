@@ -1,4 +1,3 @@
-
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
@@ -112,15 +111,17 @@ namespace melnikov
     const double new_x = point.x + k * (shape.getFrameRect().pos.x - point.x);
     const double new_y = point.y + k * (shape.getFrameRect().pos.y - point.y);
 
-    shape.move(new_x, new_y);
+    shape.move({new_x, new_y});
   }
 
   void printFrame(Shape &shape)
   {
     const rectangle_t frame = shape.getFrameRect();
 
-    std::cout << "width = " << frame.width << ", height = " << frame.height << ", pos_x = " << frame.pos.x <<
-        ", pos_y = " << frame.pos.y << ".\n";
+    std::cout << "width = " << frame.width;
+    std::cout << ", height = " << frame.height;
+    std::cout << ", pos_x = " << frame.pos.x;
+    std::cout << ", pos_y = " << frame.pos.y << ".\n";
   }
 
   void printTotalFrame(Shape **shapes, std::size_t count)
@@ -146,8 +147,9 @@ namespace melnikov
       max_y = (max_y > frame_max_y ? max_y : frame_max_y);
     }
 
-    std::cout << "\tTotal frame: width = " << max_x - min_x << ", height = " << max_y - min_y <<
-        ", pos_x = " << (min_x + max_x) / two << ", pos_y = " << (min_y + max_y) / two << "\n";
+    std::cout << "\tTotal frame: width = " << max_x - min_x;
+    std::cout << ", height = " << max_y - min_y;
+    std::cout << ", pos_x = " << (min_x + max_x) / two;
+    std::cout << ", pos_y = " << (min_y + max_y) / two << "\n";
   }
 }
-
