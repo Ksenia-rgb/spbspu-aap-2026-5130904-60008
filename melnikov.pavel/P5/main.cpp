@@ -73,8 +73,8 @@ namespace melnikov
     double y = 0.0;
     double k = 0.0;
 
-    if (!(std::cin >> x >> y >> k) || !std::isfinite(x) ||
-        !std::isfinite(y) || !std::isfinite(k))
+    if (!(std::cin >> x >> y >> k) || !std::isfinite(x)
+        || !std::isfinite(y) || !std::isfinite(k))
     {
       throw std::invalid_argument(INV_INP);
     }
@@ -110,7 +110,7 @@ namespace melnikov
   {
     shape.scale(k);
     shape.move({point.x + k * (shape.getFrameRect().pos.x - point.x),
-                point.y + k * (shape.getFrameRect().pos.y - point.y)});
+        point.y + k * (shape.getFrameRect().pos.y - point.y)});
   }
 
   void printFrame(Shape &shape)
@@ -118,9 +118,9 @@ namespace melnikov
     const rectangle_t frame = shape.getFrameRect();
 
     std::cout << "width = " << frame.width
-              << ", height = " << frame.height
-              << ", pos_x = " << frame.pos.x
-              << ", pos_y = " << frame.pos.y << ".\n";
+        << ", height = " << frame.height
+        << ", pos_x = " << frame.pos.x
+        << ", pos_y = " << frame.pos.y << ".\n";
   }
 
   void printTotalFrame(Shape **shapes, std::size_t count)
@@ -147,8 +147,8 @@ namespace melnikov
     }
 
     std::cout << "\tTotal frame: width = " << max_x - min_x
-              << ", height = " << max_y - min_y
-              << ", pos_x = " << (min_x + max_x) / two
-              << ", pos_y = " << (min_y + max_y) / two << "\n";
+        << ", height = " << max_y - min_y
+        << ", pos_x = " << (min_x + max_x) / two
+        << ", pos_y = " << (min_y + max_y) / two << "\n";
   }
 }
