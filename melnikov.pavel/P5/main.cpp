@@ -119,8 +119,8 @@ namespace melnikov
   {
     const rectangle_t frame = shape.getFrameRect();
 
-    std::cout << "width = " << frame.width << ", height = " << frame.height << ", pos_x = " << frame.pos.x
-        << ", pos_y = " << frame.pos.y << ".\n";
+    std::cout << "width = " << frame.width << ", height = " << frame.height << ", pos_x = " << frame.pos.x <<
+        ", pos_y = " << frame.pos.y << ".\n";
   }
 
   void printTotalFrame(Shape **shapes, std::size_t count)
@@ -146,8 +146,8 @@ namespace melnikov
       max_y = (max_y > frame_max_y ? max_y : frame_max_y);
     }
 
-    std::cout << "\tTotal frame: width = " << max_x - min_x << ", height = " << max_y - min_y
-        << ", pos_x = " << (min_x + max_x) / two << ", pos_y = " << (min_y + max_y) / two << "\n";
+    std::cout << "\tTotal frame: width = " << max_x - min_x << ", height = " << max_y - min_y <<
+        ", pos_x = " << (min_x + max_x) / two << ", pos_y = " << (min_y + max_y) / two << "\n";
   }
 }
 
